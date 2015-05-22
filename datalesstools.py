@@ -26,7 +26,7 @@ def getStationDataless(netsta):
 	net = netsta[:2].upper()
 	parsedDataless = Parser(datalessPath + net + '.dataless')
 	if len(netsta) > 2:
-		sta = [2:].upper()
+		sta = netsta[2:].upper()
 		for station in parsedDataless.stations:
 			for blockette in station:
 				if blockette.id == 50:
