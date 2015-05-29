@@ -323,8 +323,7 @@ if '.xml' != outputFilename[-4:]:
 outputFilepath = net + '/' + outputFilename
 
 if isvalidnetsta.isValidNetSta(net, sta):
-	datalessObj = parseStationDataless(datalesstools.getDataless(net + sta))
-	processDataless(datalessObj)
+	processDataless(datalesstools.getDataless(net + sta))
 else:
 	print 'Network and station found to not be valid (isvalidnetsta.py)'
 
