@@ -4,11 +4,11 @@ from obspy.core import UTCDateTime
 
 blkt = {}
 
-def 50():
+def skeleton50():
 	blkt['description'] = 'Station Identifier Blockette'
 	blkt['blockette type'] = 0
 	blkt['length of blockette'] = 0
-	blkt['station_call_letters'] = ''
+	blkt['station call letters'] = ''
 	blkt['latitude'] = 0.0
 	blkt['longitude'] = 0.0
 	blkt['elevation'] = 0.0
@@ -24,7 +24,7 @@ def 50():
 	blkt['network code'] = ''
 	return blkt
 
-def 52():
+def skeleton52():
 	blkt['description'] = 'Channel Identifier Blockette'
 	blkt['blockette type'] = 0
 	blkt['length of blockette'] = 0
@@ -52,7 +52,7 @@ def 52():
 	blkt['update flag'] = ''
 	return blkt
 
-def 53():
+def skeleton53():
 	blkt['description'] = 'Response (Poles & Zeros) Blockette'
 	blkt['blockette type'] = 0
 	blkt['length of blockette'] = 0
@@ -74,8 +74,8 @@ def 53():
 	blkt['imaginary pole error'] = []
 	return blkt
 
-def 54():
-	blkt['description'] = ''
+def skeleton54():
+	blkt['description'] = 'Response (Coefficients) Blockette'
 	blkt['blockette type'] = 0
 	blkt['length of blockette'] = 0
 	blkt['response type'] = ''
@@ -90,8 +90,8 @@ def 54():
 	blkt['denominator error'] = 0.0
 	return blkt
 
-def 57():
-	blkt['description'] = ''
+def skeleton57():
+	blkt['description'] = 'Decimation Blockette'
 	blkt['blockette type'] = 0
 	blkt['length of blockette'] = 0
 	blkt['stage sequence number'] = 0
@@ -102,18 +102,18 @@ def 57():
 	blkt['correction applied'] = 0.0
 	return blkt
 
-def 58():
-	blkt['description'] = ''
+def skeleton58():
+	blkt['description'] = 'Channel Sensitivity/Gain Blockette'
 	blkt['blockette type'] = 0
 	blkt['length of blockette'] = 0
 	blkt['stage sequence number'] = 0
-	blkt['sensitivity gain'] = 0.0
+	blkt['sensitivity/gain'] = 0.0
 	blkt['frequency'] = 0.0
 	blkt['number of history values'] = 0
 	return blkt
 
-def 59():
-	blkt['description'] = ''
+def skeleton59():
+	blkt['description'] = 'Channel Comment Blockette'
 	blkt['blockette type'] = 0
 	blkt['length of blockette'] = 0
 	blkt['beginning effective time'] = UTCDateTime(1985, 1, 16, 0, 0)
@@ -122,29 +122,20 @@ def 59():
 	blkt['comment level'] = 0
 	return blkt
 
-def 62():
-	blkt['description'] = ''
+def skeleton62():
+	blkt['description'] = 'Response Polynomial Blockette'
 	blkt['blockette type'] = 0
 	blkt['length of blockette'] = 0
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
-	blkt[''] = ''
+	blkt['transfer function type'] = ''
+	blkt['stage sequence number'] = 0
+	blkt['stage signal in units'] = 0
+	blkt['stage signal out units'] = 0
+	blkt['polynomial approximation type'] = ''
+	blkt['valid frequency units'] = ''
+	blkt['lower valid frequency bound'] = 0.0
+	blkt['upper valid frequency bound'] = 0.0
+	blkt['maximum absolute error'] = 0.0
+	blkt['number of polynomial coeffecients'] = 0
+	blkt['polynomial coefficient'] = []
+	blkt['polynomial coefficient error'] = []
 	return blkt
-	
-# AT THE END CHECK FOR CORRECT SPELLING
