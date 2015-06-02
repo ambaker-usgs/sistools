@@ -79,8 +79,8 @@ def parseStationDataless(parsedDataless):
 def processDataless(dataless):
 	initializeOutputFile()
 	processIntro(dataless)
-	processChannel(dataless)
-	processOutro(dataless)
+	# processChannel(dataless)
+	# processOutro(dataless)
 
 def initializeOutputFile():
 	#initiates the output file in the network's directory
@@ -110,6 +110,7 @@ def initializeOutputFile():
 
 def processIntro(dataless):
 	#processes the start of the xml file, mostly dealing with blockette 50 of the dataless
+	print type(dataless)
 	b50sd = []
 	latitude = ''
 	longitude = ''
