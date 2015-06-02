@@ -315,4 +315,3 @@ def blockette62(blockette):
 	blkt['polynomial coefficient'] = blockette.polynomial_coefficient
 	blkt['polynomial coefficient error'] = blockette.polynomial_coefficient_error
 	return blkt
-
