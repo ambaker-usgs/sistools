@@ -16,13 +16,13 @@ datalessPath = '/APPS/metadata/SEED/'
 
 #functions
 def getDataless(netsta):
-	#the function that returns the dataless
+	#the function that returns the raw dataless
 	net = netsta[:2].upper()
 	parsedDataless = Parser(datalessPath + net + '.dataless')
 	return parsedDataless
 
 def getStationDataless(netsta):
-	#the function that returns the dataless
+	#the function that returns the dataless for a given station
 	net = netsta[:2].upper()
 	parsedDataless = Parser(datalessPath + net + '.dataless')
 	if len(netsta) > 2:
@@ -32,3 +32,9 @@ def getStationDataless(netsta):
 				if blockette.id == 50:
 					if blockette.station_call_letters == sta:
 						return station
+
+def getNetworkDataless(netsta):
+	#the function that returns the dataless for a given network
+	net = netsta[:2].upper()
+	parsedDataless = Parser(datalessPath + net + '.dataless')
+	return parsedDataless.stations
