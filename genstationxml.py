@@ -110,7 +110,10 @@ def initializeOutputFile():
 
 def processIntro(dataless):
 	#processes the start of the xml file, mostly dealing with blockette 50 of the dataless
-	print type(dataless)
+	isOpenStationEpoch = False
+	for blockette in dataless:
+		if blockette.id == 50 and blockette.start_effective_date <= UTCDateTime(now) <= blockette.end_effective_date:
+			print 'SASSAFRASS'
 	b50sd = []
 	latitude = ''
 	longitude = ''
