@@ -1,0 +1,208 @@
+Network | Station | Name | Description | Town | Region
+CU | ANWB | Willy Bob | 5km northwest of Codrington | Codrington | Antigua and Barbuda
+CU | BBGH | Gun Hill | 300m west of Gun Hill Signal Station | Gun Hill | Barbados
+CU | BCIP | Isla Barro Colorado | North side of Barro Colorado | Barro Colorado | Panama
+CU | GRGR | Clabony | Northeast corner of Michael Roman Catholic School | Grenville | Grenada
+CU | GRTK | Grand Turk | North end of island | Grand Turk | Turks and Caicos Islands
+CU | GTBY | Guantanamo Bay | 6km due south of Boqueron | Guantanamo Bay | Cuba
+CU | MTDJ | Mount Denham | Atop Mount Denham | Pike | Jamaica
+CU | SDDR | Presa de Sabenta | At the foot of the dam at Presa de Sabenta Lake | La Isleta | Dominican Republic
+CU | TGUH | Tegucigalpa | Inside the Colegio de Defensa Nacional | Tegucigalpa | Honduras
+GT | BDFB | Brasilia | Inside the Brasilia National Park | Brasilia | Brazil
+GT | BOSA | Boshof | 8km south-southeast of Boshof | Boshof | South Africa
+GT | CPUP | Villa Florida | 8km west northwest of Providencia | Providencia | Paraguay
+GT | DBIC | Dimbokro | 1km northwest of Assebrakro | Assebrakro | Cote d'Ivoire
+GT | LBTB | Lobatse | 15km west northwest of Otse | Otse | Botswana
+GT | LPAZ | La Paz | Just north of Janq’u Quta Lake | Milluni | Bolivia
+GT | PLCA | Paso Flores | 15km North of San Pedro | San Pedro | Rio Negro, Argentina
+GT | SBA | Scott Base | South tip of Ross Island | Scott Base | Antarctica
+GT | VNDA | Wright Valley | 120km west northwest of Scott Base | Scott Base | Antarctica
+IC | BJT | Baijiatuan | 24km northwest of Beijing city center | Beijing | China
+IC | ENH | Enshi | At the end of Tuqiao Ave 1st Alley | Enshi, Hubei Province | China
+IC | HIA | Hailar | On the banks of the Hailar River | Hulun Buir, Neimenggu Autonomous Region | China
+IC | KMI | Kunming | West of Jinma Shopping Center | Panlong, Yunnan Province | China
+IC | LSA | Lhasa | 7km north of Lhasa’s city center | Baricun, Tibet | China
+IC | MDJ | Mudanjiang | In a valley northwest of Mudanjiang | Badacun, Heilongjiang Province | China
+IC | QIZ | Qiongzhong | On a hillside 2km from Qiongzhong | Qiongzhong, Hainan Province | China
+IC | SSE | Shanghai | Shanghai Observatory | Sheshanzhen | China
+IC | WMQ | Urumqi | 7km east southeast of Urumqi city center | Shuimogou, Xinjiang Province | China
+IC | XAN | Xi’an | In the Wangjianzhuangcun valley | Wangjiazhuangcun, Xi’an | China
+IU | ADK | Adak | 2km west northwest of Adak | Adak | Alaska
+IU | AFI | name | 1.5km due south of the Baha’i House of Worship Samoa | Vadala | Samoa
+IU | ANMO | Albuquerque | At Albuquerque Seismological Laboratory | Kirtland, NM | USA
+IU | ANTO | Ankara | 8km southwest of Ankara city center | Ankara | Turkey
+IU | BBSR | Bermuda Institute of Ocean Sciences | At the Bermuda Institute of Ocean Sciences | St George's | Bermuda
+IU | BILL | Bilibino | 1km north of Bilibino | Bilibino | Russia
+IU | CASY | Casey | At Casey Station | Casey Station | Antarctica
+IU | CCM | Cathedral Cave | In Onondaga Cave State Park | Crossroads, MO | USA
+IU | CHTO | Chiang Mai | 1km northwest of Chiang Mai Zoo | Chang Phueak | Thailand
+IU | COLA | College Station | 1km north of Smith Lake | College, AK | USA
+IU | COR | Corvallis | 1km north of Witham Hill Natural Area | Corvallis, OR | USA
+IU | CTAO | Charters Towers | At the foot of the east side of Towers Hill | Towers Hill, Queensland | Australia
+IU | DAV | Davao | Near the ABS-CBN Davao Broadcast Centre | Talomo District | Philippines
+IU | DWPF | Disney Wildlife Preserve | At southeast end of Poinciana | Poinciana, FL | USA
+IU | FUNA | Funafuti | Southeast of the airport | Vaiaku | Tuvalu
+IU | FURI | Mt. Furi | On the north slope of Mt. Furi | Alam Gena | Ethiopia
+IU | GNI | Garni | At the Garni Geophysical Observatory | Garni | Armenia
+IU | GRFO | Grafenberg | Just north of Haidhof | Haidhof | Germany
+IU | GUMO | Guam | Less than 1km northeast of Potts Junction | Potts Junction | Mariana Islands
+IU | HKT | Hockley | At the United Salt Corporation | Hockley, TX | Texas
+IU | HNR | Honiara | Less than 1km from Honiara city center | Honiara | Solomon Islands
+IU | HRV | Adam Dziewonski Observatory | Located at the Adam Dziewonski Observatory | Harvard, MA | USA
+IU | INCN | Incheon | Situated at the Incheon Weather Station | Incheon | Republic of Korea
+IU | JOHN | Johnston Atoll | On island | Johnston Atoll | USA
+IU | KBL | Kabul | 12km north northwest of Kabul | Naow Abad | Afghanistan
+IU | KBS | Ny-Alesund | On Svalbard island | Ny-Alesund, Spitzenbergen | Norway
+IU | KEV | Kevo | On a peninsula near Kevonsuu | Kevonsuu | Finland
+IU | KIEV | Kiev | 2km northwest of Vorsivka | Vorsivka | Ukraine
+IU | KIP | Kipapa | Just northwest of the Central Oahu Tennis Center | Waipio, HI | USA
+IU | KMBO | Kilima Mbogo | In the boundaries of the Ol Donyo Sapuk National Park | Kilimambogo | Kenya
+IU | KNTN | Kanton | South of the airstrip | Kanton island | Kiritibati
+IU | KONO | Kongsberg | Above Sandsvaermoen on the western hill | Sandsvaermoen | Norway
+IU | KOWA | Kowa | 10km east southeast of Sevare | Doundou | Mali
+IU | LCO | Las Campanas Observatory | At the Las Campanas Astronomical Observatory | Los Rastrojoq | Chile
+IU | LSZ | Lusaka | 18km northwest of Lusaka | Lusaka | Zambia
+IU | LVC | Limon Verde | 18km south of Calama in the Atacama desert | Calama | Chile
+IU | MA2 | Magadan | Above the hill west of Magadan | Magadan | Russia
+IU | MACI | Morro de Arena | Inside the Corona Forestal Natural Park on Tenerife island | Cruz del Roque | Canary Islands
+IU | MAJO | Matsushiro | In the Noroshiyama Forest | Nagano | Japan
+IU | MAKZ | Makanchi | 4km northwest of Makanchi | Makanchi | Kazakhstan
+IU | MBWA | Marble Bar | 2km northwest of Marble Bar | Marble Bar | Western Australia
+IU | MIDW | Midway Atoll | Southeast of Sand Island Field | Sand Island | USA
+IU | MSKU | Masuku | 4km southeast of Franceville | Franceville | Gabon
+IU | NWAO | Narrogin | 2km due east of Narrogin | Narrogin | Australia
+IU | OTAV | Otavalo | Atop the mountain 12km west of Tangali | Tangali | Ecuador
+IU | PAB | San Pablo | 1.5km west of San Pablo | San Pablo de los Montes | Spain
+IU | PAYG | Puerto Ayora | 1.5km west of El Cascajo | El Cascajo | Galapagos Islands
+IU | PET | Petropavlovsk | East of the oceanographic institute | Petropavlovsk-Kamchatskiy | Russia
+IU | PMG | Port Moresby | Near the Mobil Renbo Port Moresby Service Station | Gerehu | New Guinea
+IU | PMSA | Palmer Station | Less than 1km east of Palmer Station | Palmer Station | Antarctica
+IU | POHA | Pohakuloa | East of Bradshaw Army Airfield | Pohakuloa, HI | USA
+IU | PTCN | Pitcairn | East end of Pitcairn Island | Adamstown | South Pacific
+IU | PTGA | Pitinga | 20km East northeast of Pitinga | Pitting | Brazil
+IU | QSPA | South Pole Remote Earth Science Observatory (Quiet Zone) | At the South Pole | South Pole | South Pole Remote Earth Science Observatory (Quiet Zone)
+IU | RAO | Raoul | 1km east of Bell’s Flat Airstrip | Raoul Island | Kermadec Islands
+IU | RAR | Rarotonga | North central Rarotonga Island | Avarua District | Cook Islands
+IU | RCBR | Riachuelo | 1km south of Tanquinhos | Tanquinhos | Brazil
+IU | RSSD | Black Hills | 9km northwest of Four Corners | Four Corners, WY | USA
+IU | SAML | Samuel | 26km north of Itapua | Itapua do Oeste | Brazil
+IU | SBA | Scottt Base | At the end of the peninsula | Scott Base | Antarctica
+IU | SDV | Santo Domingo | At a bend in the Rio Santo Domingo 8km downstream of Santo Domingo | Santo Domingo | Venezuela
+IU | SFJD | Sondre Stromfjord | Less than 1km from the Kangerlussuaq Airport | Kangerlussuaq Airport | Greenland
+IU | SJG | San Juan | 2km south of Cayey | Cayey | Puerto Rico
+IU | SLBS | Sierra La Lengua | 12km up San Bartolo’s watershed | Los Barriles, Baja California | Mexico
+IU | SNZO | South Karori | At the Geodrill | Wellington | New Zealand
+IU | SSPA | Standing Stone | 11km south of Pine Grove Mills | Pine Grove Mills, PA | USA
+IU | TARA | Tarawa | West end of Tarawa island | Betio | Republic of Kiribati
+IU | TATO | Taipei | 10km southwest of Taipei city center | Taipei | Taiwan
+IU | TEIG | Tepich | 3km southwest of Tepich | Tepich | Mexico
+IU | TIXI | Tiksi | In the center of Tiksi | Tiksi | Russia
+IU | TRIS | Tristan da Cunha | Just west of Edinburgh | Edinburgh | Tristan da Cunha
+IU | TRQA | Torquist | 5km west of Villa Ventana | Villa Ventana | Argentina
+IU | TSUM | Tsumeb | 14km west of Tsumeb | Tsumeb | Namibia
+IU | TUC | Tucson | North in the foothills of Sabino High School | Tanque Verde, AZ | USA
+IU | ULN | Ulaanbaatar | On the northeast flank of Bogdkhan mountain | Ulaabaatar | Mongolia
+IU | WAKE | Wake Island | On the eastern edge of the island | Wake Island | Wake Island
+IU | WCI | Wyandotte Cave | Inside Wyandotte Cave | Carefree, IN | USA
+IU | WVT | Waverly | 6km northwest of Waverly | Waverly, TN | USA
+IU | XMAS | Kiritimati Island | North end of the island | Tabwakea | Republic of Kiribati
+IU | YAK | Yakutsk | 1km west of Yakutsk city center | Yakutsk | Russia
+IU | YSS | Yuzhno-Sakhalinsk | Just north of Spartak | Yuzhno-Sakhalinsk | Russia
+IW | DLMT | Dillon | At the north end of the arable land 17km north of Dillon | Dillon | USA
+IW | FLWY | Flagg Ranch | 4km south southwest of Flagg Ranch above the river | Flagg Ranch, WY | USA
+IW | FXWY | Fox Creek | In an abandoned quarry due east of Fox Creek in a valley | Fox Creek, WY | USA
+IW | IMW | Indian Meadow | Up some Forest Service roads 20km east of Felt | Felt, WY | USA
+IW | LOHW | Long Hollow | In a wildlife refuge 2km southeast of Kelly | Kelly, WY | USA
+IW | MFID | Camas Ranch | In a valley 6km east of Mayfield | Mayfield, ID | USA
+IW | MOOW | Moose Pond | Up a mountain slope west of the south end of Jenny Lake | Moose, WY | USA
+IW | PHWY | Pilot Hill | 1km south of Pilot Hill | Laramie, WY | USA
+IW | PLID | Pearl Lake | 22km up valley north northeast of McCall | McCall, ID | USA
+IW | REDW | Red Top Meadow | Atop the mountain west of Red Top Meadow | South Park, WY | USA
+IW | RWWY | Rawlins | Atop the mountain south of Rawlins | Rawlins, WY | USA
+IW | SMCO | Snowmass, CO | Atop the mountain southwest of Snowmass | Snowmass Village, CO | USA
+IW | SNOW | Snow King Mountain | Atop the mountain south of Jackson | Jackson, WY | USA
+IW | TPAW | Teton Pass | At Teton Pass on 22 | Teton Pass, WY | USA
+NE | BCDNQ | Boston College | At Boston College, station no longer in service | Brighton, MA | MA
+NE | BCX | Chestnut Hill | At Boston College | Brighton, MA | USA
+NE | BRY | Smithfield | At Bryant University, station no longer in service | Smithfield, RI | USA
+NE | BRYW | Smithfield | At Bryant University | Smithfield, RI | USA
+NE | DUNH | Durham | At University of New Hampshire-Durham, station no longer in service | Durham, NH | USA
+NE | EMMW | Machias | At the University of Maine at Machias | Machias, ME | USA
+NE | FFD | Franklin Falls Dam | At the Franklin Falls Dam | Franklin, NH | USA
+NE | HNH | Hanover | At Dartmouth College | Hanover, NH | USA
+NE | MAACT | Algonquin Road | On Algonquin Road, station no longer in service | Acton, MA | MA
+NE | MAFXB | name | Station no longer in service | town | MA
+NE | MAGLO | name | Station no longer in service | town | MA
+NE | MANTK | name | Station no longer in service | town | MA
+NE | MATOP | name | Station no longer in service | town | MA
+NE | NHFNK | name | Station no longer in service | town | NH
+NE | ORNO | name | Station no longer in service | town | USA
+NE | PQI | Presque Isle | At the University of Maine at Presque Isle | Presque Isle, ME | USA
+NE | QUA2 | Quabbin Reservoir | At the Quabbin Reservoir | Belchertown, MA | USA
+NE | TRY | Troy | At Rensselaer Polytechnic Institute, station no longer in service | Troy, NY | USA
+NE | VT1 | Waterbury | At Crosset Brook Middle School | Duxbury, VT | USA
+NE | WES | Weston Observatory | At the Weston Observatory at Boston College | Weston, MA | USA
+NE | WSPT | Westport | At the Rolnick Observatory, Westport Astronomical Society | Westport, CT | USA
+NE | WVL | Waterville | At Colby College | Waterville, ME | USA
+NE | YLE | Yale | At Yale University | New Haven, CT | USA
+US | AAM | Ann Arbor | 8km east northeast of the Ann Arbor city center | Ann Arbor, MI | USA
+US | ACSO | Alum Creek State Park | At the Alum Creek State Park maintenance faclity | Lewis Center, OH | USA
+US | AGMN | Agassiz national Wildlife Refuge | 31km northeast of Thief River Falls | Thief River Falls, MN | USA
+US | AHID | Auburn Hatchery | At the Auburn Hatchery | Auburn, WY | USA
+US | AMTX | Amarillo | At the southern end of Palo Duro Canyon State Park | Canyon, TX | USA
+US | BINY | Binghamton | Just south of the Binghamton Regional Airport | East Maine, NY | USA
+US | BLA | Blacksburg | At the Dairy Science Complex | Blacksburg, VA | USA
+US | BMO | Blue Mountains Array | 2km south of Sparta | Sparta, OR | USA
+US | BOZ | Bozeman | In the hills 6km northeast of Norris | Norris, MT | USA
+US | BRAL | Brewton | At a residence 8km north of Brewton | Brewton, AL | USA
+US | BW06 | Boulder Array Site 6 | On a USAFB | Boulder, WY | USA
+US | CBKS | Cedar Bluff | On the north of of the Cedar Bluff Reservoir dam | Ellis, KS | USA
+US | CBN | Corbin | At the Fredricksburg Geomagnetic Observatory | Corbin | USA
+US | CNNC | Cliffs of the Neuse | In the Cliffs of the Neuse State Park | Indian Springs, NC | USA
+US | COWI | Conover | At the Haymeadow Creek State Natural Area, 11km northeast of Conover | Conover, WI | USA
+US | DGMT | Dagmar | 13km due south of Dagmar | Dagmar, MT | USA
+US | DUG | Dugway | 7km west southwest of Dugway | Dugway, UT | USA
+US | ECSD | EROS Data Center | At the Center for Earth Resources Observation and Science | Sioux Falls, SD | USA
+US | EGAK | Eagle | At the Eagle airport | Eagle, AK | USA
+US | EGMT | Eagleton | 16km southwest of Baldy Mountain peak | Eagleton, MT | USA
+US | ELK | Elko | On the eastern flank of the mountains 45km east of Elko | Elko, NV | USA
+US | ERPA | Erie | At Penn State at Erie | Erie, PA | USA
+US | EYMN | Ely | 24km east of Winton | Winton, MN | USA
+US | GLMI | Grayling | 13km east northeast of Frederic | Frederic, MI | USA
+US | GOGA | Godfrey | Just inside the Central Georgia Branch Station Wildlife south of Godfrey | Godfrey, GA | USA
+US | HAWA | Hanford | 17km south of Hanford Site | Hanford Site, WA | USA
+US | HDIL | Hopedale | 2km north of Lilly in the Parklands Nature Preserve | Lilly, IL | USA
+US | HLID | Hailey | In a valley 11km northwest of Hailey | Hailey, ID | USA
+US | HWUT | Hardware Ranch | Inside the Hardware Ranch Wildlife Management Area | Hardware Ranch, UT | USA
+US | ISCO | Idaho Springs | Halfway toward St Mary’s | Idaho Springs, CO | USA
+US | JCT | Junction | 3km southwest of Junction | Junction, TX | USA
+US | JFWS | Jewell Farm | On Jewell Farms | Linden, WI | USA
+US | KSU1 | Kansas State University | At Konza Prairie Biological Station | Manhattan, KS | USA
+US | KVTX | Kingsville | 3km northwest of University of Texas A&M at Kingsville | Kingsville, TX | USA
+US | LAO | LASA Array | 5km south southwest of Angela | Angela, MT | USA
+US | LBNH | Lisbon | Halfway toward Lyman | Lisbon, NH | USA
+US | LKWY | Yellowstone Lake | At the north end of Yellowstone Lake in Yellowstone National Park | Yellowstone Lake, WY | USA
+US | LONY | Lake Ozonia | 7km southwest of St Regis Falls | St Regis Falls, NY | USA
+US | LRAL | Lakeview Retreat | Just inside the Cahaba Wildlife Management Area | Brierfield, AL | USA
+US | MCWV | Mont Chateau | At Ices Ferry | Ices Ferry, WV | USA
+US | MIAR | Mt Ida | 6km east of Mt Ida | Mt Ida, AR | USA
+US | MNTX | Cornudas Mountains | 13km southeast of Cornudas | Cornudas, TX | USA
+US | MSO | Missoula | On the southern flank of University Mountain 7km southeast of Missoula | Missoula, MT | USA
+US | MVCO | Mesa Verde | 3km north of Mesa Verde Archaeological Museum | Mesa Verde National Park, CO | USA
+US | NATX | Nacogdoches | At the Stephen F Austin University Observatory | Redfield, TX | USA
+US | NEW | Newport | 12km northwest of Newport | Newport, WA | USA
+US | NHSC | New Hope | 1km east northeast of New Hope Methodist Church | New Hope, SC | USA
+US | NLWA | Neilton Lookout | At Neilton Lookout 1km south of Neilton | Neilton, WA | USA
+US | OGNE | Ogallala Mountain | At the northeast corner of Colorado State | Ogallala, NE | USA
+US | OXF | Oxford | 20km northeast of Oxford | Oxford, MS | USA
+US | PKME | Peaks-Kenny State Park | At the south end of the South Cove of Sebec Lake | Dover-Foxcraft, ME | USA
+US | RLMT | Red Lodge | 7km south of Red Lodge | Red Lodge, MT | USA
+US | SCIA | State Center | 4km northwest of Harvester | Harvester, IA | USA
+US | SDCO | Great Sand Dunes National Park | On the eastern edge of the sand dunes | Great Sand Dunes National Park, CO | USA
+US | TPNV | Tonopah Spring | Halfway up on the road on the northeast side to Shoshone Peak | Indian Springs, NV | USA
+US | TZTN | Tazewell | 11km north of Tazewell | Tazewell, TN | USA
+US | VBMS | Vicksburg | 10km southwest of Raymond | Raymond, MS | USA
+US | WMOK | Wichita Mountains | On the western edge of Wichita Mountains Wildlife Refuge | Indiahoma, OK | USA
+US | WRAK | Wrangell Island | 6km southeast of Wrangell | Wrangell, AK | USA
+US | WUAZ | Wupatki | At the Wupatki National Monument | Flagstaff, AZ | USA
+US | WVOR | Wild Horse Valley | 5km south of Andrews | Andrews, OR | USA

@@ -146,7 +146,7 @@ def skeleton62():
 	blkt['polynomial coefficient error'] = []
 	return blkt
 
-def fillBlockette(blockette):
+def parseBlockette(blockette):
 	blkt = {}
 	if blockette.id == 50:
 		return blockette50(blockette)
