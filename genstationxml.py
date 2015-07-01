@@ -124,7 +124,7 @@ def processIntro(dataless):
 			appendToFile(2, ['<fsx:Description>' + description + '</fsx:Description>'])
 			appendToFile(2, ['<fsx:TotalNumberStations>' + netstaCount + '</fsx:TotalNumberStations>'])
 			appendToFile(2, ['<fsx:SelectedNumberStations>1</fsx:SelectedNumberStations>'])
-			appendToFile(2, ['<fsx:Station xsi:type="sis:StationType" code="' + sta + '" startDate="' + str(min(b50sd)) + '">'])
+			appendToFile(2, ['<fsx:Station xsi:type="sis:StationType" code="' + blockette.station_call_letters + '" startDate="' + stationStartDate(dataless) + '">'])
 			appendToFile(3, ['<fsx:Latitude>' + latitude + '</fsx:Latitude>'])
 			appendToFile(3, ['<fsx:Longitude>' + longitude + '</fsx:Longitude>'])
 			appendToFile(3, ['<fsx:Elevation>' + elevation + '</fsx:Elevation>'])
@@ -161,6 +161,14 @@ def processIntro(dataless):
 	appendToFile(3, ['<fsx:CreationDate>' + str(min(b50sd)) + '</fsx:CreationDate>'])
 	appendToFile(3, ['<fsx:TotalNumberChannels>' + channelCount + '</fsx:TotalNumberChannels>'])
 	appendToFile(3, ['<fsx:SelectedNumberChannels>' + channelCount + '</fsx:SelectedNumberChannels>'])
+
+def stationStartDate(dataless):
+	#returns the earliest start_effective_date
+	startDates = []
+	for blockette in dataless:
+		if blockette.id == 50:
+			startDates.append(blockette.start_effective_date)
+	return str(min(start_effective_date))
 
 def fetchLegendEntry():
 	legendPath = 'networklegend.txt'
