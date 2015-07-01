@@ -113,18 +113,18 @@ def processIntro(dataless):
 	isOpenStationEpoch = False
 	for blockette in dataless:
 		if blockette.id == 50 and blockette.start_effective_date <= UTCDateTime(now) <= blockette.end_effective_date:
-			print 'SASSAFRASS'
+			preamble = ['<?xml version="1.0" ?>','<fsx:FDSNStationXML xsi:type="sis:RootType" schemaVersion="2.0" sis:schemaLocation="http://anss-sis.scsn.org/xml/ext-stationxml/2.0 http://anss-sis.scsn.org/xml/ext-stationxml/2.0/sis_extension.xsd" xmlns:fsx="http://www.fdsn.org/xml/station/1" xmlns:sis="http://anss-sis.scsn.org/xml/ext-stationxml/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">']
+			appendToFile(0, preamble)
+			appendToFile(1, ['<fsx:Source>' + sisinfo.source() + '</fsx:Source>'])
+			appendToFile(1, ['<fsx:Sender>' + sisinfo.sender() + '</fsx:Sender>'])
+			appendToFile(1, ['<fsx:Created>' + UTCDateTime(now) + '</fsx:Created>'])
+			appendToFile(1, ['<fsx:Network code="' + blockette.network_code + '">'])
+			print 'Sassafrass'
 	b50sd = []
 	latitude = ''
 	longitude = ''
 	elevation = ''
 	channelCount = ''
-	preamble = ['<?xml version="1.0" ?>','<fsx:FDSNStationXML xsi:type="sis:RootType" schemaVersion="2.0" sis:schemaLocation="http://anss-sis.scsn.org/xml/ext-stationxml/2.0 http://anss-sis.scsn.org/xml/ext-stationxml/2.0/sis_extension.xsd" xmlns:fsx="http://www.fdsn.org/xml/station/1" xmlns:sis="http://anss-sis.scsn.org/xml/ext-stationxml/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">']
-	appendToFile(0, preamble)
-	appendToFile(1, ['<fsx:Source>' + sisinfo.source() + '</fsx:Source>'])
-	appendToFile(1, ['<fsx:Sender>' + sisinfo.sender() + '</fsx:Sender>'])
-	appendToFile(1, ['<fsx:Created>' + str(now).replace(' ','T') + 'Z' + '</fsx:Created>'])
-	appendToFile(1, ['<fsx:Network code="' + net + '">'])
 	for blockette in dataless:
 		if blockette.id == 50:
 			if blockette.end_effective_date - UTCDateTime(now) > 0:
