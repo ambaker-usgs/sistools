@@ -117,8 +117,17 @@ def processIntro(dataless):
 			appendToFile(0, preamble)
 			appendToFile(1, ['<fsx:Source>' + sisinfo.source() + '</fsx:Source>'])
 			appendToFile(1, ['<fsx:Sender>' + sisinfo.sender() + '</fsx:Sender>'])
-			appendToFile(1, ['<fsx:Created>' + UTCDateTime(now) + '</fsx:Created>'])
+			appendToFile(1, ['<fsx:Created>' + str(UTCDateTime(now)) + '</fsx:Created>'])
 			appendToFile(1, ['<fsx:Network code="' + blockette.network_code + '">'])
+			network, description, netstaCount = fetchLegendEntry().split('|')
+			print network, description, netstaCount
+			appendToFile(2, ['<fsx:Description>' + description + '</fsx:Description>'])
+			appendToFile(2, ['<fsx:TotalNumberStations>' + netstaCount + '</fsx:TotalNumberStations>'])
+			appendToFile(2, ['<fsx:SelectedNumberStations>1</fsx:SelectedNumberStations>'])
+			appendToFile(2, ['<fsx:Station xsi:type="sis:StationType" code="' + sta + '" startDate="' + str(min(b50sd)) + '">'])
+			appendToFile(3, ['<fsx:Latitude>' + latitude + '</fsx:Latitude>'])
+			appendToFile(3, ['<fsx:Longitude>' + longitude + '</fsx:Longitude>'])
+			appendToFile(3, ['<fsx:Elevation>' + elevation + '</fsx:Elevation>'])
 			print 'Sassafrass'
 	b50sd = []
 	latitude = ''
@@ -127,12 +136,12 @@ def processIntro(dataless):
 	channelCount = ''
 	for blockette in dataless:
 		if blockette.id == 50:
-			if blockette.end_effective_date - UTCDateTime(now) > 0:
-				#checks if the current station epoch is open, if so, set to True
-				isOpenStationEpoch = True
-			else:
-				#if not, set to False. This prevents subsequent closed epochs from being written to xml
-				isOpenStationEpoch = False
+			# if blockette.end_effective_date - UTCDateTime(now) > 0:
+			# 	#checks if the current station epoch is open, if so, set to True
+			# 	isOpenStationEpoch = True
+			# else:
+			# 	#if not, set to False. This prevents subsequent closed epochs from being written to xml
+			# 	isOpenStationEpoch = False
 			if isOpenStationEpoch:
 				if blockette.id == 50:
 					b50sd.append(blockette.start_effective_date)
@@ -140,14 +149,6 @@ def processIntro(dataless):
 					longitude = str(blockette.longitude)
 					elevation = str(blockette.elevation)
 					channelCount = str(blockette.number_of_channels)
-	network, description, netstaCount = fetchLegendEntry().split('|')
-	appendToFile(2, ['<fsx:Description>' + description + '</fsx:Description>'])
-	appendToFile(2, ['<fsx:TotalNumberStations>' + netstaCount + '</fsx:TotalNumberStations>'])
-	appendToFile(2, ['<fsx:SelectedNumberStations>1</fsx:SelectedNumberStations>'])
-	appendToFile(2, ['<fsx:Station xsi:type="sis:StationType" code="' + sta + '" startDate="' + str(min(b50sd)) + '">'])
-	appendToFile(3, ['<fsx:Latitude>' + latitude + '</fsx:Latitude>'])
-	appendToFile(3, ['<fsx:Longitude>' + longitude + '</fsx:Longitude>'])
-	appendToFile(3, ['<fsx:Elevation>' + elevation + '</fsx:Elevation>'])
 	appendToFile(3, ['<fsx:Site>'])
 	appendToFile(4, ['<fsx:Name>' + '</fsx:Name>'])
 	appendToFile(4, ['<fsx:Description>' + '</fsx:Description>'])
