@@ -168,7 +168,7 @@ def stationStartDate(dataless):
 	for blockette in dataless:
 		if blockette.id == 50:
 			startDates.append(blockette.start_effective_date)
-	return str(min(start_effective_date))
+	return str(min(startDates))
 
 def fetchLegendEntry():
 	legendPath = 'networklegend.txt'
