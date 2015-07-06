@@ -79,7 +79,7 @@ def parseStationDataless(parsedDataless):
 def processDataless(dataless):
 	initializeOutputFile()
 	processIntro(dataless)
-	# processChannel(dataless)
+	processChannel(dataless)
 	# processOutro(dataless)
 
 def initializeOutputFile():
