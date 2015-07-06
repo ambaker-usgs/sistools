@@ -140,29 +140,28 @@ def processIntro(dataless):
 			appendToFile(4, ['<fsx:Agency>' + sisinfo.agency() + '</fsx:Agency>'])
 			appendToFile(3, ['</fsx:Operator>'])
 			appendToFile(3, ['<fsx:CreationDate>' + stationStartDate(dataless) + '</fsx:CreationDate>'])
-			appendToFile(3, ['<fsx:TotalNumberChannels>' + channelCount + '</fsx:TotalNumberChannels>'])
-			appendToFile(3, ['<fsx:SelectedNumberChannels>' + channelCount + '</fsx:SelectedNumberChannels>'])
-			print 'Sassafrass'
-	# b50sd = []
-	# latitude = ''
-	# longitude = ''
-	# elevation = ''
-	# channelCount = ''
-	for blockette in dataless:
-		if blockette.id == 50:
-			# if blockette.end_effective_date - UTCDateTime(now) > 0:
-			# 	#checks if the current station epoch is open, if so, set to True
-			# 	isOpenStationEpoch = True
-			# else:
-			# 	#if not, set to False. This prevents subsequent closed epochs from being written to xml
-			# 	isOpenStationEpoch = False
-			if isOpenStationEpoch:
-				if blockette.id == 50:
-					b50sd.append(blockette.start_effective_date)
-					latitude = str(blockette.latitude)
-					longitude = str(blockette.longitude)
-					elevation = str(blockette.elevation)
-					channelCount = str(blockette.number_of_channels)
+			appendToFile(3, ['<fsx:TotalNumberChannels>' + blockette.number_of_channels + '</fsx:TotalNumberChannels>'])
+			appendToFile(3, ['<fsx:SelectedNumberChannels>' + blockette.number_of_channels + '</fsx:SelectedNumberChannels>'])
+	# # b50sd = []
+	# # latitude = ''
+	# # longitude = ''
+	# # elevation = ''
+	# # channelCount = ''
+	# for blockette in dataless:
+	# 	if blockette.id == 50:
+	# 		# if blockette.end_effective_date - UTCDateTime(now) > 0:
+	# 		# 	#checks if the current station epoch is open, if so, set to True
+	# 		# 	isOpenStationEpoch = True
+	# 		# else:
+	# 		# 	#if not, set to False. This prevents subsequent closed epochs from being written to xml
+	# 		# 	isOpenStationEpoch = False
+	# 		if isOpenStationEpoch:
+	# 			if blockette.id == 50:
+	# 				b50sd.append(blockette.start_effective_date)
+	# 				latitude = str(blockette.latitude)
+	# 				longitude = str(blockette.longitude)
+	# 				elevation = str(blockette.elevation)
+	# 				channelCount = str(blockette.number_of_channels)
 
 
 def stationStartDate(dataless):
