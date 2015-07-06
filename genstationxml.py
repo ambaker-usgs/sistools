@@ -128,14 +128,20 @@ def processIntro(dataless):
 			appendToFile(3, ['<fsx:Latitude>' + str(blockette.latitude) + '</fsx:Latitude>'])
 			appendToFile(3, ['<fsx:Longitude>' + str(blockette.longitude) + '</fsx:Longitude>'])
 			appendToFile(3, ['<fsx:Elevation>' + str(blockette.elevation) + '</fsx:Elevation>'])
-			network, station, name, description, region, country = fetchNetStaInfo(blockette).split('|')
+			network, station, name, description, town, region = fetchNetStaInfo(blockette).split('|')
 			print fetchNetStaInfo(blockette).split('|')
 			appendToFile(3, ['<fsx:Site>'])
-			appendToFile(4, ['<fsx:Name>' + '</fsx:Name>'])
-			appendToFile(4, ['<fsx:Description>' + '</fsx:Description>'])
-			appendToFile(4, ['<fsx:Town>' + '</fsx:Town>'])
-			appendToFile(4, ['<fsx:Region>' + '</fsx:Region>'])
+			appendToFile(4, ['<fsx:Name>' + name + '</fsx:Name>'])
+			appendToFile(4, ['<fsx:Description>' + description + '</fsx:Description>'])
+			appendToFile(4, ['<fsx:Town>' + town + '</fsx:Town>'])
+			appendToFile(4, ['<fsx:Region>' + region + '</fsx:Region>'])
 			appendToFile(3, ['</fsx:Site>'])
+			appendToFile(3, ['<fsx:Operator>'])
+			appendToFile(4, ['<fsx:Agency>' + sisinfo.agency() + '</fsx:Agency>'])
+			appendToFile(3, ['</fsx:Operator>'])
+			appendToFile(3, ['<fsx:CreationDate>' + stationStartDate(dataless) + '</fsx:CreationDate>'])
+			appendToFile(3, ['<fsx:TotalNumberChannels>' + channelCount + '</fsx:TotalNumberChannels>'])
+			appendToFile(3, ['<fsx:SelectedNumberChannels>' + channelCount + '</fsx:SelectedNumberChannels>'])
 			print 'Sassafrass'
 	# b50sd = []
 	# latitude = ''
@@ -157,12 +163,7 @@ def processIntro(dataless):
 					longitude = str(blockette.longitude)
 					elevation = str(blockette.elevation)
 					channelCount = str(blockette.number_of_channels)
-	appendToFile(3, ['<fsx:Operator>'])
-	appendToFile(4, ['<fsx:Agency>' + sisinfo.agency() + '</fsx:Agency>'])
-	appendToFile(3, ['</fsx:Operator>'])
-	appendToFile(3, ['<fsx:CreationDate>' + str(min(b50sd)) + '</fsx:CreationDate>'])
-	appendToFile(3, ['<fsx:TotalNumberChannels>' + channelCount + '</fsx:TotalNumberChannels>'])
-	appendToFile(3, ['<fsx:SelectedNumberChannels>' + channelCount + '</fsx:SelectedNumberChannels>'])
+
 
 def stationStartDate(dataless):
 	#returns the earliest start_effective_date
