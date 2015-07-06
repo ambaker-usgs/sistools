@@ -125,15 +125,23 @@ def processIntro(dataless):
 			appendToFile(2, ['<fsx:TotalNumberStations>' + netstaCount + '</fsx:TotalNumberStations>'])
 			appendToFile(2, ['<fsx:SelectedNumberStations>1</fsx:SelectedNumberStations>'])
 			appendToFile(2, ['<fsx:Station xsi:type="sis:StationType" code="' + blockette.station_call_letters + '" startDate="' + stationStartDate(dataless) + '">'])
-			appendToFile(3, ['<fsx:Latitude>' + latitude + '</fsx:Latitude>'])
-			appendToFile(3, ['<fsx:Longitude>' + longitude + '</fsx:Longitude>'])
-			appendToFile(3, ['<fsx:Elevation>' + elevation + '</fsx:Elevation>'])
+			appendToFile(3, ['<fsx:Latitude>' + blockette.latitude + '</fsx:Latitude>'])
+			appendToFile(3, ['<fsx:Longitude>' + blockette.longitude + '</fsx:Longitude>'])
+			appendToFile(3, ['<fsx:Elevation>' + blockette.elevation + '</fsx:Elevation>'])
+			network, station, name, description, region, country = fetchNetStaInfo(blockette).split('|')
+			print fetchNetStaInfo(blockette).split('|')
+			appendToFile(3, ['<fsx:Site>'])
+			appendToFile(4, ['<fsx:Name>' + '</fsx:Name>'])
+			appendToFile(4, ['<fsx:Description>' + '</fsx:Description>'])
+			appendToFile(4, ['<fsx:Town>' + '</fsx:Town>'])
+			appendToFile(4, ['<fsx:Region>' + '</fsx:Region>'])
+			appendToFile(3, ['</fsx:Site>'])
 			print 'Sassafrass'
-	b50sd = []
-	latitude = ''
-	longitude = ''
-	elevation = ''
-	channelCount = ''
+	# b50sd = []
+	# latitude = ''
+	# longitude = ''
+	# elevation = ''
+	# channelCount = ''
 	for blockette in dataless:
 		if blockette.id == 50:
 			# if blockette.end_effective_date - UTCDateTime(now) > 0:
@@ -149,12 +157,6 @@ def processIntro(dataless):
 					longitude = str(blockette.longitude)
 					elevation = str(blockette.elevation)
 					channelCount = str(blockette.number_of_channels)
-	appendToFile(3, ['<fsx:Site>'])
-	appendToFile(4, ['<fsx:Name>' + '</fsx:Name>'])
-	appendToFile(4, ['<fsx:Description>' + '</fsx:Description>'])
-	appendToFile(4, ['<fsx:Town>' + '</fsx:Town>'])
-	appendToFile(4, ['<fsx:Region>' + '</fsx:Region>'])
-	appendToFile(3, ['</fsx:Site>'])
 	appendToFile(3, ['<fsx:Operator>'])
 	appendToFile(4, ['<fsx:Agency>' + sisinfo.agency() + '</fsx:Agency>'])
 	appendToFile(3, ['</fsx:Operator>'])
@@ -201,6 +203,15 @@ def getLegendEntry():
 	for entry in legend:
 		if net in entry:
 			return entry.strip()
+
+def fetchNetStaInfo(blkt):
+	#fetches the info required for the Site tag
+	fob = open('netstainfo.txt', 'r')
+	contents = fob.read().split('\n')
+	fob.close()
+	for entry in contents:
+		if blockette.network_code and blockette.station_call_letters in entry:
+			return entry
 
 def addLegendEntry(network, description, stationCount):
 	#adds the legend entry to networklegend.txt
