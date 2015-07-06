@@ -140,8 +140,8 @@ def processIntro(dataless):
 			appendToFile(4, ['<fsx:Agency>' + sisinfo.agency() + '</fsx:Agency>'])
 			appendToFile(3, ['</fsx:Operator>'])
 			appendToFile(3, ['<fsx:CreationDate>' + stationStartDate(dataless) + '</fsx:CreationDate>'])
-			appendToFile(3, ['<fsx:TotalNumberChannels>' + blockette.number_of_channels + '</fsx:TotalNumberChannels>'])
-			appendToFile(3, ['<fsx:SelectedNumberChannels>' + blockette.number_of_channels + '</fsx:SelectedNumberChannels>'])
+			appendToFile(3, ['<fsx:TotalNumberChannels>' + str(blockette.number_of_channels) + '</fsx:TotalNumberChannels>'])
+			appendToFile(3, ['<fsx:SelectedNumberChannels>' + str(blockette.number_of_channels) + '</fsx:SelectedNumberChannels>'])
 	# # b50sd = []
 	# # latitude = ''
 	# # longitude = ''
