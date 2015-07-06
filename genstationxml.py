@@ -120,7 +120,6 @@ def processIntro(dataless):
 			appendToFile(1, ['<fsx:Created>' + str(UTCDateTime(now)) + '</fsx:Created>'])
 			appendToFile(1, ['<fsx:Network code="' + blockette.network_code + '">'])
 			network, description, netstaCount = fetchLegendEntry().split('|')
-			print network, description, netstaCount
 			appendToFile(2, ['<fsx:Description>' + description + '</fsx:Description>'])
 			appendToFile(2, ['<fsx:TotalNumberStations>' + netstaCount + '</fsx:TotalNumberStations>'])
 			appendToFile(2, ['<fsx:SelectedNumberStations>1</fsx:SelectedNumberStations>'])
@@ -129,7 +128,6 @@ def processIntro(dataless):
 			appendToFile(3, ['<fsx:Longitude>' + str(blockette.longitude) + '</fsx:Longitude>'])
 			appendToFile(3, ['<fsx:Elevation>' + str(blockette.elevation) + '</fsx:Elevation>'])
 			network, station, name, description, town, region = fetchNetStaInfo(blockette).split('|')
-			print fetchNetStaInfo(blockette).split('|')
 			appendToFile(3, ['<fsx:Site>'])
 			appendToFile(4, ['<fsx:Name>' + name + '</fsx:Name>'])
 			appendToFile(4, ['<fsx:Description>' + description + '</fsx:Description>'])
