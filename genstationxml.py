@@ -210,7 +210,7 @@ def fetchNetStaInfo(blkt):
 	contents = fob.read().split('\n')
 	fob.close()
 	for entry in contents:
-		if blockette.network_code and blockette.station_call_letters in entry:
+		if blkt.network_code and blkt.station_call_letters in entry:
 			return entry
 
 def addLegendEntry(network, description, stationCount):
