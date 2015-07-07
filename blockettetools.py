@@ -315,3 +315,10 @@ def blockette62(blockette):
 	blkt['polynomial coefficient'] = blockette.polynomial_coefficient
 	blkt['polynomial coefficient error'] = blockette.polynomial_coefficient_error
 	return blkt
+
+def describeChannelFlags(flags):
+	channelFlag = []
+	dictionary = {'T': 'Triggered', 'C': 'Continuous', 'H': 'State of Health', 'G': 'Geophysical', 'W': 'Weather (or Environmental Data)', 'F': 'Flag Information', 'S': 'Synthesized Data', 'I': 'Calibration Input', 'E': 'Experimental (or Temporary)', 'M': 'Maintenance Tests', 'B': 'Beam Synthesis'}
+	for flag in flags:
+		channelFlag.append(dictionary[flag])
+	return ' '.join(channelFlag)
