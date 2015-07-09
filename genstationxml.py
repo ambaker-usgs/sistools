@@ -226,6 +226,7 @@ def appendToFile(tabCount, contents):
 	fob.close()
 
 def processChannel(dataless):
+	print 'SASSFARASS', netsta
 	#isOpenStationEpoch refers to having found the open epoch
 	isOpenStationEpoch = False
 	#processes and writes to file the channel xml to the output file
@@ -238,7 +239,6 @@ def processChannel(dataless):
 				#if not, set to False. This prevents subsequent closed epochs from being written to xml
 				isOpenStationEpoch = False
 		if isOpenStationEpoch:
-			print blockette.id
 			if blockette.id == 52:
 				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + blockette.channel_identifier + '" startDate="' + str(blockette.start_date) + '" locationCode="' + blockette.location_identifier + '">'])
 				appendToFile(3, ['<fsx:Comment>'])
