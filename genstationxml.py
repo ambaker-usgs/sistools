@@ -226,7 +226,7 @@ def appendToFile(tabCount, contents):
 	fob.close()
 
 def processChannel(dataless):
-	print 'SASSFARASS', netsta
+	print 'SASSFARASS', '_'.join([net,sta])
 	#isOpenStationEpoch refers to having found the open epoch
 	isOpenStationEpoch = False
 	#processes and writes to file the channel xml to the output file
