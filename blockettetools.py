@@ -23,6 +23,17 @@ def skeleton50():
 	blkt['network code'] = ''
 	return blkt
 
+def skeleton51(blockette):
+	blkt = {}
+	blkt['description'] = 'Station Comment Blockette'
+	blkt['blockette type'] = 0
+	blkt['length of blockette'] = 0
+	blkt['beginning effective time'] = UTCDateTime(1985, 1, 16, 0, 0)
+	blkt['end effective time'] = UTCDateTime(2599, 12, 31, 23, 59, 59)
+	blkt['comment code key'] = 0
+	blkt['comment level'] = 0
+	return blkt
+
 def skeleton52():
 	blkt = {}
 	blkt['description'] = 'Channel Identifier Blockette'
@@ -186,6 +197,17 @@ def blockette50(blockette):
 	blkt['network code'] = blockette.network_code
 	return blkt
 
+def blockette51(blockette):
+	blkt = {}
+	blkt['description'] = 'Station Comment Blockette'
+	blkt['blockette type'] = blockette.blockette_type
+	blkt['length of blockette'] = blockette.length_of_blockette
+	blkt['beginning effective time'] = blockette.beginning_effective_time
+	blkt['end effective time'] = blockette.end_effective_time
+	blkt['comment code key'] = blockette.comment_code_key
+	blkt['comment level'] = blockette.comment_level
+	return blkt
+
 def blockette52(blockette):
 	blkt = {}
 	blkt['description'] = 'Channel Identifier Blockette'
@@ -317,8 +339,41 @@ def blockette62(blockette):
 	return blkt
 
 def describeChannelFlags(flags):
+	#for describing the channel flags of blockette 52
 	channelFlag = []
 	dictionary = {'T': 'Triggered', 'C': 'Continuous', 'H': 'State of Health', 'G': 'Geophysical', 'W': 'Weather (or Environmental Data)', 'F': 'Flag Information', 'S': 'Synthesized Data', 'I': 'Calibration Input', 'E': 'Experimental (or Temporary)', 'M': 'Maintenance Tests', 'B': 'Beam Synthesis'}
 	for flag in flags:
 		channelFlag.append(dictionary[flag])
 	return ' '.join(channelFlag)
+
+def describeTransferFunctionType(value):
+	#for describing the transfer function type of blockette 53
+	if value == 'A':
+		return 'Laplace (radians/second)'.upper()
+	elif value == 'B':
+		return 'Analog (Hertz)'.upper()
+	elif value == 'C':
+		return 'Composite'.upper()
+	elif value == 'D':
+		return 'Digital (Z-Transform)'.upper()
+	else:
+		return 'Undefined'.upper()
+
+def describeResponseType(value):
+	#for describing the response type of blockette 54
+	if value == 'A':
+		return 'Laplace (radians/second)'.upper()
+	elif value == 'B':
+		return 'Analog (Hertz)'.upper()
+	elif value == 'C':
+		return 'Composite'.upper()
+	elif value == 'D':
+		return 'Digital (Z-Transform)'.upper()
+	else:
+		return 'Undefined'.upper()
+
+def describeTransferFunctionType(value):
+	if value == 'A':
+		return 'Laplace (radians/second)'.upper()
+	elif value == 'B':
+		return 'Analog (Hertz)'.upper()
