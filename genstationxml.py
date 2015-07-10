@@ -225,7 +225,8 @@ def appendToFile(tabCount, contents):
 	fob.close()
 
 def processChannels(dataless):
-	print 'sASSAFRass', netsta
+	netsta = net + sta
+	print 'SASSFARS', netsta
 	channels = blockettetools.getChannels(dataless, now)
 	dictB031, dictB033, dictB034 = getDictionaries(netsta)
 	for channel in channel:
