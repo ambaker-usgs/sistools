@@ -78,7 +78,7 @@ def parseStationDataless(parsedDataless):
 def processDataless(dataless):
 	initializeOutputFile()
 	processIntro(dataless)
-	processChannel(dataless)
+	processChannels(dataless)
 	# processOutro(dataless)
 
 def initializeOutputFile():
@@ -224,6 +224,13 @@ def appendToFile(tabCount, contents):
 		fob.write(indent * tabCount + line + '\n')
 	fob.close()
 
+def processChannels(dataless):
+	print 'sASSAFRass', netsta
+	channels = blockettetools.getChannels(dataless, now)
+	dictB031, dictB033, dictB034 = getDictionaries(netsta)
+	for channel in channel:
+		
+
 def processChannel(dataless):
 	#isOpenStationEpoch refers to having found the open epoch
 	isOpenStationEpoch = False
@@ -238,11 +245,25 @@ def processChannel(dataless):
 				isOpenStationEpoch = False
 		if isOpenStationEpoch:
 			dict031, dict033, dict034 = getDictionaries(net, sta)
+			channels = getChannels(dataless, now)
 			if blockette.id == 52:
-				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + blockette.channel_identifier + '" startDate="' + str(blockette.start_date) + '" locationCode="' + blockette.location_identifier + '">'])
+				loc = blockette.location_identifier
+				chan = blockette.channel_identifier
+				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + chan + '" startDate="' + str(blockette.start_date) + '" locationCode="' + loc + '">'])
 				appendToFile(3, ['<fsx:Comment>'])
-				appendToFile(4, ['<fsx:Value>' + fetchChannelCommentValue(blockette.location_identifier, blockette.channel_identifier, now, dataless) + '</fsx:Value>'])
-				appendToFile(4, ['<fsx:BeginEffectiveTime>' +  '</fsx:BeginEffectiveTime>'])
+				appendToFile(4, ['<fsx:Value>' + fetchChannelCommentValue(loc, chan, now, dataless) + '</fsx:Value>'])
+				appendToFile(4, ['<fsx:BeginEffectiveTime>' + fetchChannelCommentValueTime(, now) +  '</fsx:BeginEffectiveTime>'])
+				appendToFile(4, ['<fsx:EndEffectiveTime>' + '</fsx:EndEffectiveTime>'])
+				appendToFile(4, ['<fsx:Author>'])
+				appendToFile(5, ['<fsx:Name>' + '</fsx:Name>'])
+				appendToFile(4, ['</fsx:Author>'])
+				appendToFile(3, ['</fsx:Comment>'])
+			
+			if blockette.id == 52:
+				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + chan + '" startDate="' + str(blockette.start_date) + '" locationCode="' + loc + '">'])
+				appendToFile(3, ['<fsx:Comment>'])
+				appendToFile(4, ['<fsx:Value>' + fetchChannelCommentValue(loc, chan, now, dataless) + '</fsx:Value>'])
+				appendToFile(4, ['<fsx:BeginEffectiveTime>' + fetchChannelCommentValueTime('begin', now) +  '</fsx:BeginEffectiveTime>'])
 				appendToFile(4, ['<fsx:EndEffectiveTime>' + '</fsx:EndEffectiveTime>'])
 				appendToFile(4, ['<fsx:Author>'])
 				appendToFile(5, ['<fsx:Name>' + '</fsx:Name>'])
@@ -385,6 +406,9 @@ def fetchChannelCommentValue(dictionary, value):
 	for channelComment in dictionary:
 		if channelComment['comment code id'] == value:
 			return channelComment['comment text']
+
+def fetchChannelCommentValueTime(time):
+	for 
 
 def processOutro(dataless):
 	appendToFile(3, ['<sis:DatumVertical>' + 'WGS84' + '</sis:DatumVertical>'])
