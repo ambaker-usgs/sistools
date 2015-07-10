@@ -408,8 +408,8 @@ def fetchChannelCommentValue(dictionary, value):
 		if channelComment['comment code id'] == value:
 			return channelComment['comment text']
 
-def fetchChannelCommentValueTime(time):
-	for 
+# def fetchChannelCommentValueTime(time):
+# 	for
 
 def processOutro(dataless):
 	appendToFile(3, ['<sis:DatumVertical>' + 'WGS84' + '</sis:DatumVertical>'])
