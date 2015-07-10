@@ -226,7 +226,6 @@ def appendToFile(tabCount, contents):
 	fob.close()
 
 def processChannel(dataless):
-	print 'SASSFARASS', '_'.join([net,sta])
 	#isOpenStationEpoch refers to having found the open epoch
 	isOpenStationEpoch = False
 	#processes and writes to file the channel xml to the output file
@@ -239,6 +238,7 @@ def processChannel(dataless):
 				#if not, set to False. This prevents subsequent closed epochs from being written to xml
 				isOpenStationEpoch = False
 		if isOpenStationEpoch:
+			dict031, dict033, dict034 = getDictionaries(net, sta)
 			if blockette.id == 52:
 				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + blockette.channel_identifier + '" startDate="' + str(blockette.start_date) + '" locationCode="' + blockette.location_identifier + '">'])
 				appendToFile(3, ['<fsx:Comment>'])
@@ -314,6 +314,77 @@ def processChannel(dataless):
 			if blockette.id == 58:
 				# appendToFile(4, [''])
 				x = 0
+
+def getDictionaries(netsta):
+	net = netsta[:2]
+	sta = netsta[2:]
+	b031, b033, b034 = parseRDSEEDAbbreviations(commands.getstatusoutput(formRDSEEDCommand(net,sta))[-1])
+	return b031, b033, b034
+
+def formRDSEEDCommand(netsta):
+	netsta = netsta[:2] + '_' + netsta[2:]
+	path = ''
+	if os.path.exists('/xs0/seed/' + netsta):
+		path = '/xs0/seed/' + netsta
+	elif os.path.exists('/xs1/seed/' + netsta):
+		path = '/xs1/seed/' + netsta
+	else:
+		print 'No station ' + netsta + ' found. Please check again.'
+	path = globMostRecent(globMostRecent(path))
+	if os.path.exists(path + '/00_LHZ.512.seed'):
+		return 'rdseed -f ' + path + '/00_LHZ.512.seed -g /APPS/metadata/SEED/' + net.upper() + '.dataless -a'
+	else:
+		print 'No suitable channel found (fomRDSEEDCommand())'
+	
+def globMostRecent(filepath):
+	paths = glob.glob(filepath + '/*')
+	pathsTemp = []
+	for path in paths:
+		if len(path.split('/')[-1]) <= 16 and 'SAVE' not in path:
+			pathsTemp.append(path)
+	return max(pathsTemp)
+
+def parseRDSEEDAbbreviations(output):
+	b031 = []
+	b033 = []
+	b034 = []
+	for group in output.split('#\t\t\n'):
+		if 'B031' == group[:4]:
+			dictionary = {}
+			for line in group.strip().split('\n'):
+				if 'B031F03' in line:
+					dictionary['Comment code id'] = int(line.split('  ')[-1].strip())
+				elif 'B031F04' in line:
+					dictionary['Comment class code'] = line.split('  ')[-1].strip()
+				elif 'B031F05' in line:
+					dictionary['Comment text'] = line.split('  ')[-1].strip()
+				elif 'B031F06' in line:
+					dictionary['Comment units'] = line.split('  ')[-1].strip()
+			b031.append(dictionary)
+		elif 'B033' == group[:4]:
+			dictionary = {}
+			for line in group.strip().split('\n'):
+				if 'B033F03' in line:
+					dictionary['Description key code'] = int(line.split('  ')[-1].strip())
+				elif 'B033F04' in line:
+					dictionary['Abbreviation description'] = line.split('  ')[-1].strip()
+			b033.append(dictionary)
+		elif 'B034' == group[:4]:
+			dictionary = {}
+			for line in group.strip().split('\n'):
+				if 'B034F03' in line:
+					dictionary['Unit code'] = int(line.split('  ')[-1].strip())
+				elif 'B034F04' in line:
+					dictionary['Unit name'] = line.split('  ')[-1].strip()
+				elif 'B034F05' in line:
+					dictionary['Unit description'] = line.split('  ')[-1].strip()
+			b034.append(dictionary)
+	return b031, b033, b034
+
+def fetchChannelCommentValue(b031, value):
+	for channelComment in b031:
+		if channelComment['Comment code id'] == value:
+			return channelComment['Comment text']
 
 def processOutro(dataless):
 	appendToFile(3, ['<sis:DatumVertical>' + 'WGS84' + '</sis:DatumVertical>'])
