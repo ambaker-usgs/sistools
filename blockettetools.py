@@ -159,22 +159,26 @@ def skeleton62():
 
 def parseBlockette(blockette):
 	blkt = {}
-	if blockette.id == 50:
+	if   blockette.id == 50:
 		return blockette50(blockette)
-	if blockette.id == 52:
+	elif blockette.id == 51:
+		return blockette51(blockette)
+	elif blockette.id == 52:
 		return blockette52(blockette)
-	if blockette.id == 53:
+	elif blockette.id == 53:
 		return blockette53(blockette)
-	if blockette.id == 54:
+	elif blockette.id == 54:
 		return blockette54(blockette)
-	if blockette.id == 57:
+	elif blockette.id == 57:
 		return blockette57(blockette)
-	if blockette.id == 58:
+	elif blockette.id == 58:
 		return blockette58(blockette)
-	if blockette.id == 59:
+	elif blockette.id == 59:
 		return blockette59(blockette)
-	if blockette.id == 62:
+	elif blockette.id == 62:
 		return blockette62(blockette)
+	else:
+		print 'Invalid blockette or blockette not supported'
 
 def blockette50(blockette):
 	blkt = {}
