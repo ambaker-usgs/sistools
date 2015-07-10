@@ -381,3 +381,15 @@ def describeTransferFunctionType(value):
 		return 'Laplace (radians/second)'.upper()
 	elif value == 'B':
 		return 'Analog (Hertz)'.upper()
+
+def getChannel(loc, chan, blockettes):
+	channel = []
+	specifiedChannel = False
+	for blockette in blockettes:
+		if blockette.id == 52 and blockette.location_identifier == loc and blockette.channel_identifier == chan:
+			specifiedChannel = True
+		elif blockette.id == 52 and blockette.location_identifier != loc and blockette.channel_identifier != chan:
+			specifiedChannel = False
+		if specifiedChannel:
+			channel.append(blockette)
+	return channel
