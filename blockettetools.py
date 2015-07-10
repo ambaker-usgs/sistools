@@ -388,7 +388,7 @@ def getChannel(loc, chan, time, blockettes):
 	for blockette in blockettes:
 		if blockette.id == 52 and blockette.location_identifier == loc and blockette.channel_identifier == chan and blockette.start_date <= time <= blockette.end_date:
 			specifiedChannel = True
-		elif blockette.id == 52 and blockette.location_identifier != loc and blockette.channel_identifier != chan and not blockette.start_date <= time <= blockette.end_date:
+		elif blockette.id == 52 and (blockette.location_identifier != loc or blockette.channel_identifier != chan or not blockette.start_date <= time <= blockette.end_date):
 			specifiedChannel = False
 		if specifiedChannel:
 			channel.append(blockette)
