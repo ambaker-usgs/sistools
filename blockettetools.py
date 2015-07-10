@@ -313,7 +313,7 @@ def blockette59(blockette):
 	blkt = {}
 	blkt['description'] = 'Channel Comment Blockette'
 	blkt['blockette type'] = blockette.blockette_type
-	blkt['blockette type'] = blockette.length_of_blockette
+	blkt['length of blockette'] = blockette.length_of_blockette
 	try:
 		blkt['beginning effective time'] = blockette.beginning_effective_time
 	except:
@@ -386,10 +386,11 @@ def getChannel(loc, chan, time, blockettes):
 	channel = []
 	specifiedChannel = False
 	for blockette in blockettes:
-		if blockette.id == 52 and blockette.location_identifier == loc and blockette.channel_identifier == chan and blockette.start_date <= time <= blockette.end_date:
-			specifiedChannel = True
-		elif blockette.id == 52 and (blockette.location_identifier != loc or blockette.channel_identifier != chan or not blockette.start_date <= time <= blockette.end_date):
-			specifiedChannel = False
+		if blockette.id == 52:
+			if blockette.location_identifier == loc and blockette.channel_identifier == chan and blockette.start_date <= time <= blockette.end_date:
+				specifiedChannel = True
+			else:
+				specifiedChannel = False
 		if specifiedChannel:
 			channel.append(blockette)
 	return channel
