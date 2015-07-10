@@ -382,13 +382,13 @@ def describeTransferFunctionType(value):
 	elif value == 'B':
 		return 'Analog (Hertz)'.upper()
 
-def getChannel(loc, chan, blockettes):
+def getChannel(loc, chan, time, blockettes):
 	channel = []
 	specifiedChannel = False
 	for blockette in blockettes:
-		if blockette.id == 52 and blockette.location_identifier == loc and blockette.channel_identifier == chan:
+		if blockette.id == 52 and blockette.location_identifier == loc and blockette.channel_identifier == chan and blockette.start_date <= time <= blockette.end_date:
 			specifiedChannel = True
-		elif blockette.id == 52 and blockette.location_identifier != loc and blockette.channel_identifier != chan:
+		elif blockette.id == 52 and blockette.location_identifier != loc and blockette.channel_identifier != chan and not blockette.start_date <= time <= blockette.end_date:
 			specifiedChannel = False
 		if specifiedChannel:
 			channel.append(blockette)
