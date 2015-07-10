@@ -229,6 +229,7 @@ def processChannels(dataless):
 	channels = blockettetools.getChannels(dataless, now)
 	dictB031, dictB033, dictB034 = getDictionaries(netsta)
 	for channel in channel:
+		x = 0
 		
 
 def processChannel(dataless):
