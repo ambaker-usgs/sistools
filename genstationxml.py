@@ -9,7 +9,6 @@
 
 import argparse
 import datalesstools
-import datetime
 import glob
 import isvalidnetsta
 import os
@@ -23,7 +22,7 @@ source = 'USGS/Albuquerque Seismological Laboratory'
 indent = '\t'
 debug = True
 
-now = datetime.datetime.today()
+now = UTCDateTime.now()
 
 def getArguments():
 	#This function parses the command line arguments
@@ -112,7 +111,7 @@ def processIntro(dataless):
 	#processes the start of the xml file, mostly dealing with blockette 50 of the dataless
 	isOpenStationEpoch = False
 	for blockette in dataless:
-		if blockette.id == 50 and blockette.start_effective_date <= UTCDateTime(now) <= blockette.end_effective_date:
+		if blockette.id == 50 and blockette.start_effective_date <= now <= blockette.end_effective_date:
 			preamble = ['<?xml version="1.0" ?>','<fsx:FDSNStationXML xsi:type="sis:RootType" schemaVersion="2.0" sis:schemaLocation="http://anss-sis.scsn.org/xml/ext-stationxml/2.0 http://anss-sis.scsn.org/xml/ext-stationxml/2.0/sis_extension.xsd" xmlns:fsx="http://www.fdsn.org/xml/station/1" xmlns:sis="http://anss-sis.scsn.org/xml/ext-stationxml/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">']
 			appendToFile(0, preamble)
 			appendToFile(1, ['<fsx:Source>' + sisinfo.source() + '</fsx:Source>'])
@@ -231,7 +230,7 @@ def processChannel(dataless):
 	#processes and writes to file the channel xml to the output file
 	for blockette in dataless:
 		if blockette.id == 50:
-			if blockette.end_effective_date - UTCDateTime(now) > 0:
+			if blockette.end_effective_date - now > 0:
 				#checks if the current station epoch is open, if so, set to True
 				isOpenStationEpoch = True
 			else:
@@ -242,8 +241,8 @@ def processChannel(dataless):
 			if blockette.id == 52:
 				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + blockette.channel_identifier + '" startDate="' + str(blockette.start_date) + '" locationCode="' + blockette.location_identifier + '">'])
 				appendToFile(3, ['<fsx:Comment>'])
-				appendToFile(4, ['<fsx:Value>' + '</fsx:Value>'])
-				appendToFile(4, ['<fsx:BeginEffectiveTime>' + '</fsx:BeginEffectiveTime>'])
+				appendToFile(4, ['<fsx:Value>' + fetchChannelCommentValue(blockette.location_identifier, blockette.channel_identifier, now, dataless) + '</fsx:Value>'])
+				appendToFile(4, ['<fsx:BeginEffectiveTime>' +  '</fsx:BeginEffectiveTime>'])
 				appendToFile(4, ['<fsx:EndEffectiveTime>' + '</fsx:EndEffectiveTime>'])
 				appendToFile(4, ['<fsx:Author>'])
 				appendToFile(5, ['<fsx:Name>' + '</fsx:Name>'])
@@ -353,38 +352,39 @@ def parseRDSEEDAbbreviations(output):
 			dictionary = {}
 			for line in group.strip().split('\n'):
 				if 'B031F03' in line:
-					dictionary['Comment code id'] = int(line.split('  ')[-1].strip())
+					dictionary['comment code id'] = int(line.split('  ')[-1].strip())
 				elif 'B031F04' in line:
-					dictionary['Comment class code'] = line.split('  ')[-1].strip()
+					dictionary['comment class code'] = line.split('  ')[-1].strip()
 				elif 'B031F05' in line:
-					dictionary['Comment text'] = line.split('  ')[-1].strip()
+					dictionary['comment text'] = line.split('  ')[-1].strip()
 				elif 'B031F06' in line:
-					dictionary['Comment units'] = line.split('  ')[-1].strip()
+					dictionary['comment units'] = line.split('  ')[-1].strip()
 			b031.append(dictionary)
 		elif 'B033' == group[:4]:
 			dictionary = {}
 			for line in group.strip().split('\n'):
 				if 'B033F03' in line:
-					dictionary['Description key code'] = int(line.split('  ')[-1].strip())
+					dictionary['description key code'] = int(line.split('  ')[-1].strip())
 				elif 'B033F04' in line:
-					dictionary['Abbreviation description'] = line.split('  ')[-1].strip()
+					dictionary['abbreviation description'] = line.split('  ')[-1].strip()
 			b033.append(dictionary)
 		elif 'B034' == group[:4]:
 			dictionary = {}
 			for line in group.strip().split('\n'):
 				if 'B034F03' in line:
-					dictionary['Unit code'] = int(line.split('  ')[-1].strip())
+					dictionary['unit code'] = int(line.split('  ')[-1].strip())
 				elif 'B034F04' in line:
-					dictionary['Unit name'] = line.split('  ')[-1].strip()
+					dictionary['unit name'] = line.split('  ')[-1].strip()
 				elif 'B034F05' in line:
-					dictionary['Unit description'] = line.split('  ')[-1].strip()
+					dictionary['unit description'] = line.split('  ')[-1].strip()
 			b034.append(dictionary)
 	return b031, b033, b034
 
-def fetchChannelCommentValue(b031, value):
-	for channelComment in b031:
-		if channelComment['Comment code id'] == value:
-			return channelComment['Comment text']
+def fetchChannelCommentValue(dictionary, value):
+	#blockette 31
+	for channelComment in dictionary:
+		if channelComment['comment code id'] == value:
+			return channelComment['comment text']
 
 def processOutro(dataless):
 	appendToFile(3, ['<sis:DatumVertical>' + 'WGS84' + '</sis:DatumVertical>'])
@@ -421,4 +421,4 @@ if isvalidnetsta.isValidNetSta(net, sta):
 else:
 	print 'Network and station found to not be valid (isvalidnetsta.py)'
 
-print 'Process lasted', (datetime.datetime.today() - now).seconds, 'seconds'
+print 'Process lasted', int((UTCDateTime.now() - now) / 60), 'seconds'
