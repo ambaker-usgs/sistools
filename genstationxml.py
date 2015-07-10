@@ -253,7 +253,7 @@ def processChannel(dataless):
 				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + chan + '" startDate="' + str(blockette.start_date) + '" locationCode="' + loc + '">'])
 				appendToFile(3, ['<fsx:Comment>'])
 				appendToFile(4, ['<fsx:Value>' + fetchChannelCommentValue(loc, chan, now, dataless) + '</fsx:Value>'])
-				appendToFile(4, ['<fsx:BeginEffectiveTime>' + fetchChannelCommentValueTime(, now) +  '</fsx:BeginEffectiveTime>'])
+				# appendToFile(4, ['<fsx:BeginEffectiveTime>' + fetchChannelCommentValueTime(, now) +  '</fsx:BeginEffectiveTime>'])
 				appendToFile(4, ['<fsx:EndEffectiveTime>' + '</fsx:EndEffectiveTime>'])
 				appendToFile(4, ['<fsx:Author>'])
 				appendToFile(5, ['<fsx:Name>' + '</fsx:Name>'])
