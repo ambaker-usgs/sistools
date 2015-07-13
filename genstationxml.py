@@ -217,7 +217,7 @@ def processChannels(dataless):
 				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + chan + '" startDate="' + str(blockette.start_date) + '" locationCode="' + loc + '">'])
 			if blockette.id == 59:
 				appendToFile(3, ['<fsx:Comment>'])
-				appendToFile(4, ['<fsx:Value>' + fetchComments(dictB031, blockette.comment_code_key) + '</fsx:Value>'])
+				appendToFile(4, ['<fsx:Value>' + fetchComment(dictB031, blockette.comment_code_key) + '</fsx:Value>'])
 				appendToFile(4, ['<fsx:BeginEffectiveTime>' + blockette.beginning_of_effective_time +  '</fsx:BeginEffectiveTime>'])
 				appendToFile(4, ['<fsx:EndEffectiveTime>' + blockette.end_effective_time + '</fsx:EndEffectiveTime>'])
 				appendToFile(4, ['<fsx:Author>'])
@@ -234,8 +234,8 @@ def processChannels(dataless):
 				appendToFile(3, ['<fsx:SampleRate>' + str(blockette.sample_rate) + '</fsx:SampleRate>'])
 				appendToFile(3, ['<fsx:ClockDrift>' + str(blockette.max_clock_drift) + '</fsx:ClockDrift>'])
 				appendToFile(3, ['<fsx:CalibrationUnits>'])
-				appendToFile(4, ['<fsx:Name>' + fetchUnits(dictB034, blockette.units_of_calibration_input)[0] + '</fsx:Name>'])
-				appendToFile(4, ['<fsx:Description>' + fetchUnits(dictB034, blockette.units_of_calibration_input)[1] + '</fsx:Description>'])
+				appendToFile(4, ['<fsx:Name>' + fetchUnit(dictB034, blockette.units_of_calibration_input)[0] + '</fsx:Name>'])
+				appendToFile(4, ['<fsx:Description>' + fetchUnit(dictB034, blockette.units_of_calibration_input)[1] + '</fsx:Description>'])
 				appendToFile(3, ['</fsx:CalibrationUnits>'])
 		
 		
@@ -410,23 +410,26 @@ def parseRDSEEDAbbreviations(output):
 			b034.append(dictionary)
 	return b031, b033, b034
 
-def fetchChannelCommentValue(dictionary, value):
-	#blockette 31
-	for channelComment in dictionary:
-		if channelComment['comment code id'] == value:
-			return channelComment['comment text']
-
-def fetchUnits(dictB034, value):
-	#blockette 34
-	for unit in dictB034:
-		if value == unit['unit code']:
-			return [unit['unit name'], unit['unit description']]
-
-def fetchComments(dictB031, value):
+def fetchComment(dictB031, value):
 	#blockette 31
 	for comment in dictB031:
 		if value == comment['comment code id']:
 			return [comment['comment text'], comment['comment units'], comment['comment class code']]
+	return ['No comments found', 'N/A', '0']
+
+def fetchInstrument(dictB033, value):
+	#blockette 33
+	for instrument in dictB033:
+		if value == instrument['description key code']:
+			return instrument['abbreviation description']
+	return 'No instrument found'
+
+def fetchUnit(dictB034, value):
+	#blockette 34
+	for unit in dictB034:
+		if value == unit['unit code']:
+			return [unit['unit name'], unit['unit description']]
+	return ['None', 'No units found']
 
 def processOutro(dataless):
 	appendToFile(3, ['<sis:DatumVertical>' + 'WGS84' + '</sis:DatumVertical>'])
