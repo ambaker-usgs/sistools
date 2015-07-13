@@ -217,7 +217,7 @@ def processChannels(dataless):
 				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + chan + '" startDate="' + str(blockette.start_date) + '" locationCode="' + loc + '">'])
 			if blockette.id == 59:
 				appendToFile(3, ['<fsx:Comment>'])
-				appendToFile(4, ['<fsx:Value>' + fetchChannelCommentValue(dictB031, blockette.comment_code_key) + '</fsx:Value>'])
+				appendToFile(4, ['<fsx:Value>' + fetchComments(dictB031, blockette.comment_code_key) + '</fsx:Value>'])
 				appendToFile(4, ['<fsx:BeginEffectiveTime>' + blockette.beginning_of_effective_time +  '</fsx:BeginEffectiveTime>'])
 				appendToFile(4, ['<fsx:EndEffectiveTime>' + blockette.end_effective_time + '</fsx:EndEffectiveTime>'])
 				appendToFile(4, ['<fsx:Author>'])
@@ -422,7 +422,7 @@ def fetchUnits(dictB034, value):
 		if value == unit['unit code']:
 			return [unit['unit name'], unit['unit description']]
 
-def fetchUnits(dictB031, value):
+def fetchComments(dictB031, value):
 	#blockette 31
 	for comment in dictB031:
 		if value == comment['comment code id']:
