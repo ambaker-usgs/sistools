@@ -9,6 +9,7 @@
 
 import argparse
 import blockettetools
+import commands
 import datalesstools
 import glob
 import isvalidnetsta
