@@ -8,6 +8,7 @@
 ###################################################################################################
 
 import argparse
+import blockettetools
 import datalesstools
 import glob
 import isvalidnetsta
@@ -139,27 +140,6 @@ def processIntro(dataless):
 			appendToFile(3, ['<fsx:CreationDate>' + stationStartDate(dataless) + '</fsx:CreationDate>'])
 			appendToFile(3, ['<fsx:TotalNumberChannels>' + str(blockette.number_of_channels) + '</fsx:TotalNumberChannels>'])
 			appendToFile(3, ['<fsx:SelectedNumberChannels>' + str(blockette.number_of_channels) + '</fsx:SelectedNumberChannels>'])
-	# # b50sd = []
-	# # latitude = ''
-	# # longitude = ''
-	# # elevation = ''
-	# # channelCount = ''
-	# for blockette in dataless:
-	# 	if blockette.id == 50:
-	# 		# if blockette.end_effective_date - UTCDateTime(now) > 0:
-	# 		# 	#checks if the current station epoch is open, if so, set to True
-	# 		# 	isOpenStationEpoch = True
-	# 		# else:
-	# 		# 	#if not, set to False. This prevents subsequent closed epochs from being written to xml
-	# 		# 	isOpenStationEpoch = False
-	# 		if isOpenStationEpoch:
-	# 			if blockette.id == 50:
-	# 				b50sd.append(blockette.start_effective_date)
-	# 				latitude = str(blockette.latitude)
-	# 				longitude = str(blockette.longitude)
-	# 				elevation = str(blockette.elevation)
-	# 				channelCount = str(blockette.number_of_channels)
-
 
 def stationStartDate(dataless):
 	#returns the earliest start_effective_date
@@ -226,11 +206,37 @@ def appendToFile(tabCount, contents):
 
 def processChannels(dataless):
 	netsta = net + sta
-	print 'SASSFARS', netsta
 	channels = blockettetools.getChannels(dataless, now)
 	dictB031, dictB033, dictB034 = getDictionaries(netsta)
-	for channel in channel:
-		x = 0
+	for channel in channels:
+		for blockette in channel:
+			if blockette.id == 52:
+				loc = blockette.location_identifier
+				chan = blockette.channel_identifier
+				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + chan + '" startDate="' + str(blockette.start_date) + '" locationCode="' + loc + '">'])
+			if blockette.id == 59:
+				appendToFile(3, ['<fsx:Comment>'])
+				appendToFile(4, ['<fsx:Value>' + fetchChannelCommentValue(dictB031, blockette.comment_code_key) + '</fsx:Value>'])
+				appendToFile(4, ['<fsx:BeginEffectiveTime>' + blockette.beginning_of_effective_time +  '</fsx:BeginEffectiveTime>'])
+				appendToFile(4, ['<fsx:EndEffectiveTime>' + blockette.end_effective_time + '</fsx:EndEffectiveTime>'])
+				appendToFile(4, ['<fsx:Author>'])
+				appendToFile(5, ['<fsx:Name>' + 'USGS ASL RDSEED' + '</fsx:Name>'])
+				appendToFile(4, ['</fsx:Author>'])
+				appendToFile(3, ['</fsx:Comment>'])
+			if blockette.id == 52:
+				appendToFile(3, ['<fsx:Latitude>' + str(blockette.latitude) + '</fsx:Latitude>'])
+				appendToFile(3, ['<fsx:Longitude>' + str(blockette.longitude) + '</fsx:Longitude>'])
+				appendToFile(3, ['<fsx:Elevation>' + str(blockette.elevation) + '</fsx:Elevation>'])
+				appendToFile(3, ['<fsx:Depth>' + str(blockette.local_depth) + '</fsx:Depth>'])
+				appendToFile(3, ['<fsx:Azimuth>' + str(blockette.azimuth) + '</fsx:Azimuth>'])
+				appendToFile(3, ['<fsx:Dip>' + str(blockette.dip) + '</fsx:Dip>'])
+				appendToFile(3, ['<fsx:SampleRate>' + str(blockette.sample_rate) + '</fsx:SampleRate>'])
+				appendToFile(3, ['<fsx:ClockDrift>' + str(blockette.max_clock_drift) + '</fsx:ClockDrift>'])
+				appendToFile(3, ['<fsx:CalibrationUnits>'])
+				appendToFile(4, ['<fsx:Name>' + fetchUnits(dictB034, blockette.units_of_calibration_input)[0] + '</fsx:Name>'])
+				appendToFile(4, ['<fsx:Description>' + fetchUnits(dictB034, blockette.units_of_calibration_input)[1] + '</fsx:Description>'])
+				appendToFile(3, ['</fsx:CalibrationUnits>'])
+		
 		
 
 def processChannel(dataless):
@@ -340,11 +346,11 @@ def processChannel(dataless):
 def getDictionaries(netsta):
 	net = netsta[:2]
 	sta = netsta[2:]
-	b031, b033, b034 = parseRDSEEDAbbreviations(commands.getstatusoutput(formRDSEEDCommand(net,sta))[-1])
+	b031, b033, b034 = parseRDSEEDAbbreviations(commands.getstatusoutput(formRDSEEDCommand(net, sta))[-1])
 	return b031, b033, b034
 
-def formRDSEEDCommand(netsta):
-	netsta = netsta[:2] + '_' + netsta[2:]
+def formRDSEEDCommand(net, sta):
+	netsta = net + '_' + sta
 	path = ''
 	if os.path.exists('/xs0/seed/' + netsta):
 		path = '/xs0/seed/' + netsta
@@ -409,8 +415,17 @@ def fetchChannelCommentValue(dictionary, value):
 		if channelComment['comment code id'] == value:
 			return channelComment['comment text']
 
-# def fetchChannelCommentValueTime(time):
-# 	for
+def fetchUnits(dictB034, value):
+	#blockette 34
+	for unit in dictB034:
+		if value == unit['unit code']:
+			return [unit['unit name'], unit['unit description']]
+
+def fetchUnits(dictB031, value):
+	#blockette 31
+	for comment in dictB031:
+		if value == comment['comment code id']:
+			return [comment['comment text'], comment['comment units'], comment['comment class code']]
 
 def processOutro(dataless):
 	appendToFile(3, ['<sis:DatumVertical>' + 'WGS84' + '</sis:DatumVertical>'])

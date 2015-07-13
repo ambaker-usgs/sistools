@@ -314,10 +314,7 @@ def blockette59(blockette):
 	blkt['description'] = 'Channel Comment Blockette'
 	blkt['blockette type'] = blockette.blockette_type
 	blkt['length of blockette'] = blockette.length_of_blockette
-	try:
-		blkt['beginning effective time'] = blockette.beginning_effective_time
-	except:
-		blkt['beginning effective time'] = blockette.beginning_of_effective_time
+	blkt['beginning effective time'] = blockette.beginning_of_effective_time
 	blkt['end effective time'] = blockette.end_effective_time
 	blkt['comment code key'] = blockette.comment_code_key
 	blkt['comment level'] = blockette.comment_level
@@ -375,12 +372,6 @@ def describeResponseType(value):
 		return 'Digital (Z-Transform)'.upper()
 	else:
 		return 'Undefined'.upper()
-
-def describeTransferFunctionType(value):
-	if value == 'A':
-		return 'Laplace (radians/second)'.upper()
-	elif value == 'B':
-		return 'Analog (Hertz)'.upper()
 
 def getChannel(loc, chan, time, dataless):
 	channel = []
