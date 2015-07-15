@@ -345,7 +345,7 @@ def describeChannelFlags(flags):
 	dictionary = {'T': 'Triggered', 'C': 'Continuous', 'H': 'State of Health', 'G': 'Geophysical', 'W': 'Weather (or Environmental Data)', 'F': 'Flag Information', 'S': 'Synthesized Data', 'I': 'Calibration Input', 'E': 'Experimental (or Temporary)', 'M': 'Maintenance Tests', 'B': 'Beam Synthesis'}
 	for flag in flags:
 		channelFlag.append(dictionary[flag])
-	return ' '.join(channelFlag)
+	return channelFlag
 
 def describeTransferFunctionType(value):
 	#for describing the transfer function type of blockette 53
@@ -369,7 +369,7 @@ def describeResponseType(value):
 	elif value == 'C':
 		return 'Composite'.upper()
 	elif value == 'D':
-		return 'Digital (Z-Transform)'.upper()
+		return 'Digital'.upper()	#(Z-Transform)
 	else:
 		return 'Undefined'.upper()
 
