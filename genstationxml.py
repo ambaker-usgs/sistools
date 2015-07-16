@@ -543,7 +543,7 @@ if '.xml' != outputFilename[-4:]:
 	outputFilename += '.xml'
 outputFilepath = net + '/' + outputFilename
 
-dict031, dict033, dict034 = getDictionaries(net, sta)
+dict031, dict033, dict034 = getDictionaries(netsta)
 
 if isvalidnetsta.isValidNetSta(net, sta):
 	processDataless(datalesstools.getStationDataless(net + sta))
