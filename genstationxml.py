@@ -232,7 +232,7 @@ def processChannels(dataless):
 	for channel in channels:
 		for blockette in channel:			
 			if blockette.id == 52:
-				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + blockette.channel_identifier + '" startDate="' + str(blockette.start_date).split('.')[0] + '" endDate="' + blockette.str(blockette.end_date).split('.')[0] + '" locationCode="' + blockette.location_identifier + '">'])
+				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + blockette.channel_identifier + '" startDate="' + str(blockette.start_date).split('.')[0] + '" endDate="' + str(blockette.end_date).split('.')[0] + '" locationCode="' + blockette.location_identifier + '">'])
 				processChannelComments(channel)
 				appendToFile(4, ['<fsx:Latitude>' + str(blockette.latitude) + '</fsx:Latitude>'])
 				appendToFile(4, ['<fsx:Longitude>' + str(blockette.longitude) + '</fsx:Longitude>'])
