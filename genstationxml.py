@@ -267,7 +267,7 @@ def processChannels(dataless):
 					appendToFile(6, ['</fsx:OutputUnits>'])
 					appendToFile(5, ['</fsx:InstrumentSensitivity>'])
 			appendToFile(4, ['</fsx:Response>'])
-			appendToFile(3, ['</fsx:Channel>'])
+		appendToFile(3, ['</fsx:Channel>'])
 			
 			
 			# if blockette.id == 53:
