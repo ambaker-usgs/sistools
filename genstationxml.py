@@ -477,7 +477,7 @@ def parseRDSEEDAbbreviations(output):
 
 def processChannelFlags(flags):
 	for flag in blockettetools.describeChannelFlags(flags):
-		appendToFile(3, ['<Type>' + flag.upper() + '</Type>'])
+		appendToFile(4, ['<Type>' + flag.upper() + '</Type>'])
 
 def fetchComment(dictB031, value):
 	#blockette 31
