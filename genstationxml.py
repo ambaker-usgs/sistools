@@ -141,7 +141,7 @@ def processIntro(dataless):
 			appendToFile(3, ['</fsx:Operator>'])
 			appendToFile(3, ['<fsx:CreationDate>' + stationStartDate(dataless) + '</fsx:CreationDate>'])
 			appendToFile(3, ['<fsx:TotalNumberChannels>' + str(blockette.number_of_channels) + '</fsx:TotalNumberChannels>'])
-			appendToFile(3, ['<fsx:SelectedNumberChannels>' + selectedNumberChannels() + '</fsx:SelectedNumberChannels>'])
+			appendToFile(3, ['<fsx:SelectedNumberChannels>' + selectedNumberChannels(dataless) + '</fsx:SelectedNumberChannels>'])
 
 def stationStartDate(dataless):
 	#returns the earliest start_effective_date
@@ -219,7 +219,7 @@ def processStationComments(blockettes):
 			appendToFile(4, ['</fsx:Author>'])
 			appendToFile(3, ['</fsx:Comment>'])
 
-def selectedNumberChannels():
+def selectedNumberChannels(dataless):
 	channelCount = 0
 	for blockette in dataless:
 		if blockette.id == 52 and blockette.start_date <= now <= blockette.end_date:
