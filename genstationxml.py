@@ -247,7 +247,7 @@ def processChannels(dataless):
 				appendToFile(5, ['<fsx:Name>' + fetchUnit(dictB034, blockette.units_of_calibration_input)[0] + '</fsx:Name>'])
 				appendToFile(5, ['<fsx:Description>' + fetchUnit(dictB034, blockette.units_of_calibration_input)[1] + '</fsx:Description>'])
 				appendToFile(4, ['</fsx:CalibrationUnits>'])
-		if channelWithoutB062(channel):
+		if not channelWithB062(channel):
 			for blockette in channel:
 				if blockette.id == 58 and blockette.stage_sequence_number == 0:
 					appendToFile(4, ['<fsx:Response xsi:type="sis:ResponseType">'])
@@ -398,11 +398,11 @@ def fetchUnit(dictB034, value):
 			return [unit['unit name'], unit['unit description']]
 	return ['None', 'No units found']
 
-def channelWithoutB062(channel):
+def channelWithB062(channel):
 	for blockette in channel:
 		if blockette.id == 62:
-			return False
-	return True
+			return True
+	return False
 
 def processOutro(dataless):
 	# appendToFile(3, ['<sis:DatumVertical>' + 'WGS84' + '</sis:DatumVertical>'])
@@ -454,4 +454,4 @@ if isvalidnetsta.isValidNetSta(net, sta):
 else:
 	print 'Network and station found to not be valid (isvalidnetsta.py)'
 
-print 'Process lasted', int(now - (UTCDateTime.now())), 'seconds'
+print 'Process lasted', int(UTCDateTime.now() - now), 'seconds'
