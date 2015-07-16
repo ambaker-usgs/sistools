@@ -518,7 +518,7 @@ def processChannelComments(blockettes):
 	for blockette in blockettes:
 		if blockette.id == 59:
 			appendToFile(4, ['<fsx:Comment>'])
-			appendToFile(5, ['<fsx:Value>' + fetchComment(dictB031, blockette.comment_code_key) + '</fsx:Value>'])
+			appendToFile(5, ['<fsx:Value>' + fetchComment(dictB031, blockette.comment_code_key)[0] + '</fsx:Value>'])
 			appendToFile(5, ['<fsx:BeginEffectiveTime>' + blockette.beginning_of_effective_time +  '</fsx:BeginEffectiveTime>'])
 			appendToFile(5, ['<fsx:EndEffectiveTime>' + blockette.end_effective_time + '</fsx:EndEffectiveTime>'])
 			appendToFile(5, ['<fsx:Author>'])
