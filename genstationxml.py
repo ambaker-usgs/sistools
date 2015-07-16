@@ -212,7 +212,7 @@ def processStationComments(blockettes):
 		if blockette.id == 51:
 			appendToFile(3, ['<fsx:Comment>'])
 			appendToFile(4, ['<fsx:Value>' + fetchComment(dictB031, blockette.comment_code_key)[0] + '</fsx:Value>'])
-			appendToFile(4, ['<fsx:BeginEffectiveTime>' + blockette.beginning_of_effective_time +  '</fsx:BeginEffectiveTime>'])
+			appendToFile(4, ['<fsx:BeginEffectiveTime>' + blockette.beginning_effective_time +  '</fsx:BeginEffectiveTime>'])
 			appendToFile(4, ['<fsx:EndEffectiveTime>' + blockette.end_effective_time + '</fsx:EndEffectiveTime>'])
 			appendToFile(4, ['<fsx:Author>'])
 			appendToFile(5, ['<fsx:Name>' + 'USGS ASL RDSEED' + '</fsx:Name>'])
