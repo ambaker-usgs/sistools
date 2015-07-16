@@ -81,7 +81,7 @@ def processDataless(dataless):
 	initializeOutputFile()
 	processIntro(dataless)
 	processChannels(dataless)
-	# processOutro(dataless)
+	processOutro(dataless)
 
 def initializeOutputFile():
 	#initiates the output file in the network's directory
@@ -303,111 +303,6 @@ def processChannels(dataless):
 			# 	appendToFile(3, ['<sis:Clip>' + 'str(######)' + '</sis:Clip>'])
 			# 	appendToFile(3, ['<sis:PinNumber>' + str(1) + '</sis:PinNumber>'])
 			# 	appendToFile(3, ['<sis:ChannelSource>' + 'SEED' + '</sis:ChannelSource>'])
-		
-		
-
-def processChannel(dataless):
-	#isOpenStationEpoch refers to having found the open epoch
-	isOpenStationEpoch = False
-	#processes and writes to file the channel xml to the output file
-	for blockette in dataless:
-		if blockette.id == 50:
-			if blockette.end_effective_date - now > 0:
-				#checks if the current station epoch is open, if so, set to True
-				isOpenStationEpoch = True
-			else:
-				#if not, set to False. This prevents subsequent closed epochs from being written to xml
-				isOpenStationEpoch = False
-		if isOpenStationEpoch:
-			channels = getChannels(dataless, now)
-			if blockette.id == 52:
-				loc = blockette.location_identifier
-				chan = blockette.channel_identifier
-				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + chan + '" startDate="' + str(blockette.start_date) + '" locationCode="' + loc + '">'])
-				appendToFile(3, ['<fsx:Comment>'])
-				appendToFile(4, ['<fsx:Value>' + fetchChannelCommentValue(loc, chan, now, dataless) + '</fsx:Value>'])
-				# appendToFile(4, ['<fsx:BeginEffectiveTime>' + fetchChannelCommentValueTime(, now) +  '</fsx:BeginEffectiveTime>'])
-				appendToFile(4, ['<fsx:EndEffectiveTime>' + '</fsx:EndEffectiveTime>'])
-				appendToFile(4, ['<fsx:Author>'])
-				appendToFile(5, ['<fsx:Name>' + '</fsx:Name>'])
-				appendToFile(4, ['</fsx:Author>'])
-				appendToFile(3, ['</fsx:Comment>'])
-			
-			if blockette.id == 52:
-				appendToFile(3, ['<fsx:Channel xsi:type="sis:ChannelType" code="' + chan + '" startDate="' + str(blockette.start_date) + '" locationCode="' + loc + '">'])
-				appendToFile(3, ['<fsx:Comment>'])
-				appendToFile(4, ['<fsx:Value>' + fetchChannelCommentValue(loc, chan, now, dataless) + '</fsx:Value>'])
-				appendToFile(4, ['<fsx:BeginEffectiveTime>' + fetchChannelCommentValueTime('begin', now) +  '</fsx:BeginEffectiveTime>'])
-				appendToFile(4, ['<fsx:EndEffectiveTime>' + '</fsx:EndEffectiveTime>'])
-				appendToFile(4, ['<fsx:Author>'])
-				appendToFile(5, ['<fsx:Name>' + '</fsx:Name>'])
-				appendToFile(4, ['</fsx:Author>'])
-				appendToFile(3, ['</fsx:Comment>'])
-				appendToFile(3, ['<fsx:Latitude>' + str(blockette.latitude) + '</fsx:Latitude>'])
-				appendToFile(3, ['<fsx:Longitude>' + str(blockette.longitude) + '</fsx:Longitude>'])
-				appendToFile(3, ['<fsx:Elevation>' + str(blockette.elevation) + '</fsx:Elevation>'])
-				appendToFile(3, ['<fsx:Depth>' + str(blockette.local_depth) + '</fsx:Depth>'])
-				appendToFile(3, ['<fsx:Azimuth>' + str(blockette.azimuth) + '</fsx:Azimuth>'])
-				appendToFile(3, ['<fsx:Dip>' + str(blockette.dip) + '</fsx:Dip>'])
-				appendToFile(3, ['<fsx:SampleRate>' + str(blockette.sample_rate) + '</fsx:SampleRate>'])
-				appendToFile(3, ['<fsx:ClockDrift>' + str(blockette.max_clock_drift) + '</fsx:ClockDrift>'])
-				appendToFile(3, ['<fsx:CalibrationUnits>'])
-				appendToFile(4, ['<fsx:Name>' + 'u' + '</fsx:Name>'])
-				appendToFile(4, ['<fsx:Description>' + 'units' + '</fsx:Description>'])
-				appendToFile(3, ['</fsx:CalibrationUnits>'])
-			if blockette.id == 53:
-				appendToFile(3, ['<fsx:Response xsi:type="sis:ResponseType">'])
-				appendToFile(4, ['<fsx:InstrumentSensitivity>'])
-				appendToFile(5, ['<fsx:Value>' + value2SciNo(blockette.A0_normalization_factor) + '</fsx:Value>'])
-				appendToFile(5, ['<fsx:Frequency>' + value2SciNo(blockette.normalization_frequency) + '</fsx:Frequency>'])
-				appendToFile(5, ['<fsx:InputUnits>'])
-				appendToFile(6, ['<fsx:Name>' + 'm/s' + '</fsx:Name>'])
-				appendToFile(6, ['<fsx:Description>' + 'meters per second' + '</fsx:Description>'])
-				appendToFile(5, ['</fsx:InputUnits>'])
-				appendToFile(5, ['<fsx:OutputUnits>'])
-				appendToFile(6, ['<fsx:Name>' + 'counts' + '</fsx:Name>'])
-				appendToFile(6, ['<fsx:Description>' + 'Digital counts' + '</fsx:Description>'])
-				appendToFile(5, ['</fsx:OutputUnits>'])
-				appendToFile(5, ['</fsx:InstrumentSensitivity>'])
-				appendToFile(3, ['</fsx:Response>'])
-				appendToFile(4, ['<sis:SubResponse sequenceNumber="1">'])
-				appendToFile(5, ['<sis:EquipmentLink>'])
-				appendToFile(6, ['<sis:SerialNumber>' + '#####' + '</sis:SerialNumber>'])
-				appendToFile(6, ['<sis:ModelName>' + 'model name' + '</sis:ModelName>'])
-				appendToFile(6, ['<sis:Category>' + 'category' + '</sis:Category>'])
-				appendToFile(6, ['<sis:ComponentName>' + '1/2/Z' + '</sis:ComponentName>'])
-				appendToFile(6, ['<sis:CalibrationDate>' + 'YYYY-MM-DDTHH:MM:SSZ' + '</sis:CalibrationDate>'])
-				appendToFile(5, ['</sis:EquipmentLink>'])
-				appendToFile(4, ['</sis:Subresponse>'])
-				appendToFile(4, ['<sis:SubResponse sequenceNumber="2">'])
-				appendToFile(5, ['<sis:EquipmentLink>'])
-				appendToFile(6, ['<sis:SerialNumber>' + 'str(#####)' + '</sis:SerialNumber>'])
-				appendToFile(6, ['<sis:ModelName>' + 'model name' + '</sis:ModelName>'])
-				appendToFile(6, ['<sis:Category>' + 'category' + '</sis:Category>'])
-				appendToFile(6, ['<sis:ComponentName>' + 'DATA1' + '</sis:ComponentName>'])
-				appendToFile(6, ['<sis:CalibrationDate>' + 'YYYY-MM-DDTHH:MM:SSZ' + '</sis:CalibrationDate>'])
-				appendToFile(5, ['</sis:EquipmentLink>'])
-				appendToFile(5, ['<sis:PreampGain>' + 'str(######)' + '</sis:PreampGain>'])
-				appendToFile(4, ['</sis:Subresponse>'])
-				appendToFile(4, ['<sis:SubResponse sequenceNumber="3">'])
-				appendToFile(5, ['<sis:ResponseDictLink>'])
-				appendToFile(6, ['<sis:Name>' + 'name' + '</sis:Name>'])
-				appendToFile(6, ['<sis:SISNameSpace>' + sisinfo.agency() + '</sis:SISNameSpace>'])
-				appendToFile(6, ['<sis:Type>' + 'type' + '</sis:Type>'])
-				appendToFile(5, ['</sis:ResponseDictLink>'])
-				appendToFile(4, ['</sis:Subresponse>'])
-				appendToFile(3, ['</sis:Response>'])
-				appendToFile(3, ['<sis:MeasurementType>' + 'measurement type' + '</sis:MeasurementType>'])
-				appendToFile(3, ['<sis:SignalUnis>'])
-				appendToFile(4, ['<sis:Name>' + 'u' + '</sis:Name>'])
-				appendToFile(4, ['<sis:Description>' + 'units' + '</sis:Description>'])
-				appendToFile(3, ['</sis:SignalUnits>'])
-				appendToFile(3, ['<sis:Clip>' + 'str(######)' + '</sis:Clip>'])
-				appendToFile(3, ['<sis:PinNumber>' + str(1) + '</sis:PinNumber>'])
-				appendToFile(3, ['<sis:ChannelSource>' + 'SEED' + '</sis:ChannelSource>'])
-			# if blockette.id == 58:
-			# 	# appendToFile(4, [''])
-			# 	x = 0
 
 def getDictionaries(netsta):
 	net = netsta[:2]
@@ -501,7 +396,7 @@ def fetchUnit(dictB034, value):
 	return ['None', 'No units found']
 
 def processOutro(dataless):
-	appendToFile(3, ['<sis:DatumVertical>' + 'WGS84' + '</sis:DatumVertical>'])
+	# appendToFile(3, ['<sis:DatumVertical>' + 'WGS84' + '</sis:DatumVertical>'])
 	appendToFile(2, ['</fsx:Station>'])
 	appendToFile(1, ['</fsx:Network>'])
 	appendToFile(0, ['</fsx:FDSNStationXML>'])
