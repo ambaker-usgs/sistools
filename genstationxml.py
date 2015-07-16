@@ -550,4 +550,4 @@ if isvalidnetsta.isValidNetSta(net, sta):
 else:
 	print 'Network and station found to not be valid (isvalidnetsta.py)'
 
-print 'Process lasted', int((UTCDateTime.now() - now) / 60), 'seconds'
+print 'Process lasted', int(now - (UTCDateTime.now()) / 60), 'seconds'
