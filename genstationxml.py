@@ -247,26 +247,29 @@ def processChannels(dataless):
 				appendToFile(5, ['<fsx:Name>' + fetchUnit(dictB034, blockette.units_of_calibration_input)[0] + '</fsx:Name>'])
 				appendToFile(5, ['<fsx:Description>' + fetchUnit(dictB034, blockette.units_of_calibration_input)[1] + '</fsx:Description>'])
 				appendToFile(4, ['</fsx:CalibrationUnits>'])
-		for blockette in channel:
-			if blockette.id == 58 and blockette.stage_sequence_number == 0:
-				appendToFile(4, ['<fsx:Response xsi:type="sis:ResponseType">'])
-				appendToFile(5, ['<fsx:InstrumentSensitivity>'])
-				appendToFile(6, ['<fsx:Value>' + value2SciNo(blockette.sensitivity_gain) + '</fsx:Value>'])
-				appendToFile(6, ['<fsx:Frequency>' + value2SciNo(blockette.frequency) + '</fsx:Frequency>'])
-		for blockette in channel:
-			if blockette.id == 52:
-				appendToFile(6, ['<fsx:InputUnits>'])
-				appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.units_of_signal_response)[0] + '</fsx:Name>'])
-				appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.units_of_signal_response)[1] + '</fsx:Description>'])
-				appendToFile(6, ['</fsx:InputUnits>'])
-			if blockette.id == 54 and blockette.stage_sequence_number == 2:
-				appendToFile(6, ['<fsx:OutputUnits>'])
-				appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</fsx:Name>'])
-				appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '</fsx:Description>'])
-				appendToFile(6, ['</fsx:OutputUnits>'])
-				appendToFile(5, ['</fsx:InstrumentSensitivity>'])
-		appendToFile(4, ['</fsx:Response>'])
-		appendToFile(3, ['</fsx:Channel>'])
+		if channelWithoutB062(channel):
+			for blockette in channel:
+				if blockette.id == 58 and blockette.stage_sequence_number == 0:
+					appendToFile(4, ['<fsx:Response xsi:type="sis:ResponseType">'])
+					appendToFile(5, ['<fsx:InstrumentSensitivity>'])
+					appendToFile(6, ['<fsx:Value>' + value2SciNo(blockette.sensitivity_gain) + '</fsx:Value>'])
+					appendToFile(6, ['<fsx:Frequency>' + value2SciNo(blockette.frequency) + '</fsx:Frequency>'])
+			for blockette in channel:
+				if blockette.id == 52:
+					appendToFile(6, ['<fsx:InputUnits>'])
+					appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.units_of_signal_response)[0] + '</fsx:Name>'])
+					appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.units_of_signal_response)[1] + '</fsx:Description>'])
+					appendToFile(6, ['</fsx:InputUnits>'])
+				if blockette.id == 54 and blockette.stage_sequence_number == 2:
+					appendToFile(6, ['<fsx:OutputUnits>'])
+					appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</fsx:Name>'])
+					appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '</fsx:Description>'])
+					appendToFile(6, ['</fsx:OutputUnits>'])
+					appendToFile(5, ['</fsx:InstrumentSensitivity>'])
+			appendToFile(4, ['</fsx:Response>'])
+			appendToFile(3, ['</fsx:Channel>'])
+			
+			
 			# if blockette.id == 53:
 			# 	appendToFile(4, ['<sis:SubResponse sequenceNumber="1">'])
 			# 	appendToFile(5, ['<sis:EquipmentLink>'])
@@ -394,6 +397,12 @@ def fetchUnit(dictB034, value):
 		if value == unit['unit code']:
 			return [unit['unit name'], unit['unit description']]
 	return ['None', 'No units found']
+
+def channelWithoutB062(channel):
+	for blockette in channel:
+		if blockette.id == 62:
+			return False
+	return True
 
 def processOutro(dataless):
 	# appendToFile(3, ['<sis:DatumVertical>' + 'WGS84' + '</sis:DatumVertical>'])
