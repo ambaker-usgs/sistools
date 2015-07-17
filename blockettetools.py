@@ -375,12 +375,11 @@ def describeResponseType(value):
 
 def getChannel(loc, chan, time, dataless):
 	channel = []
+	endDate = UTCDateTime(2599, 12,31, 59, 59)
 	specifiedChannel = False
 	for blockette in dataless:
 		if blockette.id == 52:
-			if blockette.end_date == '':
-				endDate == UTCDateTime(2599, 12,31, 59, 59)
-			else:
+			if blockette.end_date != '':
 				endDate == blockette.end_date
 			if blockette.location_identifier == loc and blockette.channel_identifier == chan and blockette.start_date <= time <= endDate:
 				specifiedChannel = True
@@ -392,12 +391,15 @@ def getChannel(loc, chan, time, dataless):
 
 def getChannels(dataless, time):
 	channels = []
+	endDate = UTCDateTime(2599, 12,31, 59, 59)
 	isOpenChannelEpoch = False
 	for blockette in dataless:
 		if blockette.id == 52:
+			if blockette.end_date != '':
+				endDate == blockette.end_date
 			if isOpenChannelEpoch:
 				channels.append(channel)
-			if blockette.start_date <= time <= blockette.end_date:
+			if blockette.start_date <= time <= endDate:
 				isOpenChannelEpoch = True
 				channel = []
 			else:
