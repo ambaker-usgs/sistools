@@ -373,7 +373,7 @@ def describeResponseType(value):
 	else:
 		return 'Undefined'.upper()
 
-def getChannel(loc, chan, time, dataless):
+def getChannel(loc, chan, dataless, time):
 	channel = []
 	endDate = UTCDateTime(2599, 12,31, 23, 59, 59)
 	specifiedChannel = False

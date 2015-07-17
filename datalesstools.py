@@ -33,8 +33,7 @@ def getStationDataless(netsta):
 		station = []
 		parsedDataless = aslParser(staDatalessPath + 'DATALESS.' + netsta + '.seed')
 		for station in parsedDataless.stations:
-			if type(station) is list:
-				station.extend(station)
+			station.extend(station)
 		return station
 	else:
 		parsedDataless = Parser(netDatalessPath + net + '.dataless')
