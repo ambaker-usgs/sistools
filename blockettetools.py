@@ -375,7 +375,7 @@ def describeResponseType(value):
 
 def getChannel(loc, chan, time, dataless):
 	channel = []
-	endDate = UTCDateTime(2599, 12,31, 59, 59)
+	endDate = UTCDateTime(2599, 12,31, 23, 59, 59)
 	specifiedChannel = False
 	for blockette in dataless:
 		if blockette.id == 52:
@@ -391,7 +391,7 @@ def getChannel(loc, chan, time, dataless):
 
 def getChannels(dataless, time):
 	channels = []
-	endDate = UTCDateTime(2599, 12,31, 59, 59)
+	endDate = UTCDateTime(2599, 12,31, 23, 59, 59)
 	isOpenChannelEpoch = False
 	for blockette in dataless:
 		if blockette.id == 52:
