@@ -215,8 +215,8 @@ def blockette51(blockette):
 def blockette52(blockette):
 	blkt = {}
 	blkt['description'] = 'Channel Identifier Blockette'
-	blkt['blockette type'] = blockette.id
-	blkt['blockette type'] = blockette.length_of_blockette
+	blkt['blockette type'] = blockette.type
+	blkt['length of blockette'] = blockette.length_of_blockette
 	blkt['location identifier'] = blockette.location_identifier
 	blkt['channel identifier'] = blockette.channel_identifier
 	blkt['subchannel identifier'] = blockette.subchannel_identifier
@@ -245,7 +245,7 @@ def blockette53(blockette):
 	blkt = {}
 	blkt['description'] = 'Response (Poles & Zeros) Blockette'
 	blkt['blockette type'] = blockette.blockette_type
-	blkt['blockette type'] = blockette.length_of_blockette
+	blkt['length of blockette'] = blockette.length_of_blockette
 	blkt['transfer function type'] = blockette.transfer_function_types
 	blkt['stage sequence number'] = blockette.stage_sequence_number
 	blkt['stage signal input units'] = blockette.stage_signal_input_units
@@ -270,7 +270,7 @@ def blockette54(blockette):
 	blkt = {}
 	blkt['description'] = 'Response (Coefficients) Blockette'
 	blkt['blockette type'] = blockette.blockette_type
-	blkt['blockette type'] = blockette.length_of_blockette
+	blkt['length of blockette'] = blockette.length_of_blockette
 	blkt['response type'] = blockette.response_type
 	blkt['stage sequence number'] = blockette.stage_sequence_number
 	blkt['signal input units'] = blockette.signal_input_units
@@ -289,7 +289,7 @@ def blockette57(blockette):
 	blkt = {}
 	blkt['description'] = 'Decimation Blockette'
 	blkt['blockette type'] = blockette.blockette_type
-	blkt['blockette type'] = blockette.length_of_blockette
+	blkt['length of blockette'] = blockette.length_of_blockette
 	blkt['stage sequence number'] = blockette.stage_sequence_number
 	blkt['input sample rate'] = blockette.input_sample_rate
 	blkt['decimation factor'] = blockette.decimation_factor
@@ -302,7 +302,7 @@ def blockette58(blockette):
 	blkt = {}
 	blkt['description'] = 'Channel Sensitivity/Gain Blockette'
 	blkt['blockette type'] = blockette.blockette_type
-	blkt['blockette type'] = blockette.length_of_blockette
+	blkt['length of blockette'] = blockette.length_of_blockette
 	blkt['stage sequence number'] = blockette.stage_sequence_number
 	blkt['sensitivity/gain'] = blockette.sensitivity_gain
 	blkt['frequency'] = blockette.frequency
@@ -324,7 +324,7 @@ def blockette62(blockette):
 	blkt = {}
 	blkt['description'] = 'Response Polynomial Blockette'
 	blkt['blockette type'] = blockette.blockette_type
-	blkt['blockette type'] = blockette.length_of_blockette
+	blkt['length of blockette'] = blockette.length_of_blockette
 	blkt['transfer function type'] = blockette.transfer_function_type
 	blkt['stage sequence number'] = blockette.stage_sequence_number
 	blkt['stage signal in units'] = blockette.stage_signal_in_units
