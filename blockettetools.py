@@ -378,7 +378,11 @@ def getChannel(loc, chan, time, dataless):
 	specifiedChannel = False
 	for blockette in dataless:
 		if blockette.id == 52:
-			if blockette.location_identifier == loc and blockette.channel_identifier == chan and blockette.start_date <= time <= blockette.end_date:
+			if blockette.end_date == '':
+				endDate == UTCDateTime(2599, 12,31, 59, 59)
+			else:
+				endDate == blockette.end_date
+			if blockette.location_identifier == loc and blockette.channel_identifier == chan and blockette.start_date <= time <= endDate:
 				specifiedChannel = True
 			else:
 				specifiedChannel = False
