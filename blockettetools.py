@@ -215,7 +215,7 @@ def blockette51(blockette):
 def blockette52(blockette):
 	blkt = {}
 	blkt['description'] = 'Channel Identifier Blockette'
-	blkt['blockette type'] = blockette.type
+	blkt['blockette type'] = blockette.blockette_type
 	blkt['length of blockette'] = blockette.length_of_blockette
 	blkt['location identifier'] = blockette.location_identifier
 	blkt['channel identifier'] = blockette.channel_identifier
