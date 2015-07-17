@@ -215,7 +215,7 @@ def blockette51(blockette):
 def blockette52(blockette):
 	blkt = {}
 	blkt['description'] = 'Channel Identifier Blockette'
-	blkt['blockette type'] = blockette.blockette_type
+	blkt['blockette type'] = blockette.id
 	blkt['blockette type'] = blockette.length_of_blockette
 	blkt['location identifier'] = blockette.location_identifier
 	blkt['channel identifier'] = blockette.channel_identifier
@@ -242,7 +242,7 @@ def blockette52(blockette):
 	return blkt
 
 def blockette53(blockette):
-	blkt = skeleton53()
+	blkt = {}
 	blkt['description'] = 'Response (Poles & Zeros) Blockette'
 	blkt['blockette type'] = blockette.blockette_type
 	blkt['blockette type'] = blockette.length_of_blockette
@@ -267,7 +267,7 @@ def blockette53(blockette):
 	return blkt
 
 def blockette54(blockette):
-	blkt = skeleton54()
+	blkt = {}
 	blkt['description'] = 'Response (Coefficients) Blockette'
 	blkt['blockette type'] = blockette.blockette_type
 	blkt['blockette type'] = blockette.length_of_blockette
