@@ -242,7 +242,7 @@ def blockette52(blockette):
 	return blkt
 
 def blockette53(blockette):
-	blkt = {}
+	blkt = skeleton53()
 	blkt['description'] = 'Response (Poles & Zeros) Blockette'
 	blkt['blockette type'] = blockette.blockette_type
 	blkt['blockette type'] = blockette.length_of_blockette
@@ -267,7 +267,7 @@ def blockette53(blockette):
 	return blkt
 
 def blockette54(blockette):
-	blkt = {}
+	blkt = skeleton54()
 	blkt['description'] = 'Response (Coefficients) Blockette'
 	blkt['blockette type'] = blockette.blockette_type
 	blkt['blockette type'] = blockette.length_of_blockette
