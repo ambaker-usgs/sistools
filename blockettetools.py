@@ -374,36 +374,22 @@ def describeResponseType(value):
 		return 'Undefined'.upper()
 
 def getChannel(loc, chan, dataless, time):
-	channel = []
-	endDate = UTCDateTime(2599, 12,31, 23, 59, 59)
-	specifiedChannel = False
-	for blockette in dataless:
-		if blockette.id == 52:
-			if blockette.end_date != '':
-				endDate == blockette.end_date
-			if blockette.location_identifier == loc and blockette.channel_identifier == chan and blockette.start_date <= time <= endDate:
-				specifiedChannel = True
-			else:
-				specifiedChannel = False
-		if specifiedChannel:
-			channel.append(blockette)
-	return channel
+	channels = getChannels(dataless, time)
+	for channel in channels:
+		for blockette in channel:
+			if blockette.id == 52:
+				if blockette.end_date != '':
+					endDate = blockette.end_date
+				else:
+					endDate = UTCDateTime(2599, 12, 31, 23, 59, 59)
+				if blockette.location_identifier == loc and blockette.channel_identifier == chan and blockette.start_date <= time and time <= endDate:
+					return channel
 
 def getChannels(dataless, time):
 	channels = []
-	endDate = UTCDateTime(2599, 12,31, 23, 59, 59)
-	isOpenChannelEpoch = False
 	for blockette in dataless:
 		if blockette.id == 52:
-			if blockette.end_date != '':
-				endDate == blockette.end_date
-			if isOpenChannelEpoch:
-				channels.append(channel)
-			if blockette.start_date <= time <= endDate:
-				isOpenChannelEpoch = True
-				channel = []
-			else:
-				isOpenChannelEpoch = False
-		if isOpenChannelEpoch:
-			channel.append(blockette)
+			channels.append([blockette])
+		elif blockette.id > 52:
+			channels[-1].append(blockette)
 	return channels
