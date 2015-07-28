@@ -62,20 +62,6 @@ def parseStationDataless(parsedDataless):
 					return station
 			else:
 				break
-	# for epoch in parsedStation:
-		# print 'EPOCH STARTING'
-		# for blockette in epoch:
-			# if blockette.id == 50:
-			# 	print blockette.start_effective_date, blockette.end_effective_date, blockette.latitude, blockette.longitude, blockette.elevation
-			# elif blockette.id == 52:
-			# 	print blockette.location_identifier, blockette.channel_identifier
-			# if blockette.id not in blockettes:
-			# 	blockettes.append(blockette.id)
-	# print blockettes
-			# if blockette.id == 50:
-			# 	print blockette.station_call_letters, blockette.start_effective_date, blockette.end_effective_date
-			# else:
-			# 	break
 
 def processDataless(dataless):
 	initializeOutputFile()
@@ -268,44 +254,6 @@ def processChannels(dataless):
 					appendToFile(5, ['</fsx:InstrumentSensitivity>'])
 			appendToFile(4, ['</fsx:Response>'])
 		appendToFile(3, ['</fsx:Channel>'])
-			
-			
-			# if blockette.id == 53:
-			# 	appendToFile(4, ['<sis:SubResponse sequenceNumber="1">'])
-			# 	appendToFile(5, ['<sis:EquipmentLink>'])
-			# 	appendToFile(6, ['<sis:SerialNumber>' + '#####' + '</sis:SerialNumber>'])
-			# 	appendToFile(6, ['<sis:ModelName>' + 'model name (sensor)' + '</sis:ModelName>'])
-			# 	appendToFile(6, ['<sis:Category>' + 'category' + '</sis:Category>'])
-			# 	appendToFile(6, ['<sis:ComponentName>' + '1/2/Z' + '</sis:ComponentName>'])
-			# 	appendToFile(6, ['<sis:CalibrationDate>' + 'YYYY-MM-DDTHH:MM:SSZ' + '</sis:CalibrationDate>'])
-			# 	appendToFile(5, ['</sis:EquipmentLink>'])
-			# 	appendToFile(4, ['</sis:Subresponse>'])
-			# 	appendToFile(4, ['<sis:SubResponse sequenceNumber="2">'])
-			# 	appendToFile(5, ['<sis:EquipmentLink>'])
-			# 	appendToFile(6, ['<sis:SerialNumber>' + 'str(#####)' + '</sis:SerialNumber>'])
-			# 	appendToFile(6, ['<sis:ModelName>' + 'model name (datalogger)' + '</sis:ModelName>'])
-			# 	appendToFile(6, ['<sis:Category>' + 'category' + '</sis:Category>'])
-			# 	appendToFile(6, ['<sis:ComponentName>' + 'DATA1' + '</sis:ComponentName>'])
-			# 	appendToFile(6, ['<sis:CalibrationDate>' + 'YYYY-MM-DDTHH:MM:SSZ' + '</sis:CalibrationDate>'])
-			# 	appendToFile(5, ['</sis:EquipmentLink>'])
-			# 	appendToFile(5, ['<sis:PreampGain>' + 'str(######)' + '</sis:PreampGain>'])
-			# 	appendToFile(4, ['</sis:Subresponse>'])
-			# 	appendToFile(4, ['<sis:SubResponse sequenceNumber="3">'])
-			# 	appendToFile(5, ['<sis:ResponseDictLink>'])
-			# 	appendToFile(6, ['<sis:Name>' + 'name' + '</sis:Name>'])
-			# 	appendToFile(6, ['<sis:SISNameSpace>' + sisinfo.agency() + '</sis:SISNameSpace>'])
-			# 	appendToFile(6, ['<sis:Type>' + 'type (filter sequence)' + '</sis:Type>'])
-			# 	appendToFile(5, ['</sis:ResponseDictLink>'])
-			# 	appendToFile(4, ['</sis:Subresponse>'])
-			# 	appendToFile(3, ['</fsx:Response>'])
-			# 	appendToFile(3, ['<sis:MeasurementType>' + 'measurement type' + '</sis:MeasurementType>'])
-			# 	appendToFile(3, ['<sis:SignalUnis>'])
-			# 	appendToFile(4, ['<sis:Name>' + 'u' + '</sis:Name>'])
-			# 	appendToFile(4, ['<sis:Description>' + 'units' + '</sis:Description>'])
-			# 	appendToFile(3, ['</sis:SignalUnits>'])
-			# 	appendToFile(3, ['<sis:Clip>' + 'str(######)' + '</sis:Clip>'])
-			# 	appendToFile(3, ['<sis:PinNumber>' + str(1) + '</sis:PinNumber>'])
-			# 	appendToFile(3, ['<sis:ChannelSource>' + 'SEED' + '</sis:ChannelSource>'])
 
 def getDictionaries(netsta):
 	net = netsta[:2]
@@ -405,7 +353,6 @@ def channelWithB062(channel):
 	return False
 
 def processOutro(dataless):
-	# appendToFile(3, ['<sis:DatumVertical>' + 'WGS84' + '</sis:DatumVertical>'])
 	appendToFile(2, ['</fsx:Station>'])
 	appendToFile(1, ['</fsx:Network>'])
 	appendToFile(0, ['</fsx:FDSNStationXML>'])

@@ -382,12 +382,8 @@ def getChannel(loc, chan, dataless, time):
 			if blockette.end_date != '':
 				endDate == blockette.end_date
 			if blockette.location_identifier == loc and blockette.channel_identifier == chan and blockette.start_date <= time <= endDate:
-				specifiedChannel = True
-			else:
-				specifiedChannel = False
-		if specifiedChannel:
-			channel.append(blockette)
-	return channel
+				return channel
+	print 'Specified channel not found'
 
 def getChannels(dataless, time):
 	channels = []
