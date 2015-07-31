@@ -235,31 +235,254 @@ def processChannels(dataless):
 				appendToFile(4, ['<Sensor>'])
 				appendToFile(5, ['<Type>' + fetchInstrument(dictB033, blockette.instrument_identifier) + '</Type>'])
 				appendToFile(4, ['</Sensor>'])
-				# appendToFile(4, ['<CalibrationUnits>'])
-				# appendToFile(5, ['<Name>' + fetchUnit(dictB034, blockette.units_of_calibration_input)[0] + '</Name>'])
-				# appendToFile(5, ['<Description>' + fetchUnit(dictB034, blockette.units_of_calibration_input)[1] + '</Description>'])
-				# appendToFile(4, ['</CalibrationUnits>'])
-		if not channelWithB062(channel):
-			for blockette in channel:
-				if blockette.id == 58 and blockette.stage_sequence_number == 0:
-					appendToFile(4, ['<Response>'])
-					appendToFile(5, ['<InstrumentSensitivity>'])
-					appendToFile(6, ['<Value>' + value2SciNo(blockette.sensitivity_gain) + '</Value>'])
-					appendToFile(6, ['<Frequency>' + value2SciNo(blockette.frequency) + '</Frequency>'])
-			for blockette in channel:
-				if blockette.id == 52:
-					appendToFile(6, ['<InputUnits>'])
-					appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.units_of_signal_response)[0] + '</Name>'])
-					appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.units_of_signal_response)[1] + '</Description>'])
-					appendToFile(6, ['</InputUnits>'])
-				if blockette.id == 54 and blockette.stage_sequence_number == 2:
-					appendToFile(6, ['<OutputUnits>'])
-					appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</Name>'])
-					appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '</Description>'])
-					appendToFile(6, ['</OutputUnits>'])
-					appendToFile(5, ['</InstrumentSensitivity>'])
-			appendToFile(4, ['</Response>'])
-		appendToFile(3, ['</Channel>'])
+				appendToFile(4, ['<Response>'])
+				appendToFile(5, ['<InstrumentSensitivity>'])
+				for blockette in channel:
+					if blockette.id == 58 and blockette.stage_sequence_number == 0:
+						appendToFile(6, ['<Value>' + value2SciNo(blockette.sensitivity_gain) + '</Value>'])
+						appendToFile(6, ['<Frequency>' + value2SciNo(blockette.frequency) + '</Frequency>'])
+				for blockette in channel:
+					if blockette.id == 53:
+						appendToFile(6, ['<InputUnits>'])
+						appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[0] + '</Name>'])
+						appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[1] + '</Description>'])
+						appendToFile(6, ['</InputUnits>'])
+				for blockette in channel:
+					if blockette.id == 54 and blockette.stage_sequence_number == 2:
+						appendToFile(6, ['<OutputUnits>'])
+						appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</Name>'])
+						appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '</Description>'])
+						appendToFile(6, ['</OutputUnits>'])
+				for blockette in channel:
+					if blockette.id == 62:
+						appendToFile(6, ['<InputUnits>'])
+						appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[0] + '</Name>'])
+						appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[1] + '</Description>'])
+						appendToFile(6, ['</InputUnits>'])
+						appendToFile(6, ['<OutputUnits>'])
+						appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_out_units)[0] + '</Name>'])
+						appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_out_units)[1] + '</Description>'])
+						appendToFile(6, ['</OutputUnits>'])
+				appendToFile(5, ['</InstrumentSensitivity>'])
+				for stage in stages(channel):
+					if stage > 0:
+						appendToFile(5, ['<Stage number="' + str(stage) + '">'])
+						for blockette in channel:
+							if blockette.id == 53 and blockette.stage_sequence_number == stage:
+								appendToFile(6, ['<PolesZeros>'])
+								appendToFile(7, ['<InputUnits>'])
+								appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[0] + '</Name>'])
+								appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[1] + '</Description>'])
+								appendToFile(7, ['</InputUnits>'])
+								appendToFile(7, ['<OutputUnits>'])
+								appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[0] + '</Name>'])
+								appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[1] + '</Description>'])
+								appendToFile(7, ['</OutputUnits>'])
+								appendToFile(7, ['<PzTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.transfer_function_type) + '</PzTransferFunctionType>')])
+								appendToFile(7, ['<NormalizationFactor>' + str(blockette.A0_normalization_factor) + '</NormalizationFactor>'])
+								appendToFile(7, ['<NormalizationFrequency>' + str(blockette.normalization_frequency) + '</NormalizationFrequency>'])
+								if blockette.number_of_complex_zeros > 0:
+									zeros = {'real zero': [], 'imaginary zero': [], 'real zero error': [], 'imaginary zero error': []}
+									if blockette.number_of_complex_zeros == 1:
+										zeros['real zero'] = [blockette.real_zero]
+										zeros['imaginary zero'] = [blockette.imaginary_zero]
+										zeros['real zero error'] = [blockette.real_zero_error]
+										zeros['imaginary zero error'] = [blockette.imaginary_zero_error]
+									elif blockette.number_of_complex_zeros > 1:
+										zeros['real zero'] = blockette.real_zero
+										zeros['imaginary zero'] = blockette.imaginary_zero
+										zeros['real zero error'] = blockette.real_zero_error
+										zeros['imaginary zero error'] = blockette.imaginary_zero_error
+								for index in range(blockette.number_of_complex_zeros):
+									appendToFile(7, ['<Zero number="' + str(index) + '">'])
+									appendToFile(8, ['<Real plusError="' + str(zeros['real zero error'][index]) + '" minus error="' + str(zeros['real zero error'][index]) + '">' + str(zeros['real zero'][index]) + '</Real>'])
+									appendToFile(8, ['<Imaginary plusError="' + str(zeros['imaginary zero error'][index]) + '" minus error="' + str(zeros['imaginary zero error'][index]) + '">' + str(zeros['imaginary zero'][index]) + '</Imaginary>'])
+									appendToFile(7, ['</Zero>'])
+								if blockette.number_of_complex_poles > 0:
+									poles = {'real pole': [], 'imaginary pole': [], 'real pole error': [], 'imaginary pole error': []}
+									if blockette.number_of_complex_poles == 1:
+										poles['real pole'] = [blockette.real_pole]
+										poles['imaginary pole'] = [blockette.imaginary_pole]
+										poles['real pole error'] = [blockette.real_pole_error]
+										poles['imaginary pole error'] = [blockette.imaginary_pole_error]
+									elif blockette.number_of_complex_poles > 1:
+										poles['real pole'] = blockette.real_pole
+										poles['imaginary pole'] = blockette.imaginary_pole
+										poles['real pole error'] = blockette.real_pole_error
+										poles['imaginary pole error'] = blockette.imaginary_pole_error
+								for index in range(blockette.number_of_complex_poles):
+									appendToFile(7, ['<Pole number="' + str(index) + '">'])
+									appendToFile(8, ['<Real plusError="' + str(poles['real pole error'][index]) + '" minus error="' + str(poles['real pole error'][index]) + '">' + str(poles['real pole'][index]) + '</Real>'])
+									appendToFile(8, ['<Imaginary plusError="' + str(poles['imaginary pole error'][index]) + '" minus error="' + str(poles['imaginary pole error'][index]) + '">' + str(poles['imaginary pole'][index]) + '</Imaginary>'])
+									appendToFile(7, ['</Pole>'])
+								appendToFile(6, ['</PolesZeros>'])
+							if blockette.id == 54 and blockette.stage_sequence_number == stage:
+								appendToFile(6, ['<Coefficients>'])
+								appendToFile(7, ['<InputUnits>'])
+								appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.signal_input_units)[0] + '</Name>'])
+								appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.signal_input_units)[1] + '</Description>'])
+								appendToFile(7, ['</InputUnits>'])
+								appendToFile(7, ['<OutputUnits>'])
+								appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</Name>'])
+								appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.ignal_output_units)[1] + '</Description>'])
+								appendToFile(7, ['</OutputUnits>'])
+								appendToFile(7, ['<CfTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.response_type) + '</CfTransferFunctionType>'])
+								appendToFile(6, ['</Coefficients>'])
+							if blockette.id == 57 and blockette.stage_sequence_number == stage:
+								appendToFile(6, ['<Decimation>'])
+								appendToFile(7, ['<InputSampleRate>' + str(blockette.input_sample_rate) + '</InputSampleRate>'])
+								appendToFile(7, ['<Factor>' + str(blockette.decimation_factor) + '</Factor>'])
+								appendToFile(7, ['<Offset>' + str(blockette.decimation_offset) + '</Offset>'])
+								appendToFile(7, ['<Delay>' + str(blockette.estimated_delay) + '</Delay>'])
+								appendToFile(7, ['<Correction>' + str(blockette.correction_applied) + '</Correction>'])
+								appendToFile(6, ['</Decimation>'])
+							if blockette.id == 58 and blockette.stage_sequence_number == stage:
+								appendToFile(6, ['<StageGain>'])
+								appendToFile(7, ['<Value>' + str(blockette.sensitivity_gain) + '</Value>'])
+								appendToFile(7, ['<Frequency>' + str(blockette.frequency) + '</Frequency>'])
+								appendToFile(6, ['</StageGain>'])
+							if blockette.id == 62 and blockette.stage_sequence_number == stage:
+								appendToFile(6, ['<Polynomial>'])
+								appendToFile(7, ['<InputUnits>'])
+								appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[0] + '</Name>'])
+								appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[1] + '</Description>'])
+								appendToFile(7, ['</InputUnits>'])
+								appendToFile(7, ['<OutputUnits>'])
+								appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_out_units)[0] + '</Name>'])
+								appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_out_units)[1] + '</Description>'])
+								appendToFile(7, ['</OutputUnits>'])
+								appendToFile(7, ['<ApproximationType>' + blockettetools.describeApproximationType(blockette.polynomial_approximation_type) + '</ApproximationType>'])
+								appendToFile(7, ['<FrequencyLowerBound>' + str(blockette.lower_valid_frequency_bound) + '</FrequencyLowerBound>'])
+								appendToFile(7, ['<FrequencyUpperBound>' + str(blockette.upper_valid_frequency_bound) + '</FrequencyUpperBound>'])
+								appendToFile(7, ['<ApproximationLowerBound>' + str(blockette.lower_bound_of_approximation) + '</ApproximationLowerBound>'])
+								appendToFile(7, ['<ApproximationUpperBound>' + str(blockette.upper_bound_of_approximation) + '</ApproximationUpperBound>'])
+								appendToFile(7, ['<MaximumError>' + str(blockette.maximum_absolute_error) + '</MaximumError>'])
+								if blockette.number_of_polynomial_coefficients > 0:
+									polyco = []
+									polyerror = []
+									if blockette.number_of_polynomial_coefficients == 1:
+										polyco.append([blockette.polynomial_coefficient])
+										polyerror.append([blockette.polynomial_coefficient_error])
+									elif blockette.number_of_polynomial_coefficients > 1:
+										polyco.append(blockette.polynomial_coefficient)
+										polyerror.append(blockette.polynomial_coefficient_error)
+									for index in range(blockette.number_of_polynomial_coefficients):
+										appendToFile(7, ['<Coefficient number="' + str(index) + '" plusError="' + str(polyerror[index]) + '" minusError="' + str(polyerror[index]) + '">' + str(polyco[index])])
+								appendToFile(6, ['</Polynomial>'])
+						appendToFile(5, ['</Stage>'])
+				appendToFile(4, ['</Response>'])
+				appendToFile(3, ['</Channel>'])
+				appendToFile(2, ['</Station>'])
+				appendToFile(1, ['</Network>'])
+				appendToFile(0, ['</FDSNStationXML>'])
+
+		# if not channelWithB062(channel):
+		# 	for blockette in channel:
+		# 		if blockette.id == 58 and blockette.stage_sequence_number == 0:
+		# 			appendToFile(4, ['<Response>'])
+		# 			appendToFile(5, ['<InstrumentSensitivity>'])
+		# 			appendToFile(6, ['<Value>' + value2SciNo(blockette.sensitivity_gain) + '</Value>'])
+		# 			appendToFile(6, ['<Frequency>' + value2SciNo(blockette.frequency) + '</Frequency>'])
+		# 	for blockette in channel:
+		# 		if blockette.id == 54 and blockette.stage_sequence_number == 2:
+		# 			appendToFile(6, ['<InputUnits>'])
+		# 			appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.signal_input_units)[0] + '</Name>'])
+		# 			appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.signal_input_units)[1] + '</Description>'])
+		# 			appendToFile(6, ['</InputUnits>'])
+		# 			appendToFile(6, ['<OutputUnits>'])
+		# 			appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</Name>'])
+		# 			appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '</Description>'])
+		# 			appendToFile(6, ['</OutputUnits>'])
+		# 			appendToFile(5, ['</InstrumentSensitivity>'])
+		# 	for blockette in channel:
+		# 		if blockette.id == 53 and blockette.stage_sequence_number == 1:
+		# 			appendToFile(5, ['<Stage number="' + str(blockette.stage_sequence_number) + '"'])
+		# 			appendToFile(6, ['<PolesZeros>'])
+		# 			appendToFile(7, ['<InputUnits>'])
+		# 			appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[0] + '</Name>'])
+		# 			appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[1] + '</Description>'])
+		# 			appendToFile(7, ['</InputUnits>'])
+		# 			appendToFile(7, ['<OutputUnits>'])
+		# 			appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[0] + '</Name>'])
+		# 			appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[1] + '</Description>'])
+		# 			appendToFile(7, ['</OutputUnits>'])
+		# 			appendToFile(7, ['<PzTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.transfer_function_type) + '</PzTransferFunctionType>')])
+		# 			appendToFile(7, ['<NormalizationFactor>' + str(blockette.A0_normalization_factor) + '</NormalizationFactor>'])
+		# 			appendToFile(7, ['<NormalizationFrequency>' + str(blockette.normalization_frequency) + '</NormalizationFrequency>'])
+		# 			if blockette.number_of_complex_zeros > 0:
+		# 				zeros = {'real zero': [], 'imaginary zero': [], 'real zero error': [], 'imaginary zero error': []}
+		# 				if blockette.number_of_complex_zeros == 1:
+		# 					zeros['real zero'] = [blockette.real_zero]
+		# 					zeros['imaginary zero'] = [blockette.imaginary_zero]
+		# 					zeros['real zero error'] = [blockette.real_zero_error]
+		# 					zeros['imaginary zero error'] = [blockette.imaginary_zero_error]
+		# 				elif blockette.number_of_complex_zeros > 1:
+		# 					zeros['real zero'] = blockette.real_zero
+		# 					zeros['imaginary zero'] = blockette.imaginary_zero
+		# 					zeros['real zero error'] = blockette.real_zero_error
+		# 					zeros['imaginary zero error'] = blockette.imaginary_zero_error
+		# 			for index in range(blockette.number_of_complex_zeros):
+		# 				appendToFile(7, ['<Zero number="' + str(index) + '">'])
+		# 				appendToFile(8, ['<Real plusError="' + str(zeros['real zero error'][index]) + '" minus error="' + str(zeros['real zero error'][index]) + '">' + str(zeros['real zero'][index]) + '</Real>'])
+		# 				appendToFile(8, ['<Imaginary plusError="' + str(zeros['imaginary zero error'][index]) + '" minus error="' + str(zeros['imaginary zero error'][index]) + '">' + str(zeros['imaginary zero'][index]) + '</Imaginary>'])
+		# 				appendToFile(7, ['</Zero>'])
+		# 			if blockette.number_of_complex_poles > 0:
+		# 				poles = {'real pole': [], 'imaginary pole': [], 'real pole error': [], 'imaginary pole error': []}
+		# 				if blockette.number_of_complex_poles == 1:
+		# 					poles['real pole'] = [blockette.real_pole]
+		# 					poles['imaginary pole'] = [blockette.imaginary_pole]
+		# 					poles['real pole error'] = [blockette.real_pole_error]
+		# 					poles['imaginary pole error'] = [blockette.imaginary_pole_error]
+		# 				elif blockette.number_of_complex_poles > 1:
+		# 					poles['real pole'] = blockette.real_pole
+		# 					poles['imaginary pole'] = blockette.imaginary_pole
+		# 					poles['real pole error'] = blockette.real_pole_error
+		# 					poles['imaginary pole error'] = blockette.imaginary_pole_error
+		# 			for index in range(blockette.number_of_complex_poles):
+		# 				appendToFile(7, ['<Pole number="' + str(index) + '">'])
+		# 				appendToFile(8, ['<Real plusError="' + str(poles['real pole error'][index]) + '" minus error="' + str(poles['real pole error'][index]) + '">' + str(poles['real pole'][index]) + '</Real>'])
+		# 				appendToFile(8, ['<Imaginary plusError="' + str(poles['imaginary pole error'][index]) + '" minus error="' + str(poles['imaginary pole error'][index]) + '">' + str(poles['imaginary pole'][index]) + '</Imaginary>'])
+		# 				appendToFile(7, ['</Pole>'])
+		# 			appendToFile(6, ['</PolesZeros>'])
+		# 	for blockette in channel:
+		# 		if blockette.id == 58 and blockette.stage_sequence_number == 1:
+		# 			appendToFile(6, ['<StageGain>'])
+		# 			appendToFile(7, ['<Value>' + str(blockette.sensitivity_gain) + '</Value>'])
+		# 			appendToFile(7, ['<Frequency>' + str(blockette.frequency) + '</Frequency>'])
+		# 			appendToFile(6, ['</StageGain>'])
+		# 			appendToFile(5, ['</Stage>'])
+		# 	for blockette in channel:
+		# 		if blockette.id == 54 and blockette.stage_sequence_number == 2:
+		# 			appendToFile(5, ['<Stage number="' + str(blockette.stage_sequence_number) + '"'])
+		# 			appendToFile(6, ['<Coefficients>'])
+		# 			appendToFile(7, ['<InputUnits>'])
+		# 			appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</Name>'])
+		# 			appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.signal_input_units)[1] + '</Description>'])
+		# 			appendToFile(7, ['</InputUnits>'])
+		# 			appendToFile(7, ['<OutputUnits>'])
+		# 			appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</Name>'])
+		# 			appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '</Description>'])
+		# 			appendToFile(7, ['</OutputUnits>'])
+		# 			appendToFile(7, ['<CfTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.response_type) + '</CfTransferFunctionType>'])
+		# 			appendToFile(6, ['</Coefficients>'])
+		# 	for blockette in channel:
+		# 		if blockette.id == 57 and blockette.stage_sequence_number == 2:
+		# 			appendToFile(6, ['<Decimation>'])
+		# 			appendToFile(7, ['<InputSampleRate>' + str(blockette.input_sample_rate) + '</InputSampleRate>'])
+		# 			appendToFile(7, ['<Factor>' + str(blockette.decimation_factor) + '</Factor>'])
+		# 			appendToFile(7, ['<Offset>' + str(blockette.decimation_offset) + '</Offset>'])
+		# 			appendToFile(7, ['<Delay>' + str(blockette.estimated_delay) + '</Delay>'])
+		# 			appendToFile(7, ['<Correction>' + str(blockette.correction_applied) + '</Correction>'])
+		# 			appendToFile(6, ['</Decimation>'])
+		# 	for blockette in channel:
+		# 		if blockette.id == 58 and blockette.stage_sequence_number == 2:
+		# 			appendToFile(6, ['<StageGain>'])
+		# 			appendToFile(7, ['<Value>' + str(blockette.sensitivity_gain) + '</Value>'])
+		# 			appendToFile(7, ['<Frequency>' + str(blockette.frequency) + '</Frequency>'])
+		# 			appendToFile(6, ['</StageGain>'])
+		# 			appendToFile(5, ['</Stage>'])
+		# 	appendToFile(4, ['</Response>'])
+		# appendToFile(3, ['</Channel>'])
 
 def getDictionaries(netsta):
 	net = netsta[:2]
@@ -387,6 +610,17 @@ def processChannelComments(blockettes):
 			appendToFile(6, ['<Name>' + 'USGS ASL RDSEED' + '</Name>'])
 			appendToFile(5, ['</Author>'])
 			appendToFile(4, ['</Comment>'])
+
+def stages(channel):
+	stages = []
+	for blockette in channel:
+		try:
+			if blockette.stage_sequence_number not in stages:
+				stages.append(blockette.stage_sequence_number)
+		except:
+			x = 0
+	stages.sort()
+	return stages
 
 #setting global variables
 parserval = getArguments()

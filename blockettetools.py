@@ -258,8 +258,8 @@ def blockette53(blockette):
 		blkt['imaginary zero'] = blockette.imaginary_zero
 		blkt['real zero error'] = blockette.real_zero_error
 		blkt['imaginary zero error'] = blockette.imaginary_zero_error
-	blkt['number of comlex poles'] = blockette.number_of_complex_poles
-	if blkt['number of comlex poles'] > 0:
+	blkt['number of complex poles'] = blockette.number_of_complex_poles
+	if blkt['number of complex poles'] > 0:
 		blkt['real pole'] = blockette.real_pole
 		blkt['imaginary pole'] = blockette.imaginary_pole
 		blkt['real pole error'] = blockette.real_pole_error
@@ -333,6 +333,8 @@ def blockette62(blockette):
 	blkt['valid frequency units'] = blockette.valid_frequency_units
 	blkt['lower valid frequency bound'] = blockette.lower_valid_frequency_bound
 	blkt['upper valid frequency bound'] = blockette.upper_valid_frequency_bound
+	blkt['lower bound of approximation'] = blockette.lower_bound_of_approximation
+	blkt['upper bound of approximation'] = blockette.upper_bound_of_approximation
 	blkt['maximum absolute error'] = blockette.maximum_absolute_error
 	blkt['number of polynomial coeffecients'] = blockette.number_of_polynomial_coefficients
 	blkt['polynomial coefficient'] = blockette.polynomial_coefficient
@@ -348,7 +350,7 @@ def describeChannelFlags(flags):
 	return channelFlag
 
 def describeTransferFunctionType(value):
-	#for describing the transfer function type of blockette 53
+	#for describing the transfer function type of blockettes 53 and 62
 	if value == 'A':
 		return 'Laplace (radians/second)'.upper()
 	elif value == 'B':
@@ -370,6 +372,13 @@ def describeResponseType(value):
 		return 'Composite'.upper()
 	elif value == 'D':
 		return 'Digital'.upper()	#(Z-Transform)
+	else:
+		return 'Undefined'.upper()
+
+def describeApproximationType(value):
+	#for describing the polynomial approximation type of blockette 62
+	if value == 'M':
+		return 'MacLaurin'.upper()
 	else:
 		return 'Undefined'.upper()
 
