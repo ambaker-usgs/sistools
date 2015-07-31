@@ -24,6 +24,8 @@ source = 'USGS/Albuquerque Seismological Laboratory'
 indent = '\t'
 debug = True
 
+polynomialSupported = False
+
 now = UTCDateTime.now()
 
 def getArguments():
@@ -99,13 +101,13 @@ def processIntro(dataless):
 	#processes the start of the xml file, mostly dealing with blockette 50 of the dataless
 	isOpenStationEpoch = False
 	for blockette in dataless:
-		if blockette.id == 50 and blockette.start_effective_date <= now <= blockette.end_effective_date:
-			preamble = ['<?xml version="1.0" ?>','','<FDSNStationXML xsi:type="sis:RootType" schemaVersion="2.0" sis:schemaLocation="http://anss-sis.scsn.org/xml/ext-stationxml/2.0 http://anss-sis.scsn.org/xml/ext-stationxml/2.0/sis_extension.xsd" xmlns:fsx="http://www.fdsn.org/xml/station/1" xmlns:sis="http://anss-sis.scsn.org/xml/ext-stationxml/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">']
+		if blockette.id == 50 and blockette.start_effective_date <= now <= validDate(blockette.end_effective_date):
+			preamble = ['<?xml version="1.0" ?>','','<FDSNStationXML xmlns:iris="http://www.fdsn.org/xml/station/1/iris" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.fdsn.org/xml/station/1" schemaVersion="1.0" xsi:schemaLocation="http://www.fdsn.org/xml/station/1 http://www.fdsn.org/xml/station/fdsn-station-1.0.xsd">']
 			appendToFile(0, preamble)
-			appendToFile(1, ['<Source>' + sisinfo.source() + '<Source>'])
+			appendToFile(1, ['<Source>' + sisinfo.source() + '</Source>'])
 			appendToFile(1, ['<Sender>' + sisinfo.sender() + '</Sender>'])
 			appendToFile(1, ['<Created>' + str(UTCDateTime(now)) + '</Created>'])
-			network, description, netstaCount, startDate, endDate = fetchLegendEntry().split('|')
+			network, description, netstaCount, startDate, endDate = fetchLegendEntry().split(' | ')
 			appendToFile(1, ['<Network code="' + blockette.network_code + '" startDate="' + startDate + '" endDate="' + endDate + '">'])
 			appendToFile(2, ['<Description>' + description + '</Description>'])
 			appendToFile(2, ['<TotalNumberStations>' + netstaCount + '</TotalNumberStations>'])
@@ -178,7 +180,7 @@ def fetchNetStaInfo(blkt):
 	contents = fob.read().split('\n')
 	fob.close()
 	for entry in contents:
-		if blkt.network_code and blkt.station_call_letters in entry:
+		if blkt.network_code and str(blkt.station_call_letters) in entry:
 			return entry
 
 def addLegendEntry(network, description, stationCount):
@@ -201,11 +203,11 @@ def processStationComments(blockettes):
 		if blockette.id == 51:
 			appendToFile(3, ['<Comment>'])
 			appendToFile(4, ['<Value>' + fetchComment(dictB031, blockette.comment_code_key)[0] + '</Value>'])
-			appendToFile(4, ['<BeginEffectiveTime>' + str(blockette.beginning_effective_time) +  '</BeginEffectiveTime>'])
-			appendToFile(4, ['<EndEffectiveTime>' + str(blockette.end_effective_time) + '</EndEffectiveTime>'])
-			appendToFile(4, ['<Author>'])
-			appendToFile(5, ['<Name>' + 'USGS ASL RDSEED' + '</Name>'])
-			appendToFile(4, ['</Author>'])
+			appendToFile(4, ['<BeginEffectiveTime>' + str(validDate(blockette.beginning_effective_time)).split('.')[0] +  '</BeginEffectiveTime>'])
+			appendToFile(4, ['<EndEffectiveTime>' + str(validDate(blockette.end_effective_time)).split('.')[0] + '</EndEffectiveTime>'])
+			# appendToFile(4, ['<Author>'])
+			# appendToFile(5, ['<Name>' + 'USGS ASL RDSEED' + '</Name>'])
+			# appendToFile(4, ['</Author>'])
 			appendToFile(3, ['</Comment>'])
 
 def selectedNumberChannels(dataless):
@@ -221,7 +223,7 @@ def processChannels(dataless):
 	for channel in channels:
 		for blockette in channel:			
 			if blockette.id == 52:
-				appendToFile(3, ['<Channel locationCode="' + blockette.location_identifier + '" startDate="' + str(blockette.start_date).split('.')[0] + '" endDate="' + str(blockette.end_date).split('.')[0] + '" code="' + blockette.channel_identifier + '">'])
+				appendToFile(3, ['<Channel locationCode="' + blockette.location_identifier + '" startDate="' + str(blockette.start_date).split('.')[0] + '" endDate="' + str(validDate(blockette.end_date)).split('.')[0] + '" code="' + blockette.channel_identifier + '">'])
 				processChannelComments(channel)
 				appendToFile(4, ['<Latitude>' + str(blockette.latitude) + '</Latitude>'])
 				appendToFile(4, ['<Longitude>' + str(blockette.longitude) + '</Longitude>'])
@@ -247,6 +249,12 @@ def processChannels(dataless):
 						appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[0] + '</Name>'])
 						appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[1] + '</Description>'])
 						appendToFile(6, ['</InputUnits>'])
+						if noB054(channel):
+							#in the event of no B054 in channel, proceed with the output units that SIS Parser (v2.0) requires
+							appendToFile(6, ['<OutputUnits>'])
+							appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[0] + '</Name>'])
+							appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[1] + '</Description>'])
+							appendToFile(6, ['</OutputUnits>'])
 				for blockette in channel:
 					if blockette.id == 54 and blockette.stage_sequence_number == 2:
 						appendToFile(6, ['<OutputUnits>'])
@@ -255,6 +263,10 @@ def processChannels(dataless):
 						appendToFile(6, ['</OutputUnits>'])
 				for blockette in channel:
 					if blockette.id == 62:
+						#value and frequency are required because the current SIS parser (v2.0) does not correctly support polynomial responses
+						if not polynomialSupported:
+							appendToFile(6, ['<Value>' + '0' + '</Value>'])
+							appendToFile(6, ['<Frequency>' + '0' + '</Frequency>'])
 						appendToFile(6, ['<InputUnits>'])
 						appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[0] + '</Name>'])
 						appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[1] + '</Description>'])
@@ -295,8 +307,8 @@ def processChannels(dataless):
 										zeros['imaginary zero error'] = blockette.imaginary_zero_error
 								for index in range(blockette.number_of_complex_zeros):
 									appendToFile(7, ['<Zero number="' + str(index) + '">'])
-									appendToFile(8, ['<Real plusError="' + str(zeros['real zero error'][index]) + '" minus error="' + str(zeros['real zero error'][index]) + '">' + str(zeros['real zero'][index]) + '</Real>'])
-									appendToFile(8, ['<Imaginary plusError="' + str(zeros['imaginary zero error'][index]) + '" minus error="' + str(zeros['imaginary zero error'][index]) + '">' + str(zeros['imaginary zero'][index]) + '</Imaginary>'])
+									appendToFile(8, ['<Real plusError="' + str(zeros['real zero error'][index]) + '" minusError="' + str(zeros['real zero error'][index]) + '">' + str(zeros['real zero'][index]) + '</Real>'])
+									appendToFile(8, ['<Imaginary plusError="' + str(zeros['imaginary zero error'][index]) + '" minusError="' + str(zeros['imaginary zero error'][index]) + '">' + str(zeros['imaginary zero'][index]) + '</Imaginary>'])
 									appendToFile(7, ['</Zero>'])
 								if blockette.number_of_complex_poles > 0:
 									poles = {'real pole': [], 'imaginary pole': [], 'real pole error': [], 'imaginary pole error': []}
@@ -312,8 +324,8 @@ def processChannels(dataless):
 										poles['imaginary pole error'] = blockette.imaginary_pole_error
 								for index in range(blockette.number_of_complex_poles):
 									appendToFile(7, ['<Pole number="' + str(index) + '">'])
-									appendToFile(8, ['<Real plusError="' + str(poles['real pole error'][index]) + '" minus error="' + str(poles['real pole error'][index]) + '">' + str(poles['real pole'][index]) + '</Real>'])
-									appendToFile(8, ['<Imaginary plusError="' + str(poles['imaginary pole error'][index]) + '" minus error="' + str(poles['imaginary pole error'][index]) + '">' + str(poles['imaginary pole'][index]) + '</Imaginary>'])
+									appendToFile(8, ['<Real plusError="' + str(poles['real pole error'][index]) + '" minusError="' + str(poles['real pole error'][index]) + '">' + str(poles['real pole'][index]) + '</Real>'])
+									appendToFile(8, ['<Imaginary plusError="' + str(poles['imaginary pole error'][index]) + '" minusError="' + str(poles['imaginary pole error'][index]) + '">' + str(poles['imaginary pole'][index]) + '</Imaginary>'])
 									appendToFile(7, ['</Pole>'])
 								appendToFile(6, ['</PolesZeros>'])
 							if blockette.id == 54 and blockette.stage_sequence_number == stage:
@@ -367,122 +379,31 @@ def processChannels(dataless):
 										polyco = blockette.polynomial_coefficient
 										polyerror = blockette.polynomial_coefficient_error
 									for index in range(blockette.number_of_polynomial_coefficients):
-										appendToFile(7, ['<Coefficient number="' + str(index) + '" plusError="' + str(polyerror[index]) + '" minusError="' + str(polyerror[index]) + '">' + str(polyco[index])])
+										appendToFile(7, ['<Coefficient number="' + str(index) + '" plusError="' + str(polyerror[index]) + '" minusError="' + str(polyerror[index]) + '">' + str(polyco[index]) + '</Coefficient>'])
 								appendToFile(6, ['</Polynomial>'])
+								if not polynomialSupported:
+									#required because the current SIS parser (v2.0) does not correctly support polynomial responses
+									appendToFile(6, ['<StageGain>'])
+									appendToFile(7, ['<Value>' + '0' + '</Value>'])
+									appendToFile(7, ['<Frequency>' + '0' + '</Frequency>'])
+									appendToFile(6, ['</StageGain>'])
 						appendToFile(5, ['</Stage>'])
 				appendToFile(4, ['</Response>'])
 				appendToFile(3, ['</Channel>'])
-				appendToFile(2, ['</Station>'])
-				appendToFile(1, ['</Network>'])
-				appendToFile(0, ['</FDSNStationXML>'])
 
-		# if not channelWithB062(channel):
-		# 	for blockette in channel:
-		# 		if blockette.id == 58 and blockette.stage_sequence_number == 0:
-		# 			appendToFile(4, ['<Response>'])
-		# 			appendToFile(5, ['<InstrumentSensitivity>'])
-		# 			appendToFile(6, ['<Value>' + value2SciNo(blockette.sensitivity_gain) + '</Value>'])
-		# 			appendToFile(6, ['<Frequency>' + value2SciNo(blockette.frequency) + '</Frequency>'])
-		# 	for blockette in channel:
-		# 		if blockette.id == 54 and blockette.stage_sequence_number == 2:
-		# 			appendToFile(6, ['<InputUnits>'])
-		# 			appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.signal_input_units)[0] + '</Name>'])
-		# 			appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.signal_input_units)[1] + '</Description>'])
-		# 			appendToFile(6, ['</InputUnits>'])
-		# 			appendToFile(6, ['<OutputUnits>'])
-		# 			appendToFile(7, ['<Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</Name>'])
-		# 			appendToFile(7, ['<Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '</Description>'])
-		# 			appendToFile(6, ['</OutputUnits>'])
-		# 			appendToFile(5, ['</InstrumentSensitivity>'])
-		# 	for blockette in channel:
-		# 		if blockette.id == 53 and blockette.stage_sequence_number == 1:
-		# 			appendToFile(5, ['<Stage number="' + str(blockette.stage_sequence_number) + '"'])
-		# 			appendToFile(6, ['<PolesZeros>'])
-		# 			appendToFile(7, ['<InputUnits>'])
-		# 			appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[0] + '</Name>'])
-		# 			appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[1] + '</Description>'])
-		# 			appendToFile(7, ['</InputUnits>'])
-		# 			appendToFile(7, ['<OutputUnits>'])
-		# 			appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[0] + '</Name>'])
-		# 			appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[1] + '</Description>'])
-		# 			appendToFile(7, ['</OutputUnits>'])
-		# 			appendToFile(7, ['<PzTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.transfer_function_type) + '</PzTransferFunctionType>')])
-		# 			appendToFile(7, ['<NormalizationFactor>' + str(blockette.A0_normalization_factor) + '</NormalizationFactor>'])
-		# 			appendToFile(7, ['<NormalizationFrequency>' + str(blockette.normalization_frequency) + '</NormalizationFrequency>'])
-		# 			if blockette.number_of_complex_zeros > 0:
-		# 				zeros = {'real zero': [], 'imaginary zero': [], 'real zero error': [], 'imaginary zero error': []}
-		# 				if blockette.number_of_complex_zeros == 1:
-		# 					zeros['real zero'] = [blockette.real_zero]
-		# 					zeros['imaginary zero'] = [blockette.imaginary_zero]
-		# 					zeros['real zero error'] = [blockette.real_zero_error]
-		# 					zeros['imaginary zero error'] = [blockette.imaginary_zero_error]
-		# 				elif blockette.number_of_complex_zeros > 1:
-		# 					zeros['real zero'] = blockette.real_zero
-		# 					zeros['imaginary zero'] = blockette.imaginary_zero
-		# 					zeros['real zero error'] = blockette.real_zero_error
-		# 					zeros['imaginary zero error'] = blockette.imaginary_zero_error
-		# 			for index in range(blockette.number_of_complex_zeros):
-		# 				appendToFile(7, ['<Zero number="' + str(index) + '">'])
-		# 				appendToFile(8, ['<Real plusError="' + str(zeros['real zero error'][index]) + '" minus error="' + str(zeros['real zero error'][index]) + '">' + str(zeros['real zero'][index]) + '</Real>'])
-		# 				appendToFile(8, ['<Imaginary plusError="' + str(zeros['imaginary zero error'][index]) + '" minus error="' + str(zeros['imaginary zero error'][index]) + '">' + str(zeros['imaginary zero'][index]) + '</Imaginary>'])
-		# 				appendToFile(7, ['</Zero>'])
-		# 			if blockette.number_of_complex_poles > 0:
-		# 				poles = {'real pole': [], 'imaginary pole': [], 'real pole error': [], 'imaginary pole error': []}
-		# 				if blockette.number_of_complex_poles == 1:
-		# 					poles['real pole'] = [blockette.real_pole]
-		# 					poles['imaginary pole'] = [blockette.imaginary_pole]
-		# 					poles['real pole error'] = [blockette.real_pole_error]
-		# 					poles['imaginary pole error'] = [blockette.imaginary_pole_error]
-		# 				elif blockette.number_of_complex_poles > 1:
-		# 					poles['real pole'] = blockette.real_pole
-		# 					poles['imaginary pole'] = blockette.imaginary_pole
-		# 					poles['real pole error'] = blockette.real_pole_error
-		# 					poles['imaginary pole error'] = blockette.imaginary_pole_error
-		# 			for index in range(blockette.number_of_complex_poles):
-		# 				appendToFile(7, ['<Pole number="' + str(index) + '">'])
-		# 				appendToFile(8, ['<Real plusError="' + str(poles['real pole error'][index]) + '" minus error="' + str(poles['real pole error'][index]) + '">' + str(poles['real pole'][index]) + '</Real>'])
-		# 				appendToFile(8, ['<Imaginary plusError="' + str(poles['imaginary pole error'][index]) + '" minus error="' + str(poles['imaginary pole error'][index]) + '">' + str(poles['imaginary pole'][index]) + '</Imaginary>'])
-		# 				appendToFile(7, ['</Pole>'])
-		# 			appendToFile(6, ['</PolesZeros>'])
-		# 	for blockette in channel:
-		# 		if blockette.id == 58 and blockette.stage_sequence_number == 1:
-		# 			appendToFile(6, ['<StageGain>'])
-		# 			appendToFile(7, ['<Value>' + str(blockette.sensitivity_gain) + '</Value>'])
-		# 			appendToFile(7, ['<Frequency>' + str(blockette.frequency) + '</Frequency>'])
-		# 			appendToFile(6, ['</StageGain>'])
-		# 			appendToFile(5, ['</Stage>'])
-		# 	for blockette in channel:
-		# 		if blockette.id == 54 and blockette.stage_sequence_number == 2:
-		# 			appendToFile(5, ['<Stage number="' + str(blockette.stage_sequence_number) + '"'])
-		# 			appendToFile(6, ['<Coefficients>'])
-		# 			appendToFile(7, ['<InputUnits>'])
-		# 			appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</Name>'])
-		# 			appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.signal_input_units)[1] + '</Description>'])
-		# 			appendToFile(7, ['</InputUnits>'])
-		# 			appendToFile(7, ['<OutputUnits>'])
-		# 			appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</Name>'])
-		# 			appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '</Description>'])
-		# 			appendToFile(7, ['</OutputUnits>'])
-		# 			appendToFile(7, ['<CfTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.response_type) + '</CfTransferFunctionType>'])
-		# 			appendToFile(6, ['</Coefficients>'])
-		# 	for blockette in channel:
-		# 		if blockette.id == 57 and blockette.stage_sequence_number == 2:
-		# 			appendToFile(6, ['<Decimation>'])
-		# 			appendToFile(7, ['<InputSampleRate>' + str(blockette.input_sample_rate) + '</InputSampleRate>'])
-		# 			appendToFile(7, ['<Factor>' + str(blockette.decimation_factor) + '</Factor>'])
-		# 			appendToFile(7, ['<Offset>' + str(blockette.decimation_offset) + '</Offset>'])
-		# 			appendToFile(7, ['<Delay>' + str(blockette.estimated_delay) + '</Delay>'])
-		# 			appendToFile(7, ['<Correction>' + str(blockette.correction_applied) + '</Correction>'])
-		# 			appendToFile(6, ['</Decimation>'])
-		# 	for blockette in channel:
-		# 		if blockette.id == 58 and blockette.stage_sequence_number == 2:
-		# 			appendToFile(6, ['<StageGain>'])
-		# 			appendToFile(7, ['<Value>' + str(blockette.sensitivity_gain) + '</Value>'])
-		# 			appendToFile(7, ['<Frequency>' + str(blockette.frequency) + '</Frequency>'])
-		# 			appendToFile(6, ['</StageGain>'])
-		# 			appendToFile(5, ['</Stage>'])
-		# 	appendToFile(4, ['</Response>'])
-		# appendToFile(3, ['</Channel>'])
+def validDate(date):
+	#this function returns a UTCDateTime date in the event a date is blank in the dataless
+	if date == '':
+		return UTCDateTime(2599, 12, 31, 23, 59, 59)
+	else:
+		return date
+
+def noB054(channel):
+	b054absent = True
+	for blockette in channel:
+		if blockette.id == 54:
+			b054absent = False
+	return b054absent
 
 def getDictionaries(netsta):
 	net = netsta[:2]
@@ -605,7 +526,7 @@ def processChannelComments(blockettes):
 			appendToFile(4, ['<Comment>'])
 			appendToFile(5, ['<Value>' + fetchComment(dictB031, blockette.comment_code_key)[0] + '</Value>'])
 			appendToFile(5, ['<BeginEffectiveTime>' + str(blockette.beginning_of_effective_time) +  '</BeginEffectiveTime>'])
-			appendToFile(5, ['<EndEffectiveTime>' + str(blockette.end_effective_time) + '</EndEffectiveTime>'])
+			appendToFile(5, ['<EndEffectiveTime>' + str(validDate(blockette.end_effective_time)).split('.')[0] + '</EndEffectiveTime>'])
 			appendToFile(5, ['<Author>'])
 			appendToFile(6, ['<Name>' + 'USGS ASL RDSEED' + '</Name>'])
 			appendToFile(5, ['</Author>'])
@@ -629,14 +550,14 @@ sta = parserval.sta.upper()
 outputFilename = parserval.outputFilename
 if outputFilename == '*':
 	#if no custom filename is given, it defaults to NN_SSSS.xml
-	outputFilename = net + '_' + sta + '.xml'
+	outputFilename = net + '_' + sta + '.fdsn.xml'
 	if debug:
 		print 'Your output file will be named ' + outputFilename
 if '.xml' != outputFilename[-4:]:
 	#appends a file extension if one isn't given
 	if debug:
 		print 'Output filename changed from ' + outputFilename + ' to ' + outputFilename + '.xml'
-	outputFilename += '.xml'
+	outputFilename += '.fdsn.xml'
 outputFilepath = net + '/' + outputFilename
 
 dictB031, dictB033, dictB034 = getDictionaries(net + sta)
