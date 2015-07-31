@@ -344,7 +344,7 @@ def blockette62(blockette):
 def describeChannelFlags(flags):
 	#for describing the channel flags of blockette 52
 	channelFlag = []
-	dictionary = {'T': 'Triggered', 'C': 'Continuous', 'H': 'State of Health', 'G': 'Geophysical', 'W': 'Weather (or Environmental Data)', 'F': 'Flag Information', 'S': 'Synthesized Data', 'I': 'Calibration Input', 'E': 'Experimental (or Temporary)', 'M': 'Maintenance Tests', 'B': 'Beam Synthesis'}
+	dictionary = {'T': 'Triggered', 'C': 'Continuous', 'H': 'Health', 'G': 'Geophysical', 'W': 'Weather', 'F': 'Flag', 'S': 'Synthesized', 'I': 'Input', 'E': 'Experimental', 'M': 'Maintenance', 'B': 'Beam'}
 	for flag in flags:
 		channelFlag.append(dictionary[flag])
 	return channelFlag
@@ -358,7 +358,7 @@ def describeTransferFunctionType(value):
 	elif value == 'C':
 		return 'Composite'.upper()
 	elif value == 'D':
-		return 'Digital (Z-Transform)'.upper()
+		return 'Digital'.upper()	#(Z-Transform)
 	else:
 		return 'Undefined'.upper()
 
