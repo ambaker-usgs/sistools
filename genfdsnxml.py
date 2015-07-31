@@ -278,7 +278,7 @@ def processChannels(dataless):
 								appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[0] + '</Name>'])
 								appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[1] + '</Description>'])
 								appendToFile(7, ['</OutputUnits>'])
-								appendToFile(7, ['<PzTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.transfer_function_type) + '</PzTransferFunctionType>')])
+								appendToFile(7, ['<PzTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.transfer_function_types) + '</PzTransferFunctionType>'])
 								appendToFile(7, ['<NormalizationFactor>' + str(blockette.A0_normalization_factor) + '</NormalizationFactor>'])
 								appendToFile(7, ['<NormalizationFrequency>' + str(blockette.normalization_frequency) + '</NormalizationFrequency>'])
 								if blockette.number_of_complex_zeros > 0:
@@ -324,7 +324,7 @@ def processChannels(dataless):
 								appendToFile(7, ['</InputUnits>'])
 								appendToFile(7, ['<OutputUnits>'])
 								appendToFile(8, ['<Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</Name>'])
-								appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.ignal_output_units)[1] + '</Description>'])
+								appendToFile(8, ['<Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '</Description>'])
 								appendToFile(7, ['</OutputUnits>'])
 								appendToFile(7, ['<CfTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.response_type) + '</CfTransferFunctionType>'])
 								appendToFile(6, ['</Coefficients>'])
@@ -361,11 +361,11 @@ def processChannels(dataless):
 									polyco = []
 									polyerror = []
 									if blockette.number_of_polynomial_coefficients == 1:
-										polyco.append([blockette.polynomial_coefficient])
-										polyerror.append([blockette.polynomial_coefficient_error])
+										polyco = [blockette.polynomial_coefficient]
+										polyerror = [blockette.polynomial_coefficient_error]
 									elif blockette.number_of_polynomial_coefficients > 1:
-										polyco.append(blockette.polynomial_coefficient)
-										polyerror.append(blockette.polynomial_coefficient_error)
+										polyco = blockette.polynomial_coefficient
+										polyerror = blockette.polynomial_coefficient_error
 									for index in range(blockette.number_of_polynomial_coefficients):
 										appendToFile(7, ['<Coefficient number="' + str(index) + '" plusError="' + str(polyerror[index]) + '" minusError="' + str(polyerror[index]) + '">' + str(polyco[index])])
 								appendToFile(6, ['</Polynomial>'])
