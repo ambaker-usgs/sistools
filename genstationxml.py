@@ -102,7 +102,7 @@ def processIntro(dataless):
 	isOpenStationEpoch = False
 	for blockette in dataless:
 		if blockette.id == 50 and blockette.start_effective_date <= now <= validDate(blockette.end_effective_date):
-			preamble = ['<?xml version="1.0" ?>','','<FDSNStationXML xmlns:iris="http://www.fdsn.org/xml/station/1/iris" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.fdsn.org/xml/station/1" schemaVersion="1.0" xsi:schemaLocation="http://www.fdsn.org/xml/station/1 http://www.fdsn.org/xml/station/fdsn-station-1.0.xsd">']
+			preamble = ['<?xml version="1.0" ?>','','<FDSNStationXML xmlns:iris="http://www.fdsn.org/xml/station/1/iris" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.fdsn.org/xml/station/1" schemaVersion="1.0" xsi:schemaLocation="http://www.fdsn.org/xml/station/1 http://www.fdsn.org/xml/station/fdsn-station-1.0.xsd" xmlns:fsx="http://www.fdsn.org/xml/station/1">']
 			appendToFile(0, preamble)
 			appendToFile(1, ['<fsx:Source>' + sisinfo.source() + '</fsx:Source>'])
 			appendToFile(1, ['<fsx:Sender>' + sisinfo.sender() + '</fsx:Sender>'])
