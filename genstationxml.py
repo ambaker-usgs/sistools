@@ -111,7 +111,7 @@ def processIntro(dataless):
 			appendToFile(1, ['<fsx:Network code="' + blockette.network_code + '" startDate="' + startDate + '" endDate="' + endDate + '">'])
 			appendToFile(2, ['<fsx:Description>' + description + '</fsx:Description>'])
 			appendToFile(2, ['<fsx:TotalNumberStations>' + netstaCount + '</fsx:TotalNumberStations>'])
-			appendToFile(2, ['<fsx:SelectedNumberStations>1</SelectedNumberStations>'])
+			appendToFile(2, ['<fsx:SelectedNumberStations>1</fsx:SelectedNumberStations>'])
 			appendToFile(2, ['<fsx:Station code="' + blockette.station_call_letters + '" startDate="' + stationStartDate(dataless) + '">'])
 			processStationComments(dataless)
 			appendToFile(3, ['<fsx:Latitude>' + str(blockette.latitude) + '</fsx:Latitude>'])
