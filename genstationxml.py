@@ -281,7 +281,7 @@ def processChannels(dataless):
 						appendToFile(5, ['<sis:SubResponse sequenceNumber="1">'])
 						appendToFile(6, ['<sis:EquipmentLink>'])
 						appendToFile(7, ['<sis:SerialNumber>000</sis:SerialNumber>'])
-			            appendToFile(7, ['<sis:ModelName>' + fetchInstrument(dictB033, blockette.instrument_identifier) + '</sis:ModelName>'])
+						appendToFile(7, ['<sis:ModelName>' + fetchInstrument(dictB033, blockette.instrument_identifier) + '</sis:ModelName>'])
 						appendToFile(7, ['<sis:Category>SENSOR</sis:Category>'])
 						appendToFile(7, ['<sis:ComponentName>' + blockette.channel_identifier[-1] + '</sis:ComponentName>'])
 						appendToFile(7, ['<sis:CalibrationDate>2199-01-23T01:23:45Z</sis:CalibrationDate>'])
