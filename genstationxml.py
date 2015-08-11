@@ -278,32 +278,32 @@ def processChannels(dataless):
 				for blockette in channel:
 					if blockette.id == 52:
 						appendToFile(5, ['<fsx:/InstrumentSensitivity>'])
-						appendToFile(5, ['<sis:SubResponse sequenceNumber="1">']
-						appendToFile(6, ['<sis:EquipmentLink>']
-						appendToFile(7, ['<sis:SerialNumber>000</sis:SerialNumber>']
-			            appendToFile(7, ['<sis:ModelName>' + fetchInstrument(dictB033, blockette.instrument_identifier) + '</sis:ModelName>']
-						appendToFile(7, ['<sis:Category>SENSOR</sis:Category>']
-						appendToFile(7, ['<sis:ComponentName>' + blockette.channel_identifier[-1] + '</sis:ComponentName>']
-						appendToFile(7, ['<sis:CalibrationDate>2199-01-23T01:23:45Z</sis:CalibrationDate>']
-						appendToFile(6, ['</sis:EquipmentLink>']
-						appendToFile(5, ['</sis:SubResponse>']
-						appendToFile(5, ['<sis:SubResponse sequenceNumber="2">']
-						appendToFile(6, ['<sis:EquipmentLink>']
-						appendToFile(7, ['<sis:SerialNumber>000</sis:SerialNumber>']
-						appendToFile(7, ['<sis:ModelName>DataLogger</sis:ModelName>']
-						appendToFile(7, ['<sis:Category>LOGGERBOARD</sis:Category>']
-						appendToFile(7, ['<sis:ComponentName>DATA1</sis:ComponentName>']
-						appendToFile(7, ['<sis:CalibrationDate>2199-01-23T01:23:45Z</sis:CalibrationDate>']
-						appendToFile(6, ['</sis:EquipmentLink>']
-						appendToFile(6, ['<sis:PreampGain>1.000000000000E+00</sis:PreampGain>']
-						appendToFile(5, ['</sis:SubResponse>']
-						appendToFile(5, ['<sis:SubResponse sequenceNumber="3">']
-						appendToFile(6, ['<sis:ResponseDictLink>']
-						appendToFile(7, ['<sis:Name>Datalogger.Filter.MS</sis:Name>']
-						appendToFile(7, ['<sis:SISNamespace>SCSN GROUP</sis:SISNamespace>']
-						appendToFile(7, ['<sis:Type>FilterSequence</sis:Type>']
-						appendToFile(6, ['</sis:ResponseDictLink>']
-						appendToFile(5, ['</sis:SubResponse>']
+						appendToFile(5, ['<sis:SubResponse sequenceNumber="1">'])
+						appendToFile(6, ['<sis:EquipmentLink>'])
+						appendToFile(7, ['<sis:SerialNumber>000</sis:SerialNumber>'])
+			            appendToFile(7, ['<sis:ModelName>' + fetchInstrument(dictB033, blockette.instrument_identifier) + '</sis:ModelName>'])
+						appendToFile(7, ['<sis:Category>SENSOR</sis:Category>'])
+						appendToFile(7, ['<sis:ComponentName>' + blockette.channel_identifier[-1] + '</sis:ComponentName>'])
+						appendToFile(7, ['<sis:CalibrationDate>2199-01-23T01:23:45Z</sis:CalibrationDate>'])
+						appendToFile(6, ['</sis:EquipmentLink>'])
+						appendToFile(5, ['</sis:SubResponse>'])
+						appendToFile(5, ['<sis:SubResponse sequenceNumber="2">'])
+						appendToFile(6, ['<sis:EquipmentLink>'])
+						appendToFile(7, ['<sis:SerialNumber>000</sis:SerialNumber>'])
+						appendToFile(7, ['<sis:ModelName>DataLogger</sis:ModelName>'])
+						appendToFile(7, ['<sis:Category>LOGGERBOARD</sis:Category>'])
+						appendToFile(7, ['<sis:ComponentName>DATA1</sis:ComponentName>'])
+						appendToFile(7, ['<sis:CalibrationDate>2199-01-23T01:23:45Z</sis:CalibrationDate>'])
+						appendToFile(6, ['</sis:EquipmentLink>'])
+						appendToFile(6, ['<sis:PreampGain>1.000000000000E+00</sis:PreampGain>'])
+						appendToFile(5, ['</sis:SubResponse>'])
+						appendToFile(5, ['<sis:SubResponse sequenceNumber="3">'])
+						appendToFile(6, ['<sis:ResponseDictLink>'])
+						appendToFile(7, ['<sis:Name>Datalogger.Filter.MS</sis:Name>'])
+						appendToFile(7, ['<sis:SISNamespace>SCSN GROUP</sis:SISNamespace>'])
+						appendToFile(7, ['<sis:Type>FilterSequence</sis:Type>'])
+						appendToFile(6, ['</sis:ResponseDictLink>'])
+						appendToFile(5, ['</sis:SubResponse>'])
 				# for stage in stages(channel):
 				# 	if stage > 0:
 				# 		appendToFile(5, ['<fsx:Stage number="' + str(stage) + '">'])
