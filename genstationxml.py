@@ -104,32 +104,32 @@ def processIntro(dataless):
 		if blockette.id == 50 and blockette.start_effective_date <= now <= validDate(blockette.end_effective_date):
 			preamble = ['<?xml version="1.0" ?>','','<FDSNStationXML xmlns:iris="http://www.fdsn.org/xml/station/1/iris" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.fdsn.org/xml/station/1" schemaVersion="1.0" xsi:schemaLocation="http://www.fdsn.org/xml/station/1 http://www.fdsn.org/xml/station/fdsn-station-1.0.xsd">']
 			appendToFile(0, preamble)
-			appendToFile(1, ['<fsx:Source>' + sisinfo.source() + '<fsx:/Source>'])
-			appendToFile(1, ['<fsx:Sender>' + sisinfo.sender() + '<fsx:/Sender>'])
-			appendToFile(1, ['<fsx:Created>' + str(UTCDateTime(now)) + '<fsx:/Created>'])
+			appendToFile(1, ['<fsx:Source>' + sisinfo.source() + '</fsx:Source>'])
+			appendToFile(1, ['<fsx:Sender>' + sisinfo.sender() + '</fsx:Sender>'])
+			appendToFile(1, ['<fsx:Created>' + str(UTCDateTime(now)) + '</fsx:Created>'])
 			network, description, netstaCount, startDate, endDate = fetchLegendEntry().split(' | ')
 			appendToFile(1, ['<fsx:Network code="' + blockette.network_code + '" startDate="' + startDate + '" endDate="' + endDate + '">'])
-			appendToFile(2, ['<fsx:Description>' + description + '<fsx:/Description>'])
-			appendToFile(2, ['<fsx:TotalNumberStations>' + netstaCount + '<fsx:/TotalNumberStations>'])
+			appendToFile(2, ['<fsx:Description>' + description + '</fsx:Description>'])
+			appendToFile(2, ['<fsx:TotalNumberStations>' + netstaCount + '</fsx:TotalNumberStations>'])
 			appendToFile(2, ['<fsx:SelectedNumberStations>1</SelectedNumberStations>'])
 			appendToFile(2, ['<fsx:Station code="' + blockette.station_call_letters + '" startDate="' + stationStartDate(dataless) + '">'])
 			processStationComments(dataless)
-			appendToFile(3, ['<fsx:Latitude>' + str(blockette.latitude) + '<fsx:/Latitude>'])
-			appendToFile(3, ['<fsx:Longitude>' + str(blockette.longitude) + '<fsx:/Longitude>'])
-			appendToFile(3, ['<fsx:Elevation>' + str(blockette.elevation) + '<fsx:/Elevation>'])
+			appendToFile(3, ['<fsx:Latitude>' + str(blockette.latitude) + '</fsx:Latitude>'])
+			appendToFile(3, ['<fsx:Longitude>' + str(blockette.longitude) + '</fsx:Longitude>'])
+			appendToFile(3, ['<fsx:Elevation>' + str(blockette.elevation) + '</fsx:Elevation>'])
 			network, station, name, description, town, region = fetchNetStaInfo(blockette).split('|')
 			appendToFile(3, ['<fsx:Site>'])
-			appendToFile(4, ['<fsx:Name>' + name + '<fsx:/Name>'])
-			appendToFile(4, ['<fsx:Description>' + description + '<fsx:/Description>'])
-			appendToFile(4, ['<fsx:Town>' + town + '<fsx:/Town>'])
-			appendToFile(4, ['<fsx:Region>' + region + '<fsx:/Region>'])
-			appendToFile(3, ['<fsx:/Site>'])
+			appendToFile(4, ['<fsx:Name>' + name + '</fsx:Name>'])
+			appendToFile(4, ['<fsx:Description>' + description + '</fsx:Description>'])
+			appendToFile(4, ['<fsx:Town>' + town + '</fsx:Town>'])
+			appendToFile(4, ['<fsx:Region>' + region + '</fsx:Region>'])
+			appendToFile(3, ['</fsx:Site>'])
 			appendToFile(3, ['<fsx:Operator>'])
-			appendToFile(4, ['<fsx:Agency>' + sisinfo.agency() + '<fsx:/Agency>'])
-			appendToFile(3, ['<fsx:/Operator>'])
-			appendToFile(3, ['<fsx:CreationDate>' + stationStartDate(dataless) + '<fsx:/CreationDate>'])
-			appendToFile(3, ['<fsx:TotalNumberChannels>' + str(blockette.number_of_channels) + '<fsx:/TotalNumberChannels>'])
-			appendToFile(3, ['<fsx:SelectedNumberChannels>' + selectedNumberChannels(dataless) + '<fsx:/SelectedNumberChannels>'])
+			appendToFile(4, ['<fsx:Agency>' + sisinfo.agency() + '</fsx:Agency>'])
+			appendToFile(3, ['</fsx:Operator>'])
+			appendToFile(3, ['<fsx:CreationDate>' + stationStartDate(dataless) + '</fsx:CreationDate>'])
+			appendToFile(3, ['<fsx:TotalNumberChannels>' + str(blockette.number_of_channels) + '</fsx:TotalNumberChannels>'])
+			appendToFile(3, ['<fsx:SelectedNumberChannels>' + selectedNumberChannels(dataless) + '</fsx:SelectedNumberChannels>'])
 
 def stationStartDate(dataless):
 	#returns the earliest start_effective_date
@@ -202,13 +202,13 @@ def processStationComments(blockettes):
 	for blockette in blockettes:
 		if blockette.id == 51:
 			appendToFile(3, ['<fsx:Comment>'])
-			appendToFile(4, ['<fsx:Value>' + fetchComment(dictB031, blockette.comment_code_key)[0] + '<fsx:/Value>'])
-			appendToFile(4, ['<fsx:BeginEffectiveTime>' + str(validDate(blockette.beginning_effective_time)).split('.')[0] +  '<fsx:/BeginEffectiveTime>'])
-			appendToFile(4, ['<fsx:EndEffectiveTime>' + str(validDate(blockette.end_effective_time)).split('.')[0] + '<fsx:/EndEffectiveTime>'])
+			appendToFile(4, ['<fsx:Value>' + fetchComment(dictB031, blockette.comment_code_key)[0] + '</fsx:Value>'])
+			appendToFile(4, ['<fsx:BeginEffectiveTime>' + str(validDate(blockette.beginning_effective_time)).split('.')[0] +  '</fsx:BeginEffectiveTime>'])
+			appendToFile(4, ['<fsx:EndEffectiveTime>' + str(validDate(blockette.end_effective_time)).split('.')[0] + '</fsx:EndEffectiveTime>'])
 			appendToFile(4, ['<fsx:Author>'])
-			appendToFile(5, ['<fsx:Name>' + 'ASL RDSEED' + '<fsx:/Name>'])
-			appendToFile(4, ['<fsx:/Author>'])
-			appendToFile(3, ['<fsx:/Comment>'])
+			appendToFile(5, ['<fsx:Name>' + 'ASL RDSEED' + '</fsx:Name>'])
+			appendToFile(4, ['</fsx:Author>'])
+			appendToFile(3, ['</fsx:Comment>'])
 
 def selectedNumberChannels(dataless):
 	channelCount = 0
@@ -225,59 +225,59 @@ def processChannels(dataless):
 			if blockette.id == 52:
 				appendToFile(3, ['<fsx:Channel locationCode="' + blockette.location_identifier + '" startDate="' + str(blockette.start_date).split('.')[0] + '" endDate="' + str(validDate(blockette.end_date)).split('.')[0] + '" code="' + blockette.channel_identifier + '">'])
 				processChannelComments(channel)
-				appendToFile(4, ['<fsx:Latitude>' + str(blockette.latitude) + '<fsx:/Latitude>'])
-				appendToFile(4, ['<fsx:Longitude>' + str(blockette.longitude) + '<fsx:/Longitude>'])
-				appendToFile(4, ['<fsx:Elevation>' + str(blockette.elevation) + '<fsx:/Elevation>'])
-				appendToFile(4, ['<fsx:Depth>' + str(blockette.local_depth) + '<fsx:/Depth>'])
-				appendToFile(4, ['<fsx:Azimuth>' + str(blockette.azimuth) + '<fsx:/Azimuth>'])
-				appendToFile(4, ['<fsx:Dip>' + str(blockette.dip) + '<fsx:/Dip>'])
+				appendToFile(4, ['<fsx:Latitude>' + str(blockette.latitude) + '</fsx:Latitude>'])
+				appendToFile(4, ['<fsx:Longitude>' + str(blockette.longitude) + '</fsx:Longitude>'])
+				appendToFile(4, ['<fsx:Elevation>' + str(blockette.elevation) + '</fsx:Elevation>'])
+				appendToFile(4, ['<fsx:Depth>' + str(blockette.local_depth) + '</fsx:Depth>'])
+				appendToFile(4, ['<fsx:Azimuth>' + str(blockette.azimuth) + '</fsx:Azimuth>'])
+				appendToFile(4, ['<fsx:Dip>' + str(blockette.dip) + '</fsx:Dip>'])
 				processChannelFlags(blockette.channel_flags)
-				appendToFile(4, ['<fsx:SampleRate>' + str(blockette.sample_rate) + '<fsx:/SampleRate>'])
-				appendToFile(4, ['<fsx:ClockDrift>' + str(blockette.max_clock_drift) + '<fsx:/ClockDrift>'])
+				appendToFile(4, ['<fsx:SampleRate>' + str(blockette.sample_rate) + '</fsx:SampleRate>'])
+				appendToFile(4, ['<fsx:ClockDrift>' + str(blockette.max_clock_drift) + '</fsx:ClockDrift>'])
 				# appendToFile(4, ['<fsx:Sensor>'])
-				# appendToFile(5, ['<fsx:Type>' + fetchInstrument(dictB033, blockette.instrument_identifier) + '<fsx:/Type>'])
-				# appendToFile(4, ['<fsx:/Sensor>'])
+				# appendToFile(5, ['<fsx:Type>' + fetchInstrument(dictB033, blockette.instrument_identifier) + '</fsx:Type>'])
+				# appendToFile(4, ['</fsx:Sensor>'])
 				appendToFile(4, ['<fsx:Response xsi:type="sis:ResponseType">'])
 				appendToFile(5, ['<fsx:InstrumentSensitivity>'])
 				for blockette in channel:
 					if blockette.id == 58 and blockette.stage_sequence_number == 0:
-						appendToFile(6, ['<fsx:Value>' + value2SciNo(blockette.sensitivity_gain) + '<fsx:/Value>'])
-						appendToFile(6, ['<fsx:Frequency>' + value2SciNo(blockette.frequency) + '<fsx:/Frequency>'])
+						appendToFile(6, ['<fsx:Value>' + value2SciNo(blockette.sensitivity_gain) + '</fsx:Value>'])
+						appendToFile(6, ['<fsx:Frequency>' + value2SciNo(blockette.frequency) + '</fsx:Frequency>'])
 				for blockette in channel:
 					if blockette.id == 53:
 						appendToFile(6, ['<fsx:InputUnits>'])
-						appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[0] + '<fsx:/Name>'])
-						appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[1] + '<fsx:/Description>'])
-						appendToFile(6, ['<fsx:/InputUnits>'])
+						appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[0] + '</fsx:Name>'])
+						appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[1] + '</fsx:Description>'])
+						appendToFile(6, ['</fsx:InputUnits>'])
 						if noB054(channel):
 							#in the event of no B054 in channel, proceed with the output units that SIS Parser (v2.0) requires
 							appendToFile(6, ['<fsx:OutputUnits>'])
-							appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[0] + '<fsx:/Name>'])
-							appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[1] + '<fsx:/Description>'])
-							appendToFile(6, ['<fsx:/OutputUnits>'])
+							appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[0] + '</fsx:Name>'])
+							appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[1] + '</fsx:Description>'])
+							appendToFile(6, ['</fsx:OutputUnits>'])
 				for blockette in channel:
 					if blockette.id == 54 and blockette.stage_sequence_number == 2:
 						appendToFile(6, ['<fsx:OutputUnits>'])
-						appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '<fsx:/Name>'])
-						appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '<fsx:/Description>'])
-						appendToFile(6, ['<fsx:/OutputUnits>'])
+						appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</fsx:Name>'])
+						appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '</fsx:Description>'])
+						appendToFile(6, ['</fsx:OutputUnits>'])
 				for blockette in channel:
 					if blockette.id == 62:
 						#value and frequency are required because the current SIS parser (v2.0) does not correctly support polynomial responses
 						if not polynomialSupported:
-							appendToFile(6, ['<fsx:Value>' + '0' + '<fsx:/Value>'])
-							appendToFile(6, ['<fsx:Frequency>' + '0' + '<fsx:/Frequency>'])
+							appendToFile(6, ['<fsx:Value>' + '0' + '</fsx:Value>'])
+							appendToFile(6, ['<fsx:Frequency>' + '0' + '</fsx:Frequency>'])
 						appendToFile(6, ['<fsx:InputUnits>'])
-						appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[0] + '<fsx:/Name>'])
-						appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[1] + '<fsx:/Description>'])
-						appendToFile(6, ['<fsx:/InputUnits>'])
+						appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[0] + '</fsx:Name>'])
+						appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[1] + '</fsx:Description>'])
+						appendToFile(6, ['</fsx:InputUnits>'])
 						appendToFile(6, ['<fsx:OutputUnits>'])
-						appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_out_units)[0] + '<fsx:/Name>'])
-						appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_out_units)[1] + '<fsx:/Description>'])
-						appendToFile(6, ['<fsx:/OutputUnits>'])
+						appendToFile(7, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_out_units)[0] + '</fsx:Name>'])
+						appendToFile(7, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_out_units)[1] + '</fsx:Description>'])
+						appendToFile(6, ['</fsx:OutputUnits>'])
 				for blockette in channel:
 					if blockette.id == 52:
-						appendToFile(5, ['<fsx:/InstrumentSensitivity>'])
+						appendToFile(5, ['</fsx:InstrumentSensitivity>'])
 						appendToFile(5, ['<sis:SubResponse sequenceNumber="1">'])
 						appendToFile(6, ['<sis:EquipmentLink>'])
 						appendToFile(7, ['<sis:SerialNumber>000</sis:SerialNumber>'])
@@ -311,16 +311,16 @@ def processChannels(dataless):
 				# 			if blockette.id == 53 and blockette.stage_sequence_number == stage:
 				# 				appendToFile(6, ['<fsx:PolesZeros>'])
 				# 				appendToFile(7, ['<fsx:InputUnits>'])
-				# 				appendToFile(8, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[0] + '<fsx:/Name>'])
-				# 				appendToFile(8, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[1] + '<fsx:/Description>'])
-				# 				appendToFile(7, ['<fsx:/InputUnits>'])
+				# 				appendToFile(8, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[0] + '</fsx:Name>'])
+				# 				appendToFile(8, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_input_units)[1] + '</fsx:Description>'])
+				# 				appendToFile(7, ['</fsx:InputUnits>'])
 				# 				appendToFile(7, ['<fsx:OutputUnits>'])
-				# 				appendToFile(8, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[0] + '<fsx:/Name>'])
-				# 				appendToFile(8, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[1] + '<fsx:/Description>'])
-				# 				appendToFile(7, ['<fsx:/OutputUnits>'])
-				# 				appendToFile(7, ['<fsx:PzTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.transfer_function_types) + '<fsx:/PzTransferFunctionType>'])
-				# 				appendToFile(7, ['<fsx:NormalizationFactor>' + str(blockette.A0_normalization_factor) + '<fsx:/NormalizationFactor>'])
-				# 				appendToFile(7, ['<fsx:NormalizationFrequency>' + str(blockette.normalization_frequency) + '<fsx:/NormalizationFrequency>'])
+				# 				appendToFile(8, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[0] + '</fsx:Name>'])
+				# 				appendToFile(8, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_output_units)[1] + '</fsx:Description>'])
+				# 				appendToFile(7, ['</fsx:OutputUnits>'])
+				# 				appendToFile(7, ['<fsx:PzTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.transfer_function_types) + '</fsx:PzTransferFunctionType>'])
+				# 				appendToFile(7, ['<fsx:NormalizationFactor>' + str(blockette.A0_normalization_factor) + '</fsx:NormalizationFactor>'])
+				# 				appendToFile(7, ['<fsx:NormalizationFrequency>' + str(blockette.normalization_frequency) + '</fsx:NormalizationFrequency>'])
 				# 				if blockette.number_of_complex_zeros > 0:
 				# 					zeros = {'real zero': [], 'imaginary zero': [], 'real zero error': [], 'imaginary zero error': []}
 				# 					if blockette.number_of_complex_zeros == 1:
@@ -335,9 +335,9 @@ def processChannels(dataless):
 				# 						zeros['imaginary zero error'] = blockette.imaginary_zero_error
 				# 				for index in range(blockette.number_of_complex_zeros):
 				# 					appendToFile(7, ['<fsx:Zero number="' + str(index) + '">'])
-				# 					appendToFile(8, ['<fsx:Real plusError="' + str(zeros['real zero error'][index]) + '" minusError="' + str(zeros['real zero error'][index]) + '">' + str(zeros['real zero'][index]) + '<fsx:/Real>'])
-				# 					appendToFile(8, ['<fsx:Imaginary plusError="' + str(zeros['imaginary zero error'][index]) + '" minusError="' + str(zeros['imaginary zero error'][index]) + '">' + str(zeros['imaginary zero'][index]) + '<fsx:/Imaginary>'])
-				# 					appendToFile(7, ['<fsx:/Zero>'])
+				# 					appendToFile(8, ['<fsx:Real plusError="' + str(zeros['real zero error'][index]) + '" minusError="' + str(zeros['real zero error'][index]) + '">' + str(zeros['real zero'][index]) + '</fsx:Real>'])
+				# 					appendToFile(8, ['<fsx:Imaginary plusError="' + str(zeros['imaginary zero error'][index]) + '" minusError="' + str(zeros['imaginary zero error'][index]) + '">' + str(zeros['imaginary zero'][index]) + '</fsx:Imaginary>'])
+				# 					appendToFile(7, ['</fsx:Zero>'])
 				# 				if blockette.number_of_complex_poles > 0:
 				# 					poles = {'real pole': [], 'imaginary pole': [], 'real pole error': [], 'imaginary pole error': []}
 				# 					if blockette.number_of_complex_poles == 1:
@@ -352,51 +352,51 @@ def processChannels(dataless):
 				# 						poles['imaginary pole error'] = blockette.imaginary_pole_error
 				# 				for index in range(blockette.number_of_complex_poles):
 				# 					appendToFile(7, ['<fsx:Pole number="' + str(index) + '">'])
-				# 					appendToFile(8, ['<fsx:Real plusError="' + str(poles['real pole error'][index]) + '" minusError="' + str(poles['real pole error'][index]) + '">' + str(poles['real pole'][index]) + '<fsx:/Real>'])
-				# 					appendToFile(8, ['<fsx:Imaginary plusError="' + str(poles['imaginary pole error'][index]) + '" minusError="' + str(poles['imaginary pole error'][index]) + '">' + str(poles['imaginary pole'][index]) + '<fsx:/Imaginary>'])
-				# 					appendToFile(7, ['<fsx:/Pole>'])
-				# 				appendToFile(6, ['<fsx:/PolesZeros>'])
+				# 					appendToFile(8, ['<fsx:Real plusError="' + str(poles['real pole error'][index]) + '" minusError="' + str(poles['real pole error'][index]) + '">' + str(poles['real pole'][index]) + '</fsx:Real>'])
+				# 					appendToFile(8, ['<fsx:Imaginary plusError="' + str(poles['imaginary pole error'][index]) + '" minusError="' + str(poles['imaginary pole error'][index]) + '">' + str(poles['imaginary pole'][index]) + '</fsx:Imaginary>'])
+				# 					appendToFile(7, ['</fsx:Pole>'])
+				# 				appendToFile(6, ['</fsx:PolesZeros>'])
 				# 			if blockette.id == 54 and blockette.stage_sequence_number == stage:
 				# 				appendToFile(6, ['<fsx:Coefficients>'])
 				# 				appendToFile(7, ['<fsx:InputUnits>'])
-				# 				appendToFile(8, ['<fsx:Name>' + fetchUnit(dictB034, blockette.signal_input_units)[0] + '<fsx:/Name>'])
-				# 				appendToFile(8, ['<fsx:Description>' + fetchUnit(dictB034, blockette.signal_input_units)[1] + '<fsx:/Description>'])
-				# 				appendToFile(7, ['<fsx:/InputUnits>'])
+				# 				appendToFile(8, ['<fsx:Name>' + fetchUnit(dictB034, blockette.signal_input_units)[0] + '</fsx:Name>'])
+				# 				appendToFile(8, ['<fsx:Description>' + fetchUnit(dictB034, blockette.signal_input_units)[1] + '</fsx:Description>'])
+				# 				appendToFile(7, ['</fsx:InputUnits>'])
 				# 				appendToFile(7, ['<fsx:OutputUnits>'])
-				# 				appendToFile(8, ['<fsx:Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '<fsx:/Name>'])
-				# 				appendToFile(8, ['<fsx:Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '<fsx:/Description>'])
-				# 				appendToFile(7, ['<fsx:/OutputUnits>'])
-				# 				appendToFile(7, ['<fsx:CfTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.response_type) + '<fsx:/CfTransferFunctionType>'])
-				# 				appendToFile(6, ['<fsx:/Coefficients>'])
+				# 				appendToFile(8, ['<fsx:Name>' + fetchUnit(dictB034, blockette.signal_output_units)[0] + '</fsx:Name>'])
+				# 				appendToFile(8, ['<fsx:Description>' + fetchUnit(dictB034, blockette.signal_output_units)[1] + '</fsx:Description>'])
+				# 				appendToFile(7, ['</fsx:OutputUnits>'])
+				# 				appendToFile(7, ['<fsx:CfTransferFunctionType>' + blockettetools.describeTransferFunctionType(blockette.response_type) + '</fsx:CfTransferFunctionType>'])
+				# 				appendToFile(6, ['</fsx:Coefficients>'])
 				# 			if blockette.id == 57 and blockette.stage_sequence_number == stage:
 				# 				appendToFile(6, ['<fsx:Decimation>'])
-				# 				appendToFile(7, ['<fsx:InputSampleRate>' + str(blockette.input_sample_rate) + '<fsx:/InputSampleRate>'])
-				# 				appendToFile(7, ['<fsx:Factor>' + str(blockette.decimation_factor) + '<fsx:/Factor>'])
-				# 				appendToFile(7, ['<fsx:Offset>' + str(blockette.decimation_offset) + '<fsx:/Offset>'])
-				# 				appendToFile(7, ['<fsx:Delay>' + str(blockette.estimated_delay) + '<fsx:/Delay>'])
-				# 				appendToFile(7, ['<fsx:Correction>' + str(blockette.correction_applied) + '<fsx:/Correction>'])
-				# 				appendToFile(6, ['<fsx:/Decimation>'])
+				# 				appendToFile(7, ['<fsx:InputSampleRate>' + str(blockette.input_sample_rate) + '</fsx:InputSampleRate>'])
+				# 				appendToFile(7, ['<fsx:Factor>' + str(blockette.decimation_factor) + '</fsx:Factor>'])
+				# 				appendToFile(7, ['<fsx:Offset>' + str(blockette.decimation_offset) + '</fsx:Offset>'])
+				# 				appendToFile(7, ['<fsx:Delay>' + str(blockette.estimated_delay) + '</fsx:Delay>'])
+				# 				appendToFile(7, ['<fsx:Correction>' + str(blockette.correction_applied) + '</fsx:Correction>'])
+				# 				appendToFile(6, ['</fsx:Decimation>'])
 				# 			if blockette.id == 58 and blockette.stage_sequence_number == stage:
 				# 				appendToFile(6, ['<fsx:StageGain>'])
-				# 				appendToFile(7, ['<fsx:Value>' + str(blockette.sensitivity_gain) + '<fsx:/Value>'])
-				# 				appendToFile(7, ['<fsx:Frequency>' + str(blockette.frequency) + '<fsx:/Frequency>'])
-				# 				appendToFile(6, ['<fsx:/StageGain>'])
+				# 				appendToFile(7, ['<fsx:Value>' + str(blockette.sensitivity_gain) + '</fsx:Value>'])
+				# 				appendToFile(7, ['<fsx:Frequency>' + str(blockette.frequency) + '</fsx:Frequency>'])
+				# 				appendToFile(6, ['</fsx:StageGain>'])
 				# 			if blockette.id == 62 and blockette.stage_sequence_number == stage:
 				# 				appendToFile(6, ['<fsx:Polynomial>'])
 				# 				appendToFile(7, ['<fsx:InputUnits>'])
-				# 				appendToFile(8, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[0] + '<fsx:/Name>'])
-				# 				appendToFile(8, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[1] + '<fsx:/Description>'])
-				# 				appendToFile(7, ['<fsx:/InputUnits>'])
+				# 				appendToFile(8, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[0] + '</fsx:Name>'])
+				# 				appendToFile(8, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_in_units)[1] + '</fsx:Description>'])
+				# 				appendToFile(7, ['</fsx:InputUnits>'])
 				# 				appendToFile(7, ['<fsx:OutputUnits>'])
-				# 				appendToFile(8, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_out_units)[0] + '<fsx:/Name>'])
-				# 				appendToFile(8, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_out_units)[1] + '<fsx:/Description>'])
-				# 				appendToFile(7, ['<fsx:/OutputUnits>'])
-				# 				appendToFile(7, ['<fsx:ApproximationType>' + blockettetools.describeApproximationType(blockette.polynomial_approximation_type) + '<fsx:/ApproximationType>'])
-				# 				appendToFile(7, ['<fsx:FrequencyLowerBound>' + str(blockette.lower_valid_frequency_bound) + '<fsx:/FrequencyLowerBound>'])
-				# 				appendToFile(7, ['<fsx:FrequencyUpperBound>' + str(blockette.upper_valid_frequency_bound) + '<fsx:/FrequencyUpperBound>'])
-				# 				appendToFile(7, ['<fsx:ApproximationLowerBound>' + str(blockette.lower_bound_of_approximation) + '<fsx:/ApproximationLowerBound>'])
-				# 				appendToFile(7, ['<fsx:ApproximationUpperBound>' + str(blockette.upper_bound_of_approximation) + '<fsx:/ApproximationUpperBound>'])
-				# 				appendToFile(7, ['<fsx:MaximumError>' + str(blockette.maximum_absolute_error) + '<fsx:/MaximumError>'])
+				# 				appendToFile(8, ['<fsx:Name>' + fetchUnit(dictB034, blockette.stage_signal_out_units)[0] + '</fsx:Name>'])
+				# 				appendToFile(8, ['<fsx:Description>' + fetchUnit(dictB034, blockette.stage_signal_out_units)[1] + '</fsx:Description>'])
+				# 				appendToFile(7, ['</fsx:OutputUnits>'])
+				# 				appendToFile(7, ['<fsx:ApproximationType>' + blockettetools.describeApproximationType(blockette.polynomial_approximation_type) + '</fsx:ApproximationType>'])
+				# 				appendToFile(7, ['<fsx:FrequencyLowerBound>' + str(blockette.lower_valid_frequency_bound) + '</fsx:FrequencyLowerBound>'])
+				# 				appendToFile(7, ['<fsx:FrequencyUpperBound>' + str(blockette.upper_valid_frequency_bound) + '</fsx:FrequencyUpperBound>'])
+				# 				appendToFile(7, ['<fsx:ApproximationLowerBound>' + str(blockette.lower_bound_of_approximation) + '</fsx:ApproximationLowerBound>'])
+				# 				appendToFile(7, ['<fsx:ApproximationUpperBound>' + str(blockette.upper_bound_of_approximation) + '</fsx:ApproximationUpperBound>'])
+				# 				appendToFile(7, ['<fsx:MaximumError>' + str(blockette.maximum_absolute_error) + '</fsx:MaximumError>'])
 				# 				if blockette.number_of_polynomial_coefficients > 0:
 				# 					polyco = []
 				# 					polyerror = []
@@ -407,17 +407,17 @@ def processChannels(dataless):
 				# 						polyco = blockette.polynomial_coefficient
 				# 						polyerror = blockette.polynomial_coefficient_error
 				# 					for index in range(blockette.number_of_polynomial_coefficients):
-				# 						appendToFile(7, ['<fsx:Coefficient number="' + str(index) + '" plusError="' + str(polyerror[index]) + '" minusError="' + str(polyerror[index]) + '">' + str(polyco[index]) + '<fsx:/Coefficient>'])
-				# 				appendToFile(6, ['<fsx:/Polynomial>'])
+				# 						appendToFile(7, ['<fsx:Coefficient number="' + str(index) + '" plusError="' + str(polyerror[index]) + '" minusError="' + str(polyerror[index]) + '">' + str(polyco[index]) + '</fsx:Coefficient>'])
+				# 				appendToFile(6, ['</fsx:Polynomial>'])
 				# 				if not polynomialSupported:
 				# 					#required because the current SIS parser (v2.0) does not correctly support polynomial responses
 				# 					appendToFile(6, ['<fsx:StageGain>'])
-				# 					appendToFile(7, ['<fsx:Value>' + '0' + '<fsx:/Value>'])
-				# 					appendToFile(7, ['<fsx:Frequency>' + '0' + '<fsx:/Frequency>'])
-				# 					appendToFile(6, ['<fsx:/StageGain>'])
-				# 		appendToFile(5, ['<fsx:/Stage>'])
-				appendToFile(4, ['<fsx:/Response>'])
-				appendToFile(3, ['<fsx:/Channel>'])
+				# 					appendToFile(7, ['<fsx:Value>' + '0' + '</fsx:Value>'])
+				# 					appendToFile(7, ['<fsx:Frequency>' + '0' + '</fsx:Frequency>'])
+				# 					appendToFile(6, ['</fsx:StageGain>'])
+				# 		appendToFile(5, ['</fsx:Stage>'])
+				appendToFile(4, ['</fsx:Response>'])
+				appendToFile(3, ['</fsx:Channel>'])
 
 def validDate(date):
 	#this function returns a UTCDateTime date in the event a date is blank in the dataless
@@ -506,7 +506,7 @@ def parseRDSEEDAbbreviations(output):
 
 def processChannelFlags(flags):
 	for flag in blockettetools.describeChannelFlags(flags):
-		appendToFile(4, ['<fsx:Type>' + flag.upper() + '<fsx:/Type>'])
+		appendToFile(4, ['<fsx:Type>' + flag.upper() + '</fsx:Type>'])
 
 def fetchComment(dictB031, value):
 	#blockette 31
@@ -536,9 +536,9 @@ def channelWithB062(channel):
 	return False
 
 def processOutro(dataless):
-	appendToFile(2, ['<fsx:/Station>'])
-	appendToFile(1, ['<fsx:/Network>'])
-	appendToFile(0, ['<fsx:/FDSNStationXML>'])
+	appendToFile(2, ['</fsx:Station>'])
+	appendToFile(1, ['</fsx:Network>'])
+	appendToFile(0, ['</fsx:FDSNStationXML>'])
 
 def value2SciNo(value):
 	#converts the string, int, or float value into scientific notation, returns it as a string
@@ -552,13 +552,13 @@ def processChannelComments(blockettes):
 	for blockette in blockettes:
 		if blockette.id == 59:
 			appendToFile(4, ['<fsx:Comment>'])
-			appendToFile(5, ['<fsx:Value>' + fetchComment(dictB031, blockette.comment_code_key)[0] + '<fsx:/Value>'])
-			appendToFile(5, ['<fsx:BeginEffectiveTime>' + str(blockette.beginning_of_effective_time) +  '<fsx:/BeginEffectiveTime>'])
-			appendToFile(5, ['<fsx:EndEffectiveTime>' + str(validDate(blockette.end_effective_time)).split('.')[0] + '<fsx:/EndEffectiveTime>'])
+			appendToFile(5, ['<fsx:Value>' + fetchComment(dictB031, blockette.comment_code_key)[0] + '</fsx:Value>'])
+			appendToFile(5, ['<fsx:BeginEffectiveTime>' + str(blockette.beginning_of_effective_time) +  '</fsx:BeginEffectiveTime>'])
+			appendToFile(5, ['<fsx:EndEffectiveTime>' + str(validDate(blockette.end_effective_time)).split('.')[0] + '</fsx:EndEffectiveTime>'])
 			appendToFile(5, ['<fsx:Author>'])
-			appendToFile(6, ['<fsx:Name>' + 'USGS ASL RDSEED' + '<fsx:/Name>'])
-			appendToFile(5, ['<fsx:/Author>'])
-			appendToFile(4, ['<fsx:/Comment>'])
+			appendToFile(6, ['<fsx:Name>' + 'USGS ASL RDSEED' + '</fsx:Name>'])
+			appendToFile(5, ['</fsx:Author>'])
+			appendToFile(4, ['</fsx:Comment>'])
 
 def stages(channel):
 	stages = []
