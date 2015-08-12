@@ -219,7 +219,7 @@ def selectedNumberChannels(dataless):
 
 def processChannels(dataless):
 	netsta = net + sta
-	channels = blockettetools.getChannels(dataless, now)
+	channels = blockettetools.getChannels(dataless)
 	for channel in channels:
 		for blockette in channel:			
 			if blockette.id == 52:

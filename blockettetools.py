@@ -417,7 +417,7 @@ def getChannel(loc, chan, dataless, time):
 				if blockette.location_identifier == loc and blockette.channel_identifier == chan and blockette.start_date <= time and time <= endDate:
 					return channel
 
-def getChannels(dataless, time):
+def getChannels(dataless):
 	channels = []
 	for blockette in dataless:
 		if blockette.id == 52:
