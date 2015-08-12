@@ -50,3 +50,15 @@ def getNetworkDataless(netsta):
 	net = netsta[:2].upper()
 	parsedDataless = Parser(netDatalessPath + net + '.dataless')
 	return parsedDataless.stations
+
+def forceStationDataless(netsta):
+	#the function that returns the dataless for a given station
+	net = netsta[:2].upper()
+	sta = netsta[2:].upper()
+	netsta = '_'.join([net,sta])
+	if os.path.exists(staDatalessPath + 'DATALESS.' + netsta + '.seed'):
+		station = []
+		parsedDataless = aslParser(staDatalessPath + 'DATALESS.' + netsta + '.seed')
+		for blockette in parsedDataless.stations:
+			station.extend(blockette)
+		return station
