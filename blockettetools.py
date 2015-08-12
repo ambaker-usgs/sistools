@@ -2,6 +2,29 @@
 
 from obspy.core import UTCDateTime
 
+def parseSkeleton(blockette):
+	blkt = {}
+	if   blockette.id == 50:
+		return skeleton50(blockette)
+	elif blockette.id == 51:
+		return skeleton51(blockette)
+	elif blockette.id == 52:
+		return skeleton52(blockette)
+	elif blockette.id == 53:
+		return skeleton53(blockette)
+	elif blockette.id == 54:
+		return skeleton54(blockette)
+	elif blockette.id == 57:
+		return skeleton57(blockette)
+	elif blockette.id == 58:
+		return skeleton58(blockette)
+	elif blockette.id == 59:
+		return skeleton59(blockette)
+	elif blockette.id == 62:
+		return skeleton62(blockette)
+	else:
+		print 'Invalid blockette or blockette not supported'
+
 def skeleton50():
 	blkt = {}
 	blkt['description'] = 'Station Identifier Blockette'
