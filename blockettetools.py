@@ -406,7 +406,7 @@ def describeApproximationType(value):
 		return 'Undefined'.upper()
 
 def getChannel(loc, chan, dataless, time):
-	channels = getChannels(dataless, time)
+	channels = getChannels(dataless)
 	for channel in channels:
 		for blockette in channel:
 			if blockette.id == 52:
